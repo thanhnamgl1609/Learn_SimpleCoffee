@@ -1,0 +1,2 @@
+com/project/simplecoffee/BuildConfig.java
+ com.project.simplecoffee.BuildConfig

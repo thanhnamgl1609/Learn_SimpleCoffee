@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "410244398854",
+    "project_id": "simple-64565",
+    "storage_bucket": "simple-64565.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410244398854:android:f35a836f87c6ca73246887",
+        "android_client_info": {
+          "package_name": "com.project.SimpleCoffee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410244398854-bmi2fatb1vap9ac2fchlds5f4216dkm6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.SimpleCoffee",
+            "certificate_hash": "5712ac0fe9b2773e42bdfbc3bf6c94cb8612a9e8"
+          }
+        },
+        {
+          "client_id": "410244398854-ftso2k2sakrpmclbhhalen8cerjut4h2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJdkkRPtaTCkuI6hN_HsahBo0fx2h9ygY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410244398854-ftso2k2sakrpmclbhhalen8cerjut4h2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
