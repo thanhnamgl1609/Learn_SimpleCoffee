@@ -32,6 +32,16 @@ class SignInFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(ShopViewModel::class.java)
 
         // TODO: Use the ViewModel
+
+        binding.btnLogIn.setOnClickListener{
+            val email : String = binding.inputEmail.text.toString()
+
+            val pass: String = binding.inputPwd.text.toString()
+
+            if (!email.isEmpty() && !pass.isEmpty()) {
+                viewModel.signIn(email, pass)
+            }
+        }
     }
 
 }
