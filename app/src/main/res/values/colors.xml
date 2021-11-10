@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#F9D886</color>
     <color name="light_red">#E6DEDE</color>
+    <color name="seashell2">#EEE5DE</color>
+    <color name="seashell4">#FFF5EE</color>
+    <color name="grey">#545454</color>
+    <color name="light_grey">#858585</color>
 </resources>
