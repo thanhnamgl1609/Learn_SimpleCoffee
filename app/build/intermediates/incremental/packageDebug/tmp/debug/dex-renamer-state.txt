@@ -1,10 +1,25 @@
-#Sat Nov 06 10:20:56 ICT 2021
-base.2=/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/dex/debug/mergeProjectDexDebug/2/classes.dex
+#Wed Nov 10 10:36:34 ICT 2021
+path.4=classes2.dex
+path.3=7/classes.dex
 path.2=2/classes.dex
-base.1=/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 path.1=0/classes.dex
+path.7=15/classes.dex
+path.6=11/classes.dex
+path.5=classes3.dex
+path.0=classes.dex
+base.4=/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/dex/debug/mergeExtDexDebug/classes2.dex
+base.3=/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/dex/debug/mergeProjectDexDebug/7/classes.dex
+base.2=/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/dex/debug/mergeProjectDexDebug/2/classes.dex
+base.1=/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 base.0=/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
+renamed.3=classes4.dex
 renamed.2=classes3.dex
 renamed.1=classes2.dex
 renamed.0=classes.dex
-path.0=classes.dex
+renamed.7=classes8.dex
+renamed.6=classes7.dex
+base.7=/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/dex/debug/mergeProjectDexDebug/15/classes.dex
+renamed.5=classes6.dex
+base.6=/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/dex/debug/mergeProjectDexDebug/11/classes.dex
+renamed.4=classes5.dex
+base.5=/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/dex/debug/mergeExtDexDebug/classes3.dex

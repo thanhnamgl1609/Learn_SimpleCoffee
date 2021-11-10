@@ -4,7 +4,7 @@
             "outputFile": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-h480dp-land-v13/values-h480dp-land-v13.xml",
             "map": [
                 {
-                    "source": "/home/namdt/.gradle/caches/transforms-3/0a2abf7e181c5770d82904112c96f8dd/transformed/material-1.4.0/res/values-h480dp-land-v13/values-h480dp-land-v13.xml",
+                    "source": "/home/namdt/.gradle/caches/transforms-3/b6ca5eb47b84c735a06216c808ce5659/transformed/material-1.4.0/res/values-h480dp-land-v13/values-h480dp-land-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",

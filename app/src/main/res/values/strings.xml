@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SimpleCoffee</string>
+    <string name="ask_for_signup">Do not have an existing account?</string>
+    <string name="sign_up">Sign Up?</string>
 </resources>

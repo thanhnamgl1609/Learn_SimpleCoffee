@@ -1,5 +1,9 @@
 [
     {
+        "merged": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/merged_res/debug/layout_sign_in_fragment.xml.flat",
+        "source": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/src/main/res/layout/sign_in_fragment.xml"
+    },
+    {
         "merged": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/merged_res/debug/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
         "source": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
@@ -8,12 +12,20 @@
         "source": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp"
     },
     {
+        "merged": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/merged_res/debug/font_zenantique_regular.ttf.flat",
+        "source": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/src/main/res/font/zenantique_regular.ttf"
+    },
+    {
         "merged": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/merged_res/debug/layout_activity_main.xml.flat",
         "source": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/src/main/res/layout/activity_main.xml"
     },
     {
         "merged": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/merged_res/debug/mipmap-mdpi_ic_launcher_round.webp.flat",
         "source": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/merged_res/debug/navigation_sign_in_graph.xml.flat",
+        "source": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/src/main/res/navigation/sign_in_graph.xml"
     },
     {
         "merged": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/merged_res/debug/mipmap-xhdpi_ic_launcher.webp.flat",
@@ -28,6 +40,10 @@
         "source": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/src/main/res/mipmap-mdpi/ic_launcher.webp"
     },
     {
+        "merged": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/merged_res/debug/drawable_background.jpg.flat",
+        "source": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/src/main/res/drawable/background.jpg"
+    },
+    {
         "merged": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/merged_res/debug/mipmap-xxhdpi_ic_launcher_round.webp.flat",
         "source": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp"
     },
@@ -40,12 +56,20 @@
         "source": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/src/main/res/mipmap-hdpi/ic_launcher.webp"
     },
     {
+        "merged": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/merged_res/debug/font_font.xml.flat",
+        "source": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/src/main/res/font/font.xml"
+    },
+    {
         "merged": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/merged_res/debug/mipmap-xhdpi_ic_launcher_round.webp.flat",
         "source": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp"
     },
     {
         "merged": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/merged_res/debug/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
         "source": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/merged_res/debug/layout_sign_in_activity.xml.flat",
+        "source": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/src/main/res/layout/sign_in_activity.xml"
     },
     {
         "merged": "/home/namdt/AndroidStudioProjects/SimpleCoffee/app/build/intermediates/merged_res/debug/drawable_ic_launcher_background.xml.flat",

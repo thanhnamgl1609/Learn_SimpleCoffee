@@ -1,2 +1,8 @@
+com/project/simplecoffee/databinding/SignInActivityBinding.java
+ com.project.simplecoffee.databinding.SignInActivityBinding
+com/project/simplecoffee/databinding/SignInFragmentBinding.java
+ com.project.simplecoffee.databinding.SignInFragmentBinding
 com/project/simplecoffee/BuildConfig.java
  com.project.simplecoffee.BuildConfig
+com/project/simplecoffee/databinding/ActivityMainBinding.java
+ com.project.simplecoffee.databinding.ActivityMainBinding
