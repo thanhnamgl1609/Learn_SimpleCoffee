@@ -1,28 +1,61 @@
 package com.project.simplecoffee.viewmodels
 
-import android.app.Application
-import androidx.annotation.NonNull
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
+import android.view.View
+import androidx.lifecycle.*
 import com.google.firebase.auth.FirebaseUser
 import com.project.simplecoffee.data.repository.AuthRepo
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ShopViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
-    private var _repository: AuthRepo? = null
-    private val repository get() = _repository!!
-    private val userData: MutableLiveData<FirebaseUser?>? = null
-    private val loggedStatus: MutableLiveData<Boolean?>? = null
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val repository: AuthRepo
+) : ViewModel() {
+    private val _userData: MutableLiveData<FirebaseUser>? = null
+    private val userData get() = _userData!!
+    private val loggedStatus: Boolean = repository.isLogIn()
 
-    fun getUserData(): MutableLiveData<FirebaseUser?>? {
+    // For databinding
+    val email = MutableLiveData<String>()
+    val pwd = MutableLiveData<String>()
+    val notify_txt = MutableLiveData<String>()
+
+    internal val btnSignInVisibility = MutableLiveData(View.VISIBLE)
+
+    init {
+        email.postValue("ABC")
+        pwd.postValue("XYZ")
+    }
+
+    fun getUserData(): LiveData<FirebaseUser> {
         return userData
     }
 
-    fun getLoggedStatus(): MutableLiveData<Boolean?>? {
+    fun getLoggedStatus(): Boolean {
         return loggedStatus
     }
 
-    fun signIn(email: String?, pass: String?) {
-        repository?.login(email, pass)
+    fun OnSignInClick() {
+        val inputMail = email.value ?: ""
+        val inputPWD = pwd.value ?: ""
+        Log.d("Mail:", inputMail)
+        Log.d("Pwd:",inputPWD)
+        if (inputMail.isNotEmpty() && inputPWD.isNotEmpty()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                try {
+                    repository.signIn(inputMail, inputPWD)
+                    notify_txt.postValue("Success to sign in")
+                } catch (e: Exception) {
+                    notify_txt.postValue("Username or password is not correct")
+                    Log.d("FAIL", e.message.toString())
+                }
+            }
+        }
+        else
+            notify_txt.postValue("Please enter all fields")
+
     }
 }

@@ -3,20 +3,20 @@ package com.project.simplecoffee
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.project.simplecoffee.databinding.ActivityMainBinding
+import android.util.Log
+import android.widget.Button
 import com.project.simplecoffee.views.auth.SignInActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private var _binding: ActivityMainBinding? = null
-    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.btnToSignIn.setOnClickListener{
-            val intent = Intent(this,SignInActivity::class.java)
-            startActivity(intent)
+        setContentView(R.layout.activity_main)
+
+        findViewById<Button>(R.id.btn_to_sign_in).setOnClickListener {
+            startActivity(Intent(this, SignInActivity::class.java))
         }
     }
 }
