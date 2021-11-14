@@ -16,29 +16,26 @@ class AuthViewModel @Inject constructor(
 ) : ViewModel() {
     private val _userData: MutableLiveData<FirebaseUser>? = null
     private val userData get() = _userData!!
-    private val loggedStatus: Boolean = repository.isLogIn()
+    private val _loggedStatus = MutableLiveData<Boolean>()
+    val loggedStatus : LiveData<Boolean> get() = _loggedStatus
 
     // For databinding
     val email = MutableLiveData<String>()
     val pwd = MutableLiveData<String>()
-    val notify_txt = MutableLiveData<String>()
+    val notifyTxt = MutableLiveData<String>()
 
     internal val btnSignInVisibility = MutableLiveData(View.VISIBLE)
 
     init {
-        email.postValue("ABC")
-        pwd.postValue("XYZ")
+        _loggedStatus.postValue(repository.logIn())
     }
 
     fun getUserData(): LiveData<FirebaseUser> {
         return userData
     }
 
-    fun getLoggedStatus(): Boolean {
-        return loggedStatus
-    }
-
-    fun OnSignInClick() {
+    // View binding
+    fun onSignInClick() {
         val inputMail = email.value ?: ""
         val inputPWD = pwd.value ?: ""
         Log.d("Mail:", inputMail)
@@ -47,15 +44,15 @@ class AuthViewModel @Inject constructor(
             viewModelScope.launch(Dispatchers.IO) {
                 try {
                     repository.signIn(inputMail, inputPWD)
-                    notify_txt.postValue("Success to sign in")
+                    notifyTxt.postValue("Success to sign in")
+                    _loggedStatus.postValue(true)
                 } catch (e: Exception) {
-                    notify_txt.postValue("Username or password is not correct")
+                    notifyTxt.postValue("Username or password is not correct")
                     Log.d("FAIL", e.message.toString())
                 }
             }
         }
         else
-            notify_txt.postValue("Please enter all fields")
-
+            notifyTxt.postValue("Please enter all fields")
     }
 }

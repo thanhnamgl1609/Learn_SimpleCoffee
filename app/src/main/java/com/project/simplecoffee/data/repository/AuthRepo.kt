@@ -18,8 +18,8 @@ class AuthRepo {
         }
     }
 
-    fun isLogIn() : Boolean {
-        return firebaseUser == null
+    fun logIn() : Boolean {
+        return firebaseUser != null
     }
 
     fun getUser() : FirebaseUser? {
@@ -29,5 +29,10 @@ class AuthRepo {
     suspend fun signIn(email: String, pass: String) {
         auth.signInWithEmailAndPassword(email, pass).await()
         firebaseUser = auth.currentUser
+    }
+
+    fun signOut() {
+        auth.signOut()
+        firebaseUser = null
     }
 }

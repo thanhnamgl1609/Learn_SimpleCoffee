@@ -115,7 +115,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{auth.notify_txt}"
+                android:text="@{auth.notifyTxt}"
                 android:textAppearance="@style/error_txt"
                 app:layout_constraintBottom_toTopOf="@+id/layout_log_in"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -136,7 +136,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_sign_in_background"
-                    android:onClick="@{() -> auth.OnSignInClick()}"
+                    android:onClick="@{() -> auth.onSignInClick()}"
                     android:text="@string/sign_in"
                     android:textAppearance="@style/input_text"
                     android:textColor="@drawable/btn_sign_in_background"
