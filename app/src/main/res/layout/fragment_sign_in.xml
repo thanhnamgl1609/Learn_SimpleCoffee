@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         tools:context=".views.auth.SignInFragment">
 
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -36,6 +37,7 @@
             android:layout_height="wrap_content"
             android:text="@string/simple_coffee"
             android:textAppearance="@style/simple_coffee"
+            android:textSize="@dimen/tz_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/gl_top_tittle" />

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_menu"
+        android:enabled="true"
+        android:icon="@drawable/ic_coffee_botnav"
+        android:title="@string/menu" />
+
+    <item
+        android:id="@+id/action_order"
+        android:enabled="true"
+        android:icon="@drawable/ic_order_botnav"
+        android:title="@string/order" />
+
+    <item
+        android:id="@+id/action_more"
+        android:enabled="true"
+        android:icon="@drawable/ic_more_botnav"
+        android:title="@string/more" />
+</menu>

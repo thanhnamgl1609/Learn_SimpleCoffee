@@ -2,6 +2,7 @@ package com.project.simplecoffee.viewmodels
 
 import android.view.View
 import androidx.lifecycle.*
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.firebase.auth.FirebaseUser
 import com.project.simplecoffee.data.repository.AuthRepo
 import com.project.simplecoffee.data.repository.UserInfoRepo

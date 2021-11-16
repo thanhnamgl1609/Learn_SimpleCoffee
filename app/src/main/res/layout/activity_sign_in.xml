@@ -8,6 +8,12 @@
         android:layout_height="match_parent"
         tools:context=".views.auth.SignInActivity">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.9"
+            android:background="@drawable/background"
+            android:scaleType="centerCrop" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"

@@ -11,7 +11,10 @@
     <color name="light_red">#E6DEDE</color>
     <color name="seashell2">#EEE5DE</color>
     <color name="seashell4">#FFF5EE</color>
-    <color name="grey">#545454</color>
-    <color name="light_grey">#858585</color>
+    <color name="dark_gray">#534742</color>
+    <color name="gray">#545454</color>
+    <color name="light_gray">#858585</color>
     <color name="red">#FF2400</color>
+    <color name="light_orange">#F6EDE7</color>
+    <color name="light_blue">#E8EDF3</color>
 </resources>

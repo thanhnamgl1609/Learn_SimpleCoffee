@@ -6,8 +6,8 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 open class Model {
-    @Exclude
-    lateinit var id: String;
+    @Exclude @JvmField
+    var id: String ?= null;
 
     fun <T : Model> withId(@NonNull id: String): T {
         this.id = id;

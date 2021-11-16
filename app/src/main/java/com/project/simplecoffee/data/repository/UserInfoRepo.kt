@@ -26,17 +26,21 @@ class UserInfoRepo constructor(
         return userInfo
     }
 
-    fun signUp(firstName: String, lastName: String, dob: Date) {
-        TODO("Not yet implemented")
-        val userInfo = UserInfo(
-            firstName,
-            lastName,
-            SealedRole.CUSTOMER.role,
-            Timestamp(dob),
-            mutableListOf()
-        )
+    fun signUp(firstName: String, lastName: String, gender: Boolean, dob: Date) {
         authRepo.getUID()?.let {
-            collection.document(it).set(userInfo)
+            userInfo = UserInfo(
+                firstName,
+                lastName,
+                SealedRole.CUSTOMER.role,
+                Timestamp(dob),
+                gender,
+                mutableListOf()
+            ).withId(it)
+            collection.document(it).set(userInfo!!)
         }
+    }
+
+    fun clear() {
+        userInfo = null
     }
 }

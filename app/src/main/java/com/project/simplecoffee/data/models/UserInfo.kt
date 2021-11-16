@@ -8,5 +8,6 @@ data class UserInfo(
     val lastname: String? = null,
     val role: String? = null,
     val dob: Timestamp? = null,
+    val gender: Boolean? = null,
     val contact: MutableList<DocumentReference>? = null
 ) : Model()

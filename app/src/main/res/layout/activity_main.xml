@@ -3,36 +3,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <import type="android.view.View"/>
-        <variable
-            name="viewModel"
-            type="com.project.simplecoffee.viewmodels.MainViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        android:background="@color/light_orange"
+        tools:context=".views.main.MainActivity">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_simple_coffee"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{`Hello ` + viewModel.name}"
-            android:visibility="@{viewModel.user != null ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@+id/my_btn"
+            android:background="@drawable/tv_head_background"
+            android:padding="10dp"
+            android:text="@string/simple_coffee"
+            android:textAlignment="center"
+            android:textAppearance="@style/simple_coffee"
+            android:textSize="@dimen/tz_header"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/my_btn"
+            android:id="@+id/btn"
+            android:text="Sign in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/frame_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+            app:layout_constraintTop_toBottomOf="@+id/tv_simple_coffee" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/bottom_nav_background"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:menu="@menu/bottom_navigation_menu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

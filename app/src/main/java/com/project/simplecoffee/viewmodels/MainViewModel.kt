@@ -9,6 +9,7 @@ import com.project.simplecoffee.data.repository.AuthRepo
 import com.project.simplecoffee.data.repository.UserInfoRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,11 +27,20 @@ class MainViewModel @Inject constructor(
     }
     private val userInfo: LiveData<UserInfo> get() = _userInfo
 
-    var name: LiveData<String> =
-        Transformations.map(userInfo) { userInfo -> "${userInfo?.firstname} ${userInfo?.lastname}" }
+    var firstName: LiveData<String> =
+        Transformations.map(userInfo) { userInfo -> userInfo.firstname }
+    var lastName: LiveData<String> =
+        Transformations.map(userInfo) { userInfo -> userInfo.lastname }
+    var email: LiveData<String> =
+        Transformations.map(user) { user -> user.email }
+    var dob: LiveData<Date> =
+        Transformations.map(userInfo) { userInfo -> userInfo.dob?.toDate() }
+    var gender: LiveData<Boolean> =
+        Transformations.map(userInfo) { userInfo -> userInfo.gender }
 
     fun signOut() {
         authRepo.signOut()
+        clearUserData()
         checkLogInStatus()
     }
 
@@ -50,5 +60,15 @@ class MainViewModel @Inject constructor(
 
     fun checkLogInStatus() {
         _user.postValue(authRepo.getUser())
+    }
+
+    private fun clearUserData() {
+        // User info
+        userInfoRepo.clear()
+        _userInfo.postValue(null)
+        // Cart
+
+        // Contact
+
     }
 }

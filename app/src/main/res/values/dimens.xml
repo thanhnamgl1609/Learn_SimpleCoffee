@@ -3,5 +3,6 @@
     <dimen name="tz_normal">14sp</dimen>
     <dimen name="tz_title">50sp</dimen>
     <dimen name="tz_larger">20sp</dimen>
+    <dimen name="tz_header">36sp</dimen>
     <dimen name="ic_size">24dp</dimen>
 </resources>
