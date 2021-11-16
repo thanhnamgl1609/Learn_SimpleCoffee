@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import com.google.firebase.auth.FirebaseUser
 import com.project.simplecoffee.databinding.ActivityMainBinding
 import com.project.simplecoffee.viewmodels.MainViewModel
 import com.project.simplecoffee.views.auth.SignInActivity
@@ -20,8 +21,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
-        viewModel.loggedStatus.observe(this,{
+        bindButton(viewModel.user.value)
+
+        viewModel.user.observe(this, {
             bindButton(it)
         })
     }
@@ -31,18 +35,23 @@ class MainActivity : AppCompatActivity() {
         viewModel.checkLogInStatus()
     }
 
-    private fun bindButton(logged : Boolean) {
-        if (logged) {
-            binding.myBtn.setOnClickListener {
-                viewModel.signOut()
+    private fun bindButton(firebaseUser: FirebaseUser?) {
+        if (firebaseUser != null) {
+            binding.myBtn.apply {
+                setOnClickListener {
+                    viewModel.signOut()
+                }
+                text = "Sign out"
             }
-            binding.myBtn.text = "Sign out"
+            viewModel.getUserInfo()
         } else {
-            binding.myBtn.setOnClickListener{
-                val intent = Intent(this, SignInActivity::class.java)
-                startActivity(intent)
+            binding.myBtn.apply {
+                setOnClickListener {
+                    val intent = Intent(this.context, SignInActivity::class.java)
+                    startActivity(intent)
+                }
+                text = "Sign in"
             }
-            binding.myBtn.text = "Sign in"
         }
     }
 }
