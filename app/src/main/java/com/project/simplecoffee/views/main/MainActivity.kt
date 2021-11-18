@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             val fragment = AccountInfoFragment()
-            supportFragmentManager.beginTransaction().replace(R.id.container, fragment)
+            supportFragmentManager.beginTransaction().replace(R.id.frame_container, fragment)
                 .commit()
         }
 
@@ -33,7 +33,8 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_order -> {
-
+                    val intent = Intent(this, SignInActivity::class.java)
+                    startActivity(intent)
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_more -> {
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadFragment(fragment: Fragment) {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, fragment)
+        transaction.replace(R.id.frame_container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }

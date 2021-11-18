@@ -1,4 +1,4 @@
-package com.project.simplecoffee.data.models
+package com.project.simplecoffee.domain.models
 
 data class Drink(
     var name: String,

@@ -6,7 +6,7 @@
 
         <variable
             name="auth"
-            type="com.project.simplecoffee.viewmodels.AuthViewModel" />
+            type="com.project.simplecoffee.viewmodels.UserVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.4" />
+            app:layout_constraintGuide_percent="0.55" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/input_layout"
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
-                android:text="@string/tv_login"
+                android:text="@string/sign_in_notif"
                 android:textAppearance="@style/tv_login"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -72,7 +72,8 @@
                 android:id="@+id/input_layout_usr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/username"
+                android:hint="@string/email"
+                android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_login"
@@ -96,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:hint="@string/password"
+                android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/input_layout_usr"
@@ -114,20 +116,11 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{auth.notifyTxt}"
-                android:textAppearance="@style/error_txt"
-                app:layout_constraintBottom_toTopOf="@+id/layout_log_in"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/input_layout_pwd" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_log_in"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayoutCompat"
                 app:layout_constraintEnd_toStartOf="@+id/gl_content_right_restrict"
                 app:layout_constraintStart_toStartOf="@+id/gl_content_left_restrict"
@@ -172,7 +165,7 @@
                     android:id="@+id/tv_ask_for_sign_up"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/tv_ask_for_signup"
+                    android:text="@string/ask_for_signup"
                     android:textAppearance="@style/tv_bot_sign_in"
                     android:textColor="@color/white" />
 
@@ -181,7 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5sp"
-                    android:text="@string/tv_sign_up"
+                    android:text="@string/sign_up"
                     android:textAppearance="@style/tv_bot_sign_in"
                     android:textColor="@color/orange" />
             </androidx.appcompat.widget.LinearLayoutCompat>

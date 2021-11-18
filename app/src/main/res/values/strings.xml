@@ -1,17 +1,21 @@
 <resources>
     <string name="app_name">SimpleCoffee</string>
-    <string name="tv_ask_for_signup">Do not have an existing account?</string>
-    <string name="tv_sign_up">Sign Up</string>
+    <string name="ask_for_signup">Do not have an existing account?</string>
+    <string name="sign_up">Sign Up</string>
     <string name="simple_coffee">SIMPLE COFFEE</string>
-    <string name="tv_login">Login to\nyour account</string>
-    <string name="username">Email</string>
+    <string name="sign_in_notif">Login to\nyour account</string>
+    <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="forgot_pwd">Forgot password?</string>
     <string name="sign_in">Log In</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu">Menu</string>
     <string name="order">Order</string>
     <string name="more">More</string>
     <string name="table">Table</string>
+    <string name="firstname">First Name</string>
+    <string name="lastname">Last Name</string>
+    <string name="dob">Date Of Birth</string>
+    <string name="avatar">Avatar</string>
+    <string name="camera">camera</string>
 </resources>

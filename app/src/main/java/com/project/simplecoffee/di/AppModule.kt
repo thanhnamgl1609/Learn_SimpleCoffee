@@ -1,10 +1,9 @@
 package com.project.simplecoffee.di
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.project.simplecoffee.data.repository.AuthRepo
-import com.project.simplecoffee.data.repository.UserInfoRepo
+import com.project.simplecoffee.data.repository.UserRepo
+import com.project.simplecoffee.domain.repository.IUserRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,20 +13,18 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+    @Singleton
+    @Provides
+    fun provideFirebaseFirestore() = FirebaseFirestore.getInstance()
 
     @Singleton
     @Provides
-    fun provideFirebaseFirestore() = Firebase.firestore
+    fun provideFirebaseAuth() = FirebaseAuth.getInstance()
 
     @Singleton
     @Provides
-    fun provideAuthRepo() = AuthRepo()
-
-    @Singleton
-    @Provides
-    fun provideUserInfoRepo(
+    fun provideUserRepo(
         db: FirebaseFirestore,
-        authRepo: AuthRepo
-    ) =
-        UserInfoRepo(db, authRepo)
+        auth: FirebaseAuth
+    ): IUserRepo = UserRepo(db, auth)
 }

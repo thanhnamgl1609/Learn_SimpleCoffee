@@ -5,4 +5,6 @@
     <dimen name="tz_larger">20sp</dimen>
     <dimen name="tz_header">36sp</dimen>
     <dimen name="ic_size">24dp</dimen>
+    <dimen name="tz_small">10sp</dimen>
+    <dimen name="text_input_padding">15dp</dimen>
 </resources>

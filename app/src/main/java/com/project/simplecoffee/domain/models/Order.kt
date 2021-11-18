@@ -1,4 +1,4 @@
-package com.project.simplecoffee.data.models
+package com.project.simplecoffee.domain.models
 
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentReference

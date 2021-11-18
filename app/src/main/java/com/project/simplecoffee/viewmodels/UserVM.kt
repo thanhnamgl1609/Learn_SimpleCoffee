@@ -1,24 +1,29 @@
 package com.project.simplecoffee.viewmodels
 
 import android.view.View
-import androidx.lifecycle.*
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
-import com.project.simplecoffee.data.repository.AuthRepo
-import com.project.simplecoffee.data.repository.UserInfoRepo
+import com.project.simplecoffee.domain.repository.IUserRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(
-    private val authRepo: AuthRepo,
-    private val userInfoRepo: UserInfoRepo
-) : ViewModel() {
+class UserVM @Inject constructor(
+    private val userRepo: IUserRepo,
+) : ViewModel(), CoroutineScope{
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main
+
     private var _user = MutableLiveData<FirebaseUser>().apply {
-        postValue(authRepo.getUser())
+        postValue(userRepo.getCurrentUser())
     }
     val user: LiveData<FirebaseUser> get() = _user
 
@@ -28,6 +33,7 @@ class AuthViewModel @Inject constructor(
     val confirmPwd = MutableLiveData<String>()
     val firstName = MutableLiveData<String>()
     val lastName = MutableLiveData<String>()
+    val gender = MutableLiveData<String>()
     val dob = MutableLiveData<Date>()
     val notifyTxt = MutableLiveData<String>()
 
@@ -39,6 +45,7 @@ class AuthViewModel @Inject constructor(
         val inputConfirmPwd = confirmPwd.value ?: ""
         val inputFirstName = firstName.value ?: ""
         val inputLastName = lastName.value ?: ""
+        val inputGender = lastName.value ?: ""
         val inputDOB = dob.value
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -46,18 +53,14 @@ class AuthViewModel @Inject constructor(
                 if (inputFirstName.isEmpty() ||
                     inputLastName.isEmpty() ||
                     inputConfirmPwd.isEmpty() ||
+                    inputGender.isEmpty() ||
                     inputDOB == null
                 ) {
                     throw IllegalArgumentException()
                 }
 
                 if (inputPwd == inputConfirmPwd) {
-                    authRepo.signUp(inputMail, inputPwd)
-                    userInfoRepo.signUp(
-                        inputFirstName,
-                        inputLastName,
-                        inputDOB
-                    )
+                    userRepo.signUp(inputMail, inputPwd)
 
                     notifyTxt.postValue("Success to sign up")
                 } else
@@ -77,9 +80,8 @@ class AuthViewModel @Inject constructor(
         val inputPWD = pwd.value ?: ""
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                authRepo.signIn(inputMail, inputPWD)
+                _user.postValue(userRepo.signIn(inputMail, inputPWD).data)
                 notifyTxt.postValue("Success to sign in")
-                _user.postValue(authRepo.getUser())
             } catch (e: IllegalArgumentException) {
                 notifyTxt.postValue("Please enter all fields")
             } catch (e: Exception) {
@@ -87,4 +89,5 @@ class AuthViewModel @Inject constructor(
             }
         }
     }
+
 }
