@@ -1,10 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.main.MenuFragment">
+    tools:context=".views.main.MenuFragment"
+    android:background="@drawable/btn_sign_in_background">
 
+
+
+
+    <TextView
+        android:id="@+id/greeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="116dp"
+        android:fontFamily="@font/sanchez"
+        android:text="Good afternoon, Simple"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        app:fontFamily="@font/sanchez"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchBar"
+        android:layout_width="374dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shapebgsearch"
+        app:iconifiedByDefault="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/greeting"
+        app:queryBackground="@null"
+        tools:queryHint="Search"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_person"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/greeting"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/user_avatar_background"
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/cart"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/it_background"
+        android:src="@drawable/ic_cart"
+
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
