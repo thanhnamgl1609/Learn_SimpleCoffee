@@ -1,58 +1,60 @@
 package com.project.simplecoffee.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.google.firebase.auth.FirebaseUser
+import com.project.simplecoffee.common.Resource
+import com.project.simplecoffee.common.toCustomString
+import com.project.simplecoffee.constant.ErrorConstant
 import com.project.simplecoffee.domain.models.UserInfo
-import com.project.simplecoffee.data.repository.UserInfoRepo
 import com.project.simplecoffee.data.repository.UserRepo
+import com.project.simplecoffee.domain.models.details.Gender
 import com.project.simplecoffee.domain.repository.IUserInfoRepo
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.project.simplecoffee.views.main.MainContainer
+import com.project.simplecoffee.views.main.MainFragment
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
-@HiltViewModel
 class UserInfoVM @Inject constructor(
-    private val userRepo: UserRepo,
-    private val userInfoRepo: IUserInfoRepo? = userRepo.getUserInfoRepo().data
+    private val container: MainContainer,
+    private val userRepo: UserRepo
 ) : ViewModel() {
-    private var _userInfo = MutableLiveData<UserInfo>()
-    private val userInfo: LiveData<UserInfo> get() = _userInfo
+    private var userInfoRepo: IUserInfoRepo? = null
+    private val userInfoLiveData = MutableLiveData<UserInfo>()
 
-    var firstName = MediatorLiveData<String>()
-
-    var lastName = MediatorLiveData<String>()
+    // Binding data
+    var firstName = Transformations.map(userInfoLiveData) { userInfo -> userInfo.firstname }
+    var lastName: LiveData<String> =
+        Transformations.map(userInfoLiveData) { userInfo -> userInfo.lastname }
+    var gender = MediatorLiveData<Int>().apply {
+        addSource(userInfoLiveData) {
+            if (it.male!!) postValue(Gender.Male.index)
+            else postValue(Gender.Female.index)
+        }
+    }
     var email = MutableLiveData<String>().apply {
         postValue(userRepo.getCurrentUser()?.email)
     }
-    var dob = Transformations.map(userInfo) { userInfo -> userInfo.dob?.toDate().toString() }
-    var gender = Transformations.map(userInfo) { userInfo -> userInfo.isMale }
+    var dob: LiveData<String> =
+        Transformations.map(userInfoLiveData) { userInfo ->
+            userInfo.dob?.toDate().toCustomString()
+        }
 
     init {
-        firstName.addSource(userInfo) { userInfo -> firstName.setValue(userInfo.firstname!!) }
-        lastName.addSource(userInfo) { userInfo -> lastName.setValue(userInfo.lastname!!) }
+        viewModelScope.launch {
+            userInfoRepo = userRepo.getUserInfoRepo().data!!
+            when (val result = userInfoRepo?.getUserInfo()) {
+                is Resource.OnSuccess -> {
+                    userInfoLiveData.postValue(result.data!!)
+
+                }
+                is Resource.OnFailure -> {
+                    container.showMessage(ErrorConstant.ERROR_UNEXPECTED)
+                    container.loadFragment(MainFragment.Setting.createFragment())
+                }
+            }
+        }
     }
 
     fun signOut() {
         userRepo.signOut()
-        clearUserData()
-        checkLogInStatus()
-    }
-
-    fun getUserInfo() {
-
-    }
-
-    fun checkLogInStatus() {
-
-    }
-
-    private fun clearUserData() {
-        // User info
-
-        // Cart
-
-        // Contact
-
     }
 }

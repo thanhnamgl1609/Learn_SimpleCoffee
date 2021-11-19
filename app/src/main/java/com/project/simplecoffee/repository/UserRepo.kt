@@ -13,9 +13,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.lang.Exception
+import java.lang.IllegalArgumentException
+import java.util.*
+import javax.inject.Inject
 
 
-class UserRepo constructor(
+class UserRepo @Inject constructor(
     private val db: FirebaseFirestore,
     private val auth: FirebaseAuth,
 ) : IUserRepo {
@@ -36,19 +39,41 @@ class UserRepo constructor(
         } catch (e: Exception) {
             Resource.OnFailure(
                 null,
-                e.message ?: ErrorConstant.ERROR_UNEXPECTED
+                ErrorConstant.ERROR_LOG_IN
             )
         }
     }
 
     override suspend fun signUp(
-        email: String,
-        pwd: String
+        email: String?,
+        pwd: String?,
+        confirmPWD: String?,
+        firstName: String?,
+        lastName: String?,
+        gender: String?,
+        dob: Date?
     ): Resource<FirebaseUser?> = withContext(Dispatchers.IO) {
         try {
-            auth.createUserWithEmailAndPassword(email, pwd).await()
+            if (pwd != confirmPWD)
+                throw IllegalArgumentException()
+
+            auth.createUserWithEmailAndPassword(email.toString(), pwd.toString()).await()
             user = auth.currentUser
-            Resource.OnSuccess(user)
+
+            getUserInfoRepo()
+            when (val result = userInfoRepo!!.createUserInfo(
+                firstName, lastName, dob, gender
+            )) {
+                is Resource.OnSuccess -> Resource.OnSuccess(user)
+                is Resource.OnFailure -> {
+                    user?.delete()?.await()
+                    user = null
+                    Resource.OnFailure(null, result.message)
+                }
+
+            }
+        } catch (e: IllegalArgumentException) {
+            Resource.OnFailure(null, ErrorConstant.ERROR_DIFF_PWD)
         } catch (e: Exception) {
             Resource.OnFailure(
                 null,

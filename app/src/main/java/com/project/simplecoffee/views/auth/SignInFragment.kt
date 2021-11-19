@@ -12,11 +12,13 @@ import com.project.simplecoffee.R
 import com.project.simplecoffee.databinding.FragmentSignInBinding
 import com.project.simplecoffee.viewmodels.UserVM
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignInFragment : Fragment() {
 
-    private val viewModel: UserVM by viewModels()
+    @Inject
+    lateinit var viewModel: UserVM
     private lateinit var binding: FragmentSignInBinding
     private lateinit var navController: NavController
 
@@ -33,14 +35,8 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.user.observe(viewLifecycleOwner, {
-            it?.let {
-                activity?.finish()
-            }
-        })
         binding.tvSignUp.setOnClickListener {
             navController.navigate(R.id.signUpFragment)
         }
     }
-
 }

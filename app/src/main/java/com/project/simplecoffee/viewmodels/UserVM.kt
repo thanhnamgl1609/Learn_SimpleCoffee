@@ -6,88 +6,81 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
+import com.project.simplecoffee.common.Resource
 import com.project.simplecoffee.domain.repository.IUserRepo
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
+import com.project.simplecoffee.views.auth.AuthContainer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
-@HiltViewModel
 class UserVM @Inject constructor(
+    private val container: AuthContainer,
     private val userRepo: IUserRepo,
-) : ViewModel(), CoroutineScope{
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main
-
-    private var _user = MutableLiveData<FirebaseUser>().apply {
-        postValue(userRepo.getCurrentUser())
-    }
-    val user: LiveData<FirebaseUser> get() = _user
+) : ViewModel() {
 
     // For databinding
-    val email = MutableLiveData<String>()
-    val pwd = MutableLiveData<String>()
-    val confirmPwd = MutableLiveData<String>()
-    val firstName = MutableLiveData<String>()
-    val lastName = MutableLiveData<String>()
-    val gender = MutableLiveData<String>()
-    val dob = MutableLiveData<Date>()
-    val notifyTxt = MutableLiveData<String>()
+    val inputEmail = MutableLiveData<String>()
+    val inputPWD = MutableLiveData<String>()
+    val inputConfirmPWD = MutableLiveData<String>()
+    val inputFirstName = MutableLiveData<String>()
+    val inputLastName = MutableLiveData<String>()
+    val inputGender = MutableLiveData<String>()
+    val inputDoB = MutableLiveData<Date>()
 
-    internal val btnSignInVisibility = MutableLiveData(View.VISIBLE)
+    val btnVisible = MutableLiveData<Int>().apply {
+        postValue(View.VISIBLE)
+    }
 
-    fun onSignUpClick() {
-        val inputMail = email.value ?: ""
-        val inputPwd = pwd.value ?: ""
-        val inputConfirmPwd = confirmPwd.value ?: ""
-        val inputFirstName = firstName.value ?: ""
-        val inputLastName = lastName.value ?: ""
-        val inputGender = lastName.value ?: ""
-        val inputDOB = dob.value
+    init {
+        if (userRepo.getCurrentUser() != null)
+            container.finish()
+    }
 
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                if (inputFirstName.isEmpty() ||
-                    inputLastName.isEmpty() ||
-                    inputConfirmPwd.isEmpty() ||
-                    inputGender.isEmpty() ||
-                    inputDOB == null
-                ) {
-                    throw IllegalArgumentException()
-                }
+    fun onSignUpClick() = viewModelScope.launch() {
+        btnVisible.postValue(View.GONE)
+        val email = inputEmail.value ?: ""
+        val pwd = inputPWD.value ?: ""
+        val confirmPWD = inputConfirmPWD.value ?: ""
+        val firstName = inputFirstName.value ?: ""
+        val lastName = inputLastName.value ?: ""
+        val gender = inputGender.value ?: ""
+        val dob = inputDoB.value!!
 
-                if (inputPwd == inputConfirmPwd) {
-                    userRepo.signUp(inputMail, inputPwd)
-
-                    notifyTxt.postValue("Success to sign up")
-                } else
-                    notifyTxt.postValue("Password and confirm password are not match")
-
-            } catch (e: IllegalArgumentException) {
-                notifyTxt.postValue("Please enter all fields")
-            } catch (e: Exception) {
-                notifyTxt.postValue("Unexpected error")
+        when (val result = userRepo.signUp(
+            email,
+            pwd,
+            confirmPWD,
+            firstName,
+            lastName,
+            gender,
+            dob
+        )) {
+            is Resource.OnSuccess -> {
+                container.finish()
+            }
+            is Resource.OnFailure -> {
+                container.showError(result.message!!)
+                btnVisible.postValue(View.VISIBLE)
             }
         }
     }
 
     // View binding
-    fun onSignInClick() {
-        val inputMail = email.value ?: ""
-        val inputPWD = pwd.value ?: ""
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                _user.postValue(userRepo.signIn(inputMail, inputPWD).data)
-                notifyTxt.postValue("Success to sign in")
-            } catch (e: IllegalArgumentException) {
-                notifyTxt.postValue("Please enter all fields")
-            } catch (e: Exception) {
-                notifyTxt.postValue("Username or password is not correct")
+    fun onSignInClick() = viewModelScope.launch() {
+        btnVisible.postValue(View.GONE)
+        when (val result = userRepo.signIn(
+            inputEmail.value ?: "",
+            inputPWD.value ?: ""
+        )) {
+            is Resource.OnSuccess -> {
+                container.finish()
+            }
+            is Resource.OnFailure -> {
+                container.showError(result.message!!)
+                btnVisible.postValue(View.VISIBLE)
             }
         }
-    }
 
+    }
 }

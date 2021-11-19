@@ -16,8 +16,13 @@ interface IUserRepo {
     ): Resource<FirebaseUser?>
 
     suspend fun signUp(
-        email: String,
-        pwd: String
+        email: String?,
+        pwd: String?,
+        confirmPWD: String?,
+        firstName: String?,
+        lastName: String?,
+        gender: String?,
+        dob: Date?
     ): Resource<FirebaseUser?>
 
     fun signOut()

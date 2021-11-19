@@ -9,17 +9,22 @@ import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.project.simplecoffee.R
-import com.project.simplecoffee.views.auth.SignInActivity
+import com.project.simplecoffee.common.makeToast
+import com.project.simplecoffee.viewmodels.MainVM
+import com.project.simplecoffee.views.auth.AuthActivity
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContainer {
+
+    @Inject
+    lateinit var viewModel : MainVM
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
         if (savedInstanceState == null) {
             val fragment = AccountInfoFragment()
             supportFragmentManager.beginTransaction().replace(R.id.frame_container, fragment)
@@ -33,12 +38,10 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_order -> {
-                    val intent = Intent(this, SignInActivity::class.java)
-                    startActivity(intent)
                     return@setOnItemSelectedListener true
                 }
                 R.id.action_more -> {
-                    loadFragment(AccountInfoFragment())
+                    viewModel.loadFragment(MainFragment.AccountInfo)
                     return@setOnItemSelectedListener true
                 }
                 else -> {
@@ -48,10 +51,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadFragment(fragment: Fragment) {
+    override fun showMessage(message: String) {
+        makeToast(message)
+    }
+
+    override fun loadFragment(fragment: Fragment) {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frame_container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
+    }
+
+    override fun onSignIn() {
+        startActivity(Intent(this, AuthActivity::class.java))
     }
 }

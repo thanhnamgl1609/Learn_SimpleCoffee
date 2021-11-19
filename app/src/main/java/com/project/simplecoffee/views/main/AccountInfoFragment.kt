@@ -10,9 +10,15 @@ import android.widget.Spinner
 import androidx.databinding.DataBindingUtil
 import com.project.simplecoffee.R
 import com.project.simplecoffee.databinding.FragmentAccountInfoBinding
+import com.project.simplecoffee.viewmodels.UserInfoVM
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AccountInfoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
+    @Inject
+    lateinit var viewModel : UserInfoVM
     private lateinit var binding: FragmentAccountInfoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,8 +28,10 @@ class AccountInfoFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_account_info, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
         setUpSpinner()
         return binding.root
     }

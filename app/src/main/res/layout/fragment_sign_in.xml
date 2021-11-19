@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,7 +10,7 @@
             type="com.project.simplecoffee.viewmodels.UserVM" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sign_in"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -86,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/it_background"
                     android:inputType="textEmailAddress"
-                    android:text="@={auth.email}"
+                    android:text="@={auth.inputEmail}"
                     android:textAppearance="@style/input_text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -111,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/it_background"
                     android:inputType="textPassword"
-                    android:text="@={auth.pwd}"
+                    android:text="@={auth.inputPWD}"
                     android:textAppearance="@style/input_text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -135,23 +136,34 @@
                     android:text="@string/sign_in"
                     android:textAppearance="@style/input_text"
                     android:textColor="@drawable/btn_sign_in_background"
+                    android:visibility="@{auth.btnVisible}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tv_forgot_pwd"
+                <ProgressBar
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/forgot_pwd"
-                    android:textAppearance="@style/tv_bot_sign_in"
-                    android:textColor="@color/orange"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_log_in" />
+                    app:layout_constraintTop_toTopOf="parent" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <TextView
+                android:id="@+id/tv_forgot_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/forgot_pwd"
+                android:textAppearance="@style/tv_bot_sign_in"
+                android:textColor="@color/orange"
+                app:layout_constraintBottom_toTopOf="@id/linearLayoutCompat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.494"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_log_in"
+                app:layout_constraintVertical_bias="0.0" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/linearLayoutCompat"

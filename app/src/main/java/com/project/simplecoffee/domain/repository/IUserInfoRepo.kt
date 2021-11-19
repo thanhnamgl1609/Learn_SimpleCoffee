@@ -6,17 +6,17 @@ import java.util.*
 
 interface IUserInfoRepo {
     suspend fun createUserInfo(
-        firstName: String,
-        lastName: String,
-        dob: Date,
-        gender: String
+        firstName: String?,
+        lastName: String?,
+        dob: Date?,
+        gender: String?
     ): Resource<UserInfo>
 
 
     suspend fun updateUserInfo(
-        firstName: String,
-        lastName: String,
-        gender: String
+        firstName: String?,
+        lastName: String?,
+        gender: String?
     ): Resource<UserInfo>
 
     suspend fun getUserInfo(): Resource<UserInfo?>

@@ -9,7 +9,11 @@ data class UserInfo(
     val lastname: String? = null,
     val role: String? = null,
     val dob: Timestamp? = null,
-    @PropertyName("male")
-    val isMale: Boolean? = null,
+    val avatar: String? = null,
+    val male: Boolean? = null,
     val contact: MutableList<DocumentReference>? = null
-) : Model()
+) : Model() {
+    companion object CONSTANT {
+        val AVATAR_DEFAULT="https://firebasestorage.googleapis.com/v0/b/simple-64565.appspot.com/o/User%2Fdefault.jpg?alt=media&token=b9cf035d-a568-45e8-b0f4-fa92240ca1f6"
+    }
+}

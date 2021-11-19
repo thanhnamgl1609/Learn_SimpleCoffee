@@ -14,6 +14,7 @@ import com.project.simplecoffee.domain.repository.IUserInfoRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.lang.IllegalArgumentException
 import java.util.*
 
 class UserInfoRepo constructor(
@@ -23,22 +24,35 @@ class UserInfoRepo constructor(
     private var userInfo: UserInfo? = null
 
     override suspend fun createUserInfo(
-        firstName: String,
-        lastName: String,
-        dob: Date,
-        gender: String
+        firstName: String?,
+        lastName: String?,
+        dob: Date?,
+        gender: String?
     ): Resource<UserInfo> = withContext(Dispatchers.IO) {
         try {
+            if (
+                firstName == null || lastName == null
+                || dob == null || gender == null
+            ) {
+                throw IllegalArgumentException()
+            }
             userInfo = UserInfo(
                 firstName,
                 lastName,
                 Role.Customer.value,
                 Timestamp(dob),
+                UserInfo.CONSTANT.AVATAR_DEFAULT,
                 gender == Gender.Male.value,
                 mutableListOf()
             ).withId(uid)
             collection.document(uid).set(userInfo!!).await()
+
             Resource.OnSuccess(userInfo)
+        } catch (e: IllegalArgumentException) {
+            Resource.OnFailure(
+                userInfo,
+                ErrorConstant.NOT_ALL_FILLED
+            )
         } catch (e: Exception) {
             Resource.OnFailure(
                 userInfo,
@@ -48,19 +62,23 @@ class UserInfoRepo constructor(
     }
 
     override suspend fun updateUserInfo(
-        firstName: String,
-        lastName: String,
-        gender: String
+        firstName: String?,
+        lastName: String?,
+        gender: String?
     ): Resource<UserInfo> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getUserInfo(): Resource<UserInfo?> {
-        if (userInfo == null) {
-            val document = collection.document(uid).get().await()
-            userInfo = document.toObject(UserInfo::class.java)?.withId(document.id)
-
+    override suspend fun getUserInfo()
+            : Resource<UserInfo?> = withContext(Dispatchers.IO) {
+        try {
+            if (userInfo == null) {
+                val document = collection.document(uid).get().await()
+                userInfo = document.toObject(UserInfo::class.java)?.withId(document.id)
+            }
+            Resource.OnSuccess(userInfo)
+        } catch (e: Exception) {
+            Resource.OnFailure(null, e.message.toString())
         }
-        return Resource.OnSuccess(userInfo)
     }
 }
