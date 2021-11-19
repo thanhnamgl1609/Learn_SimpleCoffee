@@ -9,14 +9,14 @@ interface IUserInfoRepo {
         firstName: String?,
         lastName: String?,
         dob: Date?,
-        gender: String?
+        gender: Boolean?
     ): Resource<UserInfo>
 
 
     suspend fun updateUserInfo(
         firstName: String?,
         lastName: String?,
-        gender: String?
+        gender: Boolean?
     ): Resource<UserInfo>
 
     suspend fun getUserInfo(): Resource<UserInfo?>

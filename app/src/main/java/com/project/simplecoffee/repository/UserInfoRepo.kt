@@ -1,15 +1,12 @@
 package com.project.simplecoffee.data.repository
 
 import com.google.firebase.Timestamp
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.project.simplecoffee.common.Resource
-import com.project.simplecoffee.constant.ErrorConstant
+import com.project.simplecoffee.constant.ErrorConst
 import com.project.simplecoffee.domain.models.details.Role
 import com.project.simplecoffee.domain.models.UserInfo
-import com.project.simplecoffee.domain.models.details.Gender
 import com.project.simplecoffee.domain.repository.IUserInfoRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -27,12 +24,11 @@ class UserInfoRepo constructor(
         firstName: String?,
         lastName: String?,
         dob: Date?,
-        gender: String?
+        gender: Boolean?
     ): Resource<UserInfo> = withContext(Dispatchers.IO) {
         try {
-            if (
-                firstName == null || lastName == null
-                || dob == null || gender == null
+            if (!isValid(firstName, lastName, gender)
+                || dob == null
             ) {
                 throw IllegalArgumentException()
             }
@@ -42,21 +38,23 @@ class UserInfoRepo constructor(
                 Role.Customer.value,
                 Timestamp(dob),
                 UserInfo.CONSTANT.AVATAR_DEFAULT,
-                gender == Gender.Male.value,
+                gender,
                 mutableListOf()
             ).withId(uid)
             collection.document(uid).set(userInfo!!).await()
 
             Resource.OnSuccess(userInfo)
         } catch (e: IllegalArgumentException) {
+            userInfo = null
             Resource.OnFailure(
                 userInfo,
-                ErrorConstant.NOT_ALL_FILLED
+                ErrorConst.NOT_ALL_FILLED
             )
         } catch (e: Exception) {
+            userInfo = null
             Resource.OnFailure(
                 userInfo,
-                e.message ?: ErrorConstant.ERROR_UNEXPECTED
+                e.message ?: ErrorConst.ERROR_UNEXPECTED
             )
         }
     }
@@ -64,9 +62,44 @@ class UserInfoRepo constructor(
     override suspend fun updateUserInfo(
         firstName: String?,
         lastName: String?,
-        gender: String?
-    ): Resource<UserInfo> {
-        TODO("Not yet implemented")
+        gender: Boolean?
+    ): Resource<UserInfo> = withContext(Dispatchers.IO) {
+        // Save fields for recovering
+        val recoverName = arrayOf(
+            userInfo?.firstname,
+            userInfo?.lastname
+        )
+        val recoverGender = userInfo?.male
+
+        try {
+            if (!isValid(firstName, lastName, gender)) {
+                throw IllegalArgumentException()
+            }
+            userInfo?.apply {
+                firstname = firstName
+                lastname = lastName
+                male = gender
+            }
+            collection.document(uid).set(userInfo!!).await()
+
+            Resource.OnSuccess(userInfo)
+        } catch (e: IllegalArgumentException) {
+            Resource.OnFailure(
+                userInfo,
+                ErrorConst.NOT_ALL_FILLED
+            )
+        } catch (e: Exception) {
+            // Recovery if error happens
+            userInfo?.apply {
+                firstname = recoverName[0]
+                lastname = recoverName[1]
+                male = recoverGender
+            }
+            Resource.OnFailure(
+                userInfo,
+                ErrorConst.ERROR_UNEXPECTED
+            )
+        }
     }
 
     override suspend fun getUserInfo()
@@ -80,5 +113,13 @@ class UserInfoRepo constructor(
         } catch (e: Exception) {
             Resource.OnFailure(null, e.message.toString())
         }
+    }
+
+    private fun isValid(
+        firstName: String?,
+        lastName: String?,
+        gender: Boolean?
+    ): Boolean {
+        return firstName != null && lastName != null && gender != null
     }
 }

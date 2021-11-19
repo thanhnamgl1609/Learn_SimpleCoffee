@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import com.project.simplecoffee.common.Resource
+import com.project.simplecoffee.domain.models.details.Gender
 import com.project.simplecoffee.domain.repository.IUserRepo
 import com.project.simplecoffee.views.auth.AuthContainer
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +26,7 @@ class UserVM @Inject constructor(
     val inputConfirmPWD = MutableLiveData<String>()
     val inputFirstName = MutableLiveData<String>()
     val inputLastName = MutableLiveData<String>()
-    val inputGender = MutableLiveData<String>()
+    val inputGender = MutableLiveData<Int>()
     val inputDoB = MutableLiveData<Date>()
 
     val btnVisible = MutableLiveData<Int>().apply {
@@ -39,12 +40,12 @@ class UserVM @Inject constructor(
 
     fun onSignUpClick() = viewModelScope.launch() {
         btnVisible.postValue(View.GONE)
-        val email = inputEmail.value ?: ""
-        val pwd = inputPWD.value ?: ""
-        val confirmPWD = inputConfirmPWD.value ?: ""
-        val firstName = inputFirstName.value ?: ""
-        val lastName = inputLastName.value ?: ""
-        val gender = inputGender.value ?: ""
+        val email = inputEmail.value
+        val pwd = inputPWD.value
+        val confirmPWD = inputConfirmPWD.value
+        val firstName = inputFirstName.value
+        val lastName = inputLastName.value
+        val gender = inputGender.value
         val dob = inputDoB.value!!
 
         when (val result = userRepo.signUp(
@@ -53,7 +54,7 @@ class UserVM @Inject constructor(
             confirmPWD,
             firstName,
             lastName,
-            gender,
+            gender == Gender.Male.index,
             dob
         )) {
             is Resource.OnSuccess -> {

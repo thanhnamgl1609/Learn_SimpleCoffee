@@ -21,7 +21,7 @@ interface IUserRepo {
         confirmPWD: String?,
         firstName: String?,
         lastName: String?,
-        gender: String?,
+        gender: Boolean?,
         dob: Date?
     ): Resource<FirebaseUser?>
 

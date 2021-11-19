@@ -18,4 +18,5 @@
     <string name="dob">Date Of Birth</string>
     <string name="avatar">Avatar</string>
     <string name="camera">camera</string>
+    <string name="update">Update</string>
 </resources>

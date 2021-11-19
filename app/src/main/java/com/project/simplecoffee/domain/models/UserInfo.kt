@@ -5,12 +5,12 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.PropertyName
 
 data class UserInfo(
-    val firstname: String? = null,
-    val lastname: String? = null,
+    var firstname: String? = null,
+    var lastname: String? = null,
     val role: String? = null,
     val dob: Timestamp? = null,
     val avatar: String? = null,
-    val male: Boolean? = null,
+    var male: Boolean? = null,
     val contact: MutableList<DocumentReference>? = null
 ) : Model() {
     companion object CONSTANT {

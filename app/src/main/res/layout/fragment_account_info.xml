@@ -5,87 +5,99 @@
     tools:context=".views.main.AccountInfoFragment">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.project.simplecoffee.viewmodels.UserInfoVM" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:id="@+id/user_avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/user_avatar_background"
-            android:contentDescription="@string/avatar"
-            android:src="@drawable/ic_user_avatar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/btn_camera_background"
-            app:layout_constraintBottom_toBottomOf="@+id/user_avatar"
-            app:layout_constraintEnd_toEndOf="@+id/user_avatar">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:contentDescription="@string/camera"
-                android:src="@drawable/ic_camera" />
-        </LinearLayout>
+                android:id="@+id/user_avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/user_avatar_background"
+                android:contentDescription="@string/avatar"
+                android:src="@drawable/ic_user_avatar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <LinearLayout
+                android:id="@+id/camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/btn_camera_background"
+                app:layout_constraintBottom_toBottomOf="@+id/user_avatar"
+                app:layout_constraintEnd_toEndOf="@+id/user_avatar">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="35dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_avatar">
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:contentDescription="@string/camera"
+                    android:src="@drawable/ic_camera" />
+            </LinearLayout>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="vertical">
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="35dp"
+                android:scrollbars="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_avatar">
 
-                <EditText
-                    android:id="@+id/input_firstname"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_name"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:background="@drawable/it_info_background"
-                    android:hint="@string/firstname"
-                    android:inputType="text"
-                    android:padding="@dimen/text_input_padding"
-                    android:text="@{viewModel.firstName}"
-                    android:textAppearance="@style/input_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <EditText
-                    android:id="@+id/input_lastname"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/it_info_background"
-                    android:hint="@string/lastname"
-                    android:inputType="text"
-                    android:padding="@dimen/text_input_padding"
-                    android:text="@{viewModel.lastName}"
-                    android:textAppearance="@style/input_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/input_firstname" />
+                    <EditText
+                        android:id="@+id/input_firstname"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/it_info_background"
+                        android:hint="@string/firstname"
+                        android:inputType="text"
+                        android:padding="@dimen/text_input_padding"
+                        android:text="@={viewModel.firstName}"
+                        android:textAppearance="@style/input_text"
+                        app:layout_constraintEnd_toStartOf="@id/input_lastname"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/input_lastname"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:background="@drawable/it_info_background"
+                        android:hint="@string/lastname"
+                        android:inputType="text"
+                        android:padding="@dimen/text_input_padding"
+                        android:text="@={viewModel.lastName}"
+                        android:textAppearance="@style/input_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/input_firstname"
+                        app:layout_constraintTop_toBottomOf="@id/input_firstname" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <EditText
                     android:id="@+id/input_email"
@@ -102,7 +114,7 @@
                     android:textColorHint="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/input_lastname" />
+                    app:layout_constraintTop_toBottomOf="@id/layout_name" />
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -164,8 +176,23 @@
                     android:padding="10dp"
                     android:selectedItemPosition="@={viewModel.gender}"
                     app:layout_constraintTop_toBottomOf="@+id/layout_dob" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <android.widget.Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/btn_sign_in_background"
+                    android:onClick="@{() -> viewModel.onUpdateClick()}"
+                    android:text="@string/update"
+                    android:textAppearance="@style/input_text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/input_gender" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 </layout>

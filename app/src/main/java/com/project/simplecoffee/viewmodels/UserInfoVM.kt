@@ -3,7 +3,8 @@ package com.project.simplecoffee.viewmodels
 import androidx.lifecycle.*
 import com.project.simplecoffee.common.Resource
 import com.project.simplecoffee.common.toCustomString
-import com.project.simplecoffee.constant.ErrorConstant
+import com.project.simplecoffee.constant.ErrorConst
+import com.project.simplecoffee.constant.SuccessConst
 import com.project.simplecoffee.domain.models.UserInfo
 import com.project.simplecoffee.data.repository.UserRepo
 import com.project.simplecoffee.domain.models.details.Gender
@@ -21,9 +22,12 @@ class UserInfoVM @Inject constructor(
     private val userInfoLiveData = MutableLiveData<UserInfo>()
 
     // Binding data
-    var firstName = Transformations.map(userInfoLiveData) { userInfo -> userInfo.firstname }
-    var lastName: LiveData<String> =
-        Transformations.map(userInfoLiveData) { userInfo -> userInfo.lastname }
+    var firstName = MediatorLiveData<String>().apply {
+        addSource(userInfoLiveData) { userInfo -> postValue(userInfo.firstname) }
+    }
+    var lastName = MediatorLiveData<String>().apply {
+        addSource(userInfoLiveData) { userInfo -> postValue(userInfo.lastname) }
+    }
     var gender = MediatorLiveData<Int>().apply {
         addSource(userInfoLiveData) {
             if (it.male!!) postValue(Gender.Male.index)
@@ -38,6 +42,9 @@ class UserInfoVM @Inject constructor(
             userInfo.dob?.toDate().toCustomString()
         }
 
+    /**
+     * Load user info binding to UI
+     */
     init {
         viewModelScope.launch {
             userInfoRepo = userRepo.getUserInfoRepo().data!!
@@ -47,11 +54,32 @@ class UserInfoVM @Inject constructor(
 
                 }
                 is Resource.OnFailure -> {
-                    container.showMessage(ErrorConstant.ERROR_UNEXPECTED)
+                    container.showMessage(ErrorConst.ERROR_UNEXPECTED)
                     container.loadFragment(MainFragment.Setting.createFragment())
                 }
             }
         }
+    }
+
+    /**
+     * Update user information
+     */
+    fun onUpdateClick() = viewModelScope.launch {
+        userInfoRepo?.apply {
+            when (val result = updateUserInfo(
+                firstName.value,
+                lastName.value,
+                gender.value == Gender.Male.index
+            )) {
+                is Resource.OnSuccess -> {
+                    userInfoLiveData.postValue(result.data!!)
+                    container.showMessage(SuccessConst.SUCCESS_UPDATE)
+                }
+                is Resource.OnFailure -> {
+                    container.showMessage(result.message.toString())
+                }
+            }
+        } ?: container.showMessage(ErrorConst.ERROR_UNEXPECTED)
     }
 
     fun signOut() {

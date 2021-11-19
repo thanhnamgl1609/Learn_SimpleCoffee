@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.project.simplecoffee.common.Resource
-import com.project.simplecoffee.constant.ErrorConstant
+import com.project.simplecoffee.constant.ErrorConst
 import com.project.simplecoffee.domain.repository.*
 import com.project.simplecoffee.repository.CartRepo
 import com.project.simplecoffee.repository.ContactRepo
@@ -39,7 +39,7 @@ class UserRepo @Inject constructor(
         } catch (e: Exception) {
             Resource.OnFailure(
                 null,
-                ErrorConstant.ERROR_LOG_IN
+                ErrorConst.ERROR_LOG_IN
             )
         }
     }
@@ -50,7 +50,7 @@ class UserRepo @Inject constructor(
         confirmPWD: String?,
         firstName: String?,
         lastName: String?,
-        gender: String?,
+        gender: Boolean?,
         dob: Date?
     ): Resource<FirebaseUser?> = withContext(Dispatchers.IO) {
         try {
@@ -73,11 +73,11 @@ class UserRepo @Inject constructor(
 
             }
         } catch (e: IllegalArgumentException) {
-            Resource.OnFailure(null, ErrorConstant.ERROR_DIFF_PWD)
+            Resource.OnFailure(null, ErrorConst.ERROR_DIFF_PWD)
         } catch (e: Exception) {
             Resource.OnFailure(
                 null,
-                e.message ?: ErrorConstant.ERROR_UNEXPECTED
+                e.message ?: ErrorConst.ERROR_UNEXPECTED
             )
         }
     }
@@ -108,7 +108,7 @@ class UserRepo @Inject constructor(
         } catch (e: Exception) {
             Resource.OnFailure(
                 userInfoRepo,
-                ErrorConstant.ERROR_AUTH
+                ErrorConst.ERROR_AUTH
             )
         }
     }
@@ -122,7 +122,7 @@ class UserRepo @Inject constructor(
         } catch (e: Exception) {
             Resource.OnFailure(
                 cartRepo,
-                ErrorConstant.ERROR_AUTH
+                ErrorConst.ERROR_AUTH
             )
         }
     }
@@ -136,7 +136,7 @@ class UserRepo @Inject constructor(
         } catch (e: Exception) {
             Resource.OnFailure(
                 contactRepo,
-                ErrorConstant.ERROR_AUTH
+                ErrorConst.ERROR_AUTH
             )
         }
     }
@@ -150,7 +150,7 @@ class UserRepo @Inject constructor(
         } catch (e: Exception) {
             Resource.OnFailure(
                 orderRepo,
-                ErrorConstant.ERROR_AUTH
+                ErrorConst.ERROR_AUTH
             )
         }
     }
