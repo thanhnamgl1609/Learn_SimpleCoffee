@@ -18,7 +18,7 @@
         android:layout_marginStart="72dp"
         android:layout_marginTop="116dp"
         android:fontFamily="@font/sanchez"
-        android:text="Good afternoon, Simple"
+        android:text="@string/greeting"
         android:textSize="20sp"
         android:textColor="@color/black"
         app:fontFamily="@font/sanchez"
@@ -67,6 +67,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <TextView
+        android:id="@+id/cart_count"
+        android:layout_width="26dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="9dp"
+
+        android:text="10"
+        android:textColor="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/DrinksRecyclerView"
         android:layout_width="348dp"
@@ -78,7 +91,7 @@
         app:layout_constraintTop_toBottomOf="@+id/searchBar" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/CategoriesRecycleView"
+        android:id="@+id/CategoriesRecyclerView"
         android:layout_width="372dp"
         android:layout_height="46dp"
         android:layout_marginTop="16dp"
@@ -89,6 +102,8 @@
 
         android:orientation="horizontal"
         />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
