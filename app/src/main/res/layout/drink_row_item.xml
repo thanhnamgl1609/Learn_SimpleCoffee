@@ -17,7 +17,8 @@
         app:cardMaxElevation="12dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
-        android:id="@+id/drink_cardview">
+        android:id="@+id/drink_cardview"
+    >
 
         <!--
         In the above cardview widget
@@ -32,7 +33,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/menu_item_background"
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/drink_image"

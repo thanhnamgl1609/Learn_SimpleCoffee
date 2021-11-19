@@ -69,8 +69,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/DrinksRecyclerView"
-        android:layout_width="294dp"
-        android:layout_height="315dp"
+        android:layout_width="348dp"
+        android:layout_height="413dp"
         android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
