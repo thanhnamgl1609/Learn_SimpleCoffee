@@ -57,7 +57,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="112dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/it_background"
+        android:background="@drawable/it_info_background"
         android:src="@drawable/ic_cart"
 
         app:civ_border_color="#FF000000"
