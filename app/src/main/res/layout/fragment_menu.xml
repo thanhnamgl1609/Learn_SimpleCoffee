@@ -45,8 +45,6 @@
         android:layout_marginTop="112dp"
         android:layout_marginEnd="8dp"
         android:src="@drawable/ic_person"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="10dp"
         app:layout_constraintEnd_toStartOf="@+id/greeting"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/user_avatar_background"
@@ -61,9 +59,6 @@
         android:layout_marginEnd="24dp"
         android:background="@drawable/it_info_background"
         android:src="@drawable/ic_cart"
-
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
