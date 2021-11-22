@@ -1,11 +1,13 @@
 package com.project.simplecoffee.di
 
-import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.project.simplecoffee.data.repository.UserRepo
+import com.project.simplecoffee.domain.repository.IDrinkCategoryRepo
+import com.project.simplecoffee.domain.repository.IDrinkRepo
 import com.project.simplecoffee.domain.repository.IUserRepo
-import com.project.simplecoffee.views.auth.AuthContainer
+import com.project.simplecoffee.repository.DrinkCategoryRepo
+import com.project.simplecoffee.repository.DrinkRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +28,18 @@ object AppModule {
     @Singleton
     @Provides
     fun provideUserRepo(
-        db: FirebaseFirestore,
         auth: FirebaseAuth
-    ): IUserRepo = UserRepo(db, auth)
+    ): IUserRepo = UserRepo(auth)
+
+    @Singleton
+    @Provides
+    fun provideDrinkRepo(
+        db: FirebaseFirestore
+    ): IDrinkRepo = DrinkRepo(db)
+
+    @Singleton
+    @Provides
+    fun provideDrinkCategoryRepo(
+        db: FirebaseFirestore
+    ): IDrinkCategoryRepo = DrinkCategoryRepo(db)
 }

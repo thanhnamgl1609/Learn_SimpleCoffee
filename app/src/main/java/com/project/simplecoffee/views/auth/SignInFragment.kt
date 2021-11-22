@@ -5,12 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.project.simplecoffee.R
 import com.project.simplecoffee.databinding.FragmentSignInBinding
-import com.project.simplecoffee.viewmodels.UserVM
+import com.project.simplecoffee.viewmodel.UserVM
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

@@ -1,16 +1,13 @@
-package com.project.simplecoffee.viewmodels
+package com.project.simplecoffee.viewmodel
 
 import android.view.View
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseUser
 import com.project.simplecoffee.common.Resource
 import com.project.simplecoffee.domain.models.details.Gender
 import com.project.simplecoffee.domain.repository.IUserRepo
 import com.project.simplecoffee.views.auth.AuthContainer
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -35,7 +32,7 @@ class UserVM @Inject constructor(
 
     init {
         if (userRepo.getCurrentUser() != null)
-            container.finish()
+            container.finishActivity()
     }
 
     fun onSignUpClick() = viewModelScope.launch() {
@@ -58,7 +55,7 @@ class UserVM @Inject constructor(
             dob
         )) {
             is Resource.OnSuccess -> {
-                container.finish()
+                container.finishActivity()
             }
             is Resource.OnFailure -> {
                 container.showError(result.message!!)
@@ -75,7 +72,7 @@ class UserVM @Inject constructor(
             inputPWD.value ?: ""
         )) {
             is Resource.OnSuccess -> {
-                container.finish()
+                container.finishActivity()
             }
             is Resource.OnFailure -> {
                 container.showError(result.message!!)

@@ -2,7 +2,6 @@ package com.project.simplecoffee.data.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
 import com.project.simplecoffee.common.Resource
 import com.project.simplecoffee.constant.ErrorConst
 import com.project.simplecoffee.domain.repository.*
@@ -19,7 +18,6 @@ import javax.inject.Inject
 
 
 class UserRepo @Inject constructor(
-    private val db: FirebaseFirestore,
     private val auth: FirebaseAuth,
 ) : IUserRepo {
     private var user: FirebaseUser? = null

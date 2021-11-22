@@ -8,14 +8,6 @@ data class Cart(
     @PropertyName("user_mail")
     val mail: String? = null,
     val total: Double? = null,
-    val contact: Contact? = null
-) : Model() {
-    @Exclude
-    lateinit var items: MutableList<Map<String, Any>>
-
-    fun setProperties(id: String, document: DocumentSnapshot) : Cart {
-        // Get list of item
-
-        return this.withId(id)
-    }
-}
+    val contact: Contact? = null,
+    var items: MutableList<Map<String, Any>>? = null
+) : Model()

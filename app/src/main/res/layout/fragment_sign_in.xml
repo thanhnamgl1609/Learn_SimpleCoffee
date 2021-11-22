@@ -7,7 +7,7 @@
 
         <variable
             name="auth"
-            type="com.project.simplecoffee.viewmodels.UserVM" />
+            type="com.project.simplecoffee.viewmodel.UserVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

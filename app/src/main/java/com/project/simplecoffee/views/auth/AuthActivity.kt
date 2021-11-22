@@ -1,12 +1,15 @@
 package com.project.simplecoffee.views.auth
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
 import com.project.simplecoffee.R
 import com.project.simplecoffee.common.makeToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AuthActivity : AppCompatActivity(), AuthContainer{
+class AuthActivity : AppCompatActivity(), AuthContainer {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
@@ -16,7 +19,14 @@ class AuthActivity : AppCompatActivity(), AuthContainer{
         makeToast(message)
     }
 
-    override fun finish() {
+    override fun finishActivity() {
         finish()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finish()
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }

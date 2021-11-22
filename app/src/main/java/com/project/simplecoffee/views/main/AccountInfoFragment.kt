@@ -10,7 +10,7 @@ import android.widget.Spinner
 import androidx.databinding.DataBindingUtil
 import com.project.simplecoffee.R
 import com.project.simplecoffee.databinding.FragmentAccountInfoBinding
-import com.project.simplecoffee.viewmodels.UserInfoVM
+import com.project.simplecoffee.viewmodel.UserInfoVM
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

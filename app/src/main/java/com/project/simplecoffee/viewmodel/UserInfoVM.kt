@@ -1,4 +1,4 @@
-package com.project.simplecoffee.viewmodels
+package com.project.simplecoffee.viewmodel
 
 import androidx.lifecycle.*
 import com.project.simplecoffee.common.Resource
@@ -10,7 +10,7 @@ import com.project.simplecoffee.data.repository.UserRepo
 import com.project.simplecoffee.domain.models.details.Gender
 import com.project.simplecoffee.domain.repository.IUserInfoRepo
 import com.project.simplecoffee.views.main.MainContainer
-import com.project.simplecoffee.views.main.MainFragment
+import com.project.simplecoffee.views.main.AllMainFragment
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -46,16 +46,19 @@ class UserInfoVM @Inject constructor(
      * Load user info binding to UI
      */
     init {
+        loadData()
+    }
+
+    private fun loadData() {
         viewModelScope.launch {
             userInfoRepo = userRepo.getUserInfoRepo().data!!
             when (val result = userInfoRepo?.getUserInfo()) {
                 is Resource.OnSuccess -> {
-                    userInfoLiveData.postValue(result.data!!)
-
+                    userInfoLiveData.value = result.data!!
                 }
                 is Resource.OnFailure -> {
                     container.showMessage(ErrorConst.ERROR_UNEXPECTED)
-                    container.loadFragment(MainFragment.Setting.createFragment())
+                    container.loadFragment(AllMainFragment.Setting.createFragment())
                 }
             }
         }
@@ -72,7 +75,7 @@ class UserInfoVM @Inject constructor(
                 gender.value == Gender.Male.index
             )) {
                 is Resource.OnSuccess -> {
-                    userInfoLiveData.postValue(result.data!!)
+                    userInfoLiveData.value = result.data!!
                     container.showMessage(SuccessConst.SUCCESS_UPDATE)
                 }
                 is Resource.OnFailure -> {
