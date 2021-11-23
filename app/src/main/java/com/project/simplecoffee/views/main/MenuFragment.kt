@@ -40,6 +40,10 @@ class MenuFragment : Fragment() {
                     RecyclerView.HORIZONTAL,
                     false
                 )
+            searchBar.apply {
+                setOnQueryTextListener(menuVM.searchViewListener)
+                isSubmitButtonEnabled = true
+            }
         }
         return binding.root
     }

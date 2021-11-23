@@ -1,5 +1,6 @@
 package com.project.simplecoffee.viewmodel
 
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,8 +20,31 @@ class MenuVM @Inject constructor(
 ) : ViewModel() {
     val listDrinkCategory = MutableLiveData<List<DrinkCategoryItemVM>>()
     val listDrink = MutableLiveData<List<DrinkItemVM>>()
-
     private var listAllDrinkVM = mutableListOf<DrinkItemVM>()
+    private var listCurrentDrink = emptyList<DrinkItemVM>()
+
+    val searchViewListener = object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            filter(query)
+            return true
+        }
+
+        override fun onQueryTextChange(newText: String?): Boolean {
+            filter(newText)
+            return true
+        }
+
+        private fun filter(query: String?) =
+            viewModelScope.launch(Dispatchers.IO) {
+                listCurrentDrink = if (query != null && query.isNotEmpty()) {
+                    listCurrentDrink.filter { item ->
+                        item.drink.name!!.contains(query, ignoreCase = true)
+                    }
+                } else
+                    listAllDrinkVM
+                listDrink.postValue(listCurrentDrink)
+            }
+    }
 
     init {
         loadDrink()
@@ -29,7 +53,7 @@ class MenuVM @Inject constructor(
 
     private fun loadDrinkCategory(
         menuVM: MenuVM
-    ) = viewModelScope.launch {
+    ) = viewModelScope.launch(Dispatchers.IO) {
         val listDrinkCategoryVM = mutableListOf<DrinkCategoryItemVM>()
         when (val result = drinkCategoryRepo.getDrinkCategory()) {
             is Resource.OnSuccess -> {
@@ -40,7 +64,7 @@ class MenuVM @Inject constructor(
                             drinkCategory
                         )
                     )
-                    listDrinkCategory.value = listDrinkCategoryVM
+                    listDrinkCategory.postValue(listDrinkCategoryVM)
                 }
             }
             is Resource.OnFailure -> {
@@ -49,13 +73,14 @@ class MenuVM @Inject constructor(
         }
     }
 
-    private fun loadDrink() = viewModelScope.launch {
+    private fun loadDrink() = viewModelScope.launch(Dispatchers.IO) {
         when (val result = drinkRepo.getDrink()) {
             is Resource.OnSuccess -> {
                 result.data?.forEach { drink ->
                     listAllDrinkVM.add(DrinkItemVM(drink))
-                    listDrink.value = listAllDrinkVM
                 }
+                listDrink.postValue(listAllDrinkVM)
+                listCurrentDrink = listAllDrinkVM
             }
             is Resource.OnFailure -> {
                 container.showMessage(result.message.toString())
@@ -68,11 +93,12 @@ class MenuVM @Inject constructor(
     ) = viewModelScope.launch(Dispatchers.IO) {
         if (drinkCategory.name == "All") {
             listDrink.postValue(listAllDrinkVM)
+            listCurrentDrink = listAllDrinkVM
         } else {
-            val filterDrink = listAllDrinkVM.filter { item ->
+            listCurrentDrink = listAllDrinkVM.filter { item ->
                 item.drink.category!!.contains(drinkCategory.id!!)
             }.sortedBy { item -> item.drink.name }
-            listDrink.postValue(filterDrink)
+            listDrink.postValue(listCurrentDrink)
         }
     }
 }
