@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="tz_title">50sp</dimen>
+    <dimen name="tz_small_title">36sp</dimen>
     <dimen name="tz_header">36sp</dimen>
     <dimen name="tz_larger">20sp</dimen>
     <dimen name="tz_normal">14sp</dimen>

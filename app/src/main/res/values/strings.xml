@@ -21,4 +21,8 @@
     <string name="update">Update</string>
     <string name="greeting">Good afternoon, Simple</string>
     <string name="our_drink">Our Drink</string>
+    <string name="img_des">background</string>
+    <string name="confirm_pwd">Confirm password</string>
+    <string name="register_title">Register an account</string>
+    <string name="register_btn">Sign up</string>
 </resources>
