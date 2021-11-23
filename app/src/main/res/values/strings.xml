@@ -25,4 +25,11 @@
     <string name="confirm_pwd">Confirm password</string>
     <string name="register_title">Register an account</string>
     <string name="register_btn">Sign up</string>
+    <string name="Today_txt">Today</string>
+    <string name="This_week_txt">This week</string>
+    <string name="This_month_txt">This month</string>
+    <string name="This_year_txt">This year</string>
+    <string name="Income">Income</string>
+    <string name="Expenses">Expenses</string>
+    <string name="Total">Total</string>
 </resources>
