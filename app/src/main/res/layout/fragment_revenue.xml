@@ -107,7 +107,7 @@
             android:text="@string/Income"
             android:textAlignment="center"
             android:textAppearance="@style/simple_coffee"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -121,7 +121,7 @@
             android:text="@string/Expenses"
             android:textAlignment="center"
             android:textAppearance="@style/simple_coffee"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/Income"
             app:layout_constraintTop_toTopOf="parent"
@@ -135,7 +135,7 @@
             android:text="@string/Total"
             android:textAlignment="center"
             android:textAppearance="@style/simple_coffee"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/Expenses"
             app:layout_constraintTop_toTopOf="parent"
@@ -145,12 +145,13 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
         android:layout_width="412dp"
         android:layout_height="38dp"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
-        android:background="@color/white">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
 
         <TextView
@@ -161,8 +162,8 @@
             android:text="3,278.76"
             android:textAlignment="center"
             android:textAppearance="@style/simple_coffee"
-            android:textSize="20dp"
             android:textColor="@color/green"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -176,8 +177,8 @@
             android:text="3,276.21"
             android:textAlignment="center"
             android:textAppearance="@style/simple_coffee"
-            android:textSize="20dp"
             android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -190,11 +191,20 @@
             android:text="3,141.59"
             android:textAlignment="center"
             android:textAppearance="@style/simple_coffee"
-            android:textSize="20dp"
             android:textColor="@color/red"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/total_count"
             app:layout_constraintStart_toEndOf="@+id/income_count"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="413dp"
+        android:layout_height="592dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
