@@ -2,7 +2,7 @@ package com.project.simplecoffee.di
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.project.simplecoffee.data.repository.UserRepo
+import com.project.simplecoffee.repository.UserRepo
 import com.project.simplecoffee.domain.repository.IDrinkCategoryRepo
 import com.project.simplecoffee.domain.repository.IDrinkRepo
 import com.project.simplecoffee.domain.repository.IUserRepo

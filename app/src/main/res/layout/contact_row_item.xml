@@ -6,7 +6,7 @@
 
         <variable
             name="itemViewModel"
-            type="com.project.simplecoffee.viewmodel.DrinkItemVM" />
+            type="com.project.simplecoffee.viewmodel.ContactItemVM" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -15,8 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginVertical="5dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/silver"
         app:cardElevation="10dp"
         app:cardMaxElevation="12dp"
         app:cardPreventCornerOverlap="true"
@@ -36,16 +35,15 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu_item_background"
+            android:onClick="@{() -> itemViewModel.onItemClick()}"
             android:padding="10dp">
 
             <ImageView
-                android:id="@+id/drink_image"
-                bitMap="@{itemViewModel.bitmap}"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/img_drink_background"
+                android:id="@+id/ic_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:contentDescription="@string/our_drink"
+                android:src="@drawable/ic_address"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -55,37 +53,51 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/add_button"
-                app:layout_constraintStart_toEndOf="@+id/drink_image"
+                app:layout_constraintEnd_toStartOf="@+id/ic_edit"
+                app:layout_constraintStart_toEndOf="@+id/ic_contact"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/drink_name"
+                    android:id="@+id/contact_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:text="@{itemViewModel.name}"
-                    android:textAppearance="@style/tv_black16"
+                    android:textAppearance="@style/address_text"
+                    android:textSize="@dimen/_20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/drink_price"
+                    android:id="@+id/contact_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@{`$` + itemViewModel.price}"
-                    android:textAppearance="@style/tv_black_straight14"
+                    android:layout_gravity="bottom"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{itemViewModel.address}"
+                    android:textAppearance="@style/address_text"
+                    android:textSize="@dimen/_14sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/drink_name" />
+                    app:layout_constraintTop_toBottomOf="@id/contact_name" />
+
+                <TextView
+                    android:id="@+id/contact_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{itemViewModel.phone}"
+                    android:textAppearance="@style/address_text"
+                    android:textSize="@dimen/_14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/contact_address" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/add_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:onClick="@{() -> itemViewModel.onAddToCartClick()}"
-                android:src="@drawable/ic_add_circle"
+
+            <ImageView
+                android:id="@+id/ic_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

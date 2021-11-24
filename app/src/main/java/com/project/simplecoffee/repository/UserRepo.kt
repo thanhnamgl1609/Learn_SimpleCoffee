@@ -1,19 +1,18 @@
-package com.project.simplecoffee.data.repository
+package com.project.simplecoffee.repository
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.project.simplecoffee.common.Resource
 import com.project.simplecoffee.constant.ErrorConst
 import com.project.simplecoffee.domain.repository.*
-import com.project.simplecoffee.repository.CartRepo
-import com.project.simplecoffee.repository.ContactRepo
-import com.project.simplecoffee.repository.OrderRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 import java.lang.IllegalArgumentException
-import java.util.*
+import java.lang.NullPointerException
+import java.time.LocalDate
 import javax.inject.Inject
 
 
@@ -49,7 +48,7 @@ class UserRepo @Inject constructor(
         firstName: String?,
         lastName: String?,
         gender: Boolean?,
-        dob: Date?
+        dob: LocalDate?
     ): Resource<FirebaseUser?> = withContext(Dispatchers.IO) {
         try {
             if (pwd != confirmPWD)
@@ -82,7 +81,15 @@ class UserRepo @Inject constructor(
 
     override fun signOut() {
         auth.signOut()
+        clearUserData()
+    }
+
+    private fun clearUserData() {
         user = null
+        userInfoRepo = null
+        cartRepo = null
+        contactRepo = null
+        orderRepo = null
     }
 
     override fun getCurrentUser(): FirebaseUser? {
@@ -99,6 +106,8 @@ class UserRepo @Inject constructor(
 
     override fun getUserInfoRepo(): Resource<IUserInfoRepo> {
         return try {
+            if (user == null)
+                throw NullPointerException()
             if (userInfoRepo == null) {
                 userInfoRepo = UserInfoRepo(user!!.uid)
             }
@@ -113,6 +122,8 @@ class UserRepo @Inject constructor(
 
     override fun getCartRepo(): Resource<ICartRepo> {
         return try {
+            if (user == null)
+                throw NullPointerException()
             if (cartRepo == null) {
                 cartRepo = CartRepo(user!!.uid)
             }
@@ -127,8 +138,10 @@ class UserRepo @Inject constructor(
 
     override fun getContactRepo(): Resource<IContactRepo> {
         return try {
+            if (user == null)
+                throw NullPointerException()
             if (contactRepo == null) {
-                contactRepo = ContactRepo(user!!.uid, userInfoRepo)
+                contactRepo = ContactRepo(user!!.uid)
             }
             Resource.OnSuccess(contactRepo)
         } catch (e: Exception) {
@@ -141,6 +154,8 @@ class UserRepo @Inject constructor(
 
     override fun getOrderRepo(): Resource<IOrderRepo> {
         return try {
+            if (user == null)
+                throw NullPointerException()
             if (orderRepo == null) {
                 orderRepo = OrderRepo(user!!.uid)
             }

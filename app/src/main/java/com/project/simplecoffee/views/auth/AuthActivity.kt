@@ -22,11 +22,4 @@ class AuthActivity : AppCompatActivity(), AuthContainer {
     override fun finishActivity() {
         finish()
     }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            finish()
-        }
-        return super.onKeyDown(keyCode, event)
-    }
 }

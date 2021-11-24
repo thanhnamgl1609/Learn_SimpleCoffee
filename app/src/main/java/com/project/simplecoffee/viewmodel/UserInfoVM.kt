@@ -6,7 +6,7 @@ import com.project.simplecoffee.common.toCustomString
 import com.project.simplecoffee.constant.ErrorConst
 import com.project.simplecoffee.constant.SuccessConst
 import com.project.simplecoffee.domain.models.UserInfo
-import com.project.simplecoffee.data.repository.UserRepo
+import com.project.simplecoffee.repository.UserRepo
 import com.project.simplecoffee.domain.models.details.Gender
 import com.project.simplecoffee.domain.repository.IUserInfoRepo
 import com.project.simplecoffee.views.main.MainContainer
@@ -83,9 +83,5 @@ class UserInfoVM @Inject constructor(
                 }
             }
         } ?: container.showMessage(ErrorConst.ERROR_UNEXPECTED)
-    }
-
-    fun signOut() {
-        userRepo.signOut()
     }
 }

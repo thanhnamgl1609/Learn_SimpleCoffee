@@ -1,9 +1,9 @@
-package com.project.simplecoffee.data.repository
+package com.project.simplecoffee.repository
 
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.project.simplecoffee.common.Resource
+import com.project.simplecoffee.common.toTimestamp
 import com.project.simplecoffee.constant.ErrorConst
 import com.project.simplecoffee.domain.models.details.Role
 import com.project.simplecoffee.domain.models.UserInfo
@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.lang.IllegalArgumentException
-import java.util.*
+import java.time.LocalDate
 
 class UserInfoRepo constructor(
     private val uid: String
@@ -23,7 +23,7 @@ class UserInfoRepo constructor(
     override suspend fun createUserInfo(
         firstName: String?,
         lastName: String?,
-        dob: Date?,
+        dob: LocalDate?,
         gender: Boolean?
     ): Resource<UserInfo> = withContext(Dispatchers.IO) {
         try {
@@ -36,10 +36,9 @@ class UserInfoRepo constructor(
                 firstName,
                 lastName,
                 Role.Customer.value,
-                Timestamp(dob),
+                dob.toTimestamp(),
                 UserInfo.CONSTANT.AVATAR_DEFAULT,
-                gender,
-                mutableListOf()
+                gender
             ).withId(uid)
             collection.document(uid).set(userInfo!!).await()
 

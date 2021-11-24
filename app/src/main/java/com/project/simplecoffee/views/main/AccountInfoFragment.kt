@@ -18,21 +18,19 @@ import javax.inject.Inject
 class AccountInfoFragment : Fragment() {
 
     @Inject
-    lateinit var viewModel : UserInfoVM
+    lateinit var viewModel: UserInfoVM
     private lateinit var binding: FragmentAccountInfoBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_account_info, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_account_info, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         setUpSpinner()
+        
         return binding.root
     }
 

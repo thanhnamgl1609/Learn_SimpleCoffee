@@ -7,33 +7,35 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.project.simplecoffee.R
-import com.project.simplecoffee.databinding.FragmentSettingBinding
-import com.project.simplecoffee.viewmodel.SettingVM
+import com.project.simplecoffee.databinding.FragmentContactDetailBinding
+import com.project.simplecoffee.viewmodel.ContactDetailVM
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class SettingFragment : Fragment() {
+class ContactDetailFragment : Fragment() {
 
     @Inject
-    lateinit var settingVM: SettingVM
-    private lateinit var binding: FragmentSettingBinding
+    lateinit var contactDetailVM: ContactDetailVM
+    private lateinit var binding: FragmentContactDetailBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_contact_detail, container, false)
         binding.apply {
-            viewModel = settingVM
+            viewModel = contactDetailVM
             lifecycleOwner = viewLifecycleOwner
         }
         return binding.root
     }
 
-    override fun onStart() {
-        settingVM.checkSignedInStatus()
-        super.onStart()
+    override fun onDestroy() {
+        contactDetailVM.clear()
+        super.onDestroy()
     }
 }

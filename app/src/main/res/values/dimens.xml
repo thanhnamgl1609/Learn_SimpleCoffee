@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="tz_title">50sp</dimen>
-    <dimen name="tz_small_title">36sp</dimen>
-    <dimen name="tz_header">36sp</dimen>
+    <dimen name="_36sp">36sp</dimen>
     <dimen name="tz_larger">20sp</dimen>
-    <dimen name="tz_normal">14sp</dimen>
+    <dimen name="_16sp">16sp</dimen>
+    <dimen name="_14sp">14sp</dimen>
     <dimen name="tz_small">10sp</dimen>
     <dimen name="ic_size">24dp</dimen>
     <dimen name="text_input_padding">15dp</dimen>
     <dimen name="ic_small_size">16dp</dimen>
-    <dimen name="tz_cat_item">12sp</dimen>
+    <dimen name="_12sp">12sp</dimen>
+    <dimen name="_27sp">27dp</dimen>
+    <dimen name="_20sp">20sp</dimen>
 </resources>

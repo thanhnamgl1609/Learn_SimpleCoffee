@@ -11,13 +11,25 @@ sealed class AllMainFragment {
 
     object Setting : AllMainFragment() {
         override fun createFragment(): Fragment {
-            return AccountInfoFragment()
+            return SettingFragment()
         }
     }
 
     object Menu : AllMainFragment() {
         override fun createFragment(): Fragment {
             return MenuFragment()
+        }
+    }
+
+    object Contact : AllMainFragment() {
+        override fun createFragment(): Fragment {
+            return ContactFragment()
+        }
+    }
+
+    object ContactDetailFragment : AllMainFragment() {
+        override fun createFragment(): Fragment {
+            return ContactDetailFragment()
         }
     }
 

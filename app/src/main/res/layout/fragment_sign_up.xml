@@ -60,7 +60,7 @@
                     android:background="@drawable/it_background"
                     android:inputType="textEmailAddress"
                     android:text="@={auth.inputEmail}"
-                    android:textAppearance="@style/input_text" />
+                    android:textAppearance="@style/tv_black_straight14" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -79,9 +79,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/it_background"
-                    android:inputType="textPassword"
+                    android:inputType="text"
                     android:text="@={auth.inputFirstName}"
-                    android:textAppearance="@style/input_text" />
+                    android:textAppearance="@style/tv_black_straight14" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,9 +101,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/it_background"
-                    android:inputType="textPassword"
-                    android:text="@={auth.inputFirstName}"
-                    android:textAppearance="@style/input_text" />
+                    android:inputType="text"
+                    android:text="@={auth.inputLastName}"
+                    android:textAppearance="@style/tv_black_straight14" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,7 +125,7 @@
                     android:background="@drawable/it_background"
                     android:inputType="textPassword"
                     android:text="@={auth.inputPWD}"
-                    android:textAppearance="@style/input_text" />
+                    android:textAppearance="@style/tv_black_straight14" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -147,7 +147,7 @@
                     android:background="@drawable/it_background"
                     android:inputType="textPassword"
                     android:text="@={auth.inputConfirmPWD}"
-                    android:textAppearance="@style/input_text" />
+                    android:textAppearance="@style/tv_black_straight14" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -169,8 +169,8 @@
                     android:enabled="false"
                     android:hint="@string/dob"
                     android:padding="@dimen/text_input_padding"
-                    android:text="@{auth.dob}"
-                    android:textAppearance="@style/input_text"
+                    android:text="@{auth.inputDoB}"
+                    android:textAppearance="@style/tv_black_straight14"
                     android:textColorHint="@color/black"
                     app:layout_constraintEnd_toStartOf="@id/layout_btn_picker"
                     app:layout_constraintStart_toStartOf="parent"
@@ -180,7 +180,7 @@
                     android:id="@+id/layout_btn_picker"
                     android:layout_width="50dp"
                     android:layout_height="0dp"
-                    android:background="@drawable/layout_dob_background"
+                    android:background="@drawable/it_background"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/input_dob"
@@ -220,8 +220,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
-                    android:padding="10dp"
-                    android:selectedItemPosition="@={auth.gender}"
+                    android:selectedItemPosition="@={auth.inputGender}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ic_gender" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -233,8 +232,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
             android:background="@drawable/btn_sign_in_background"
+            android:onClick="@{()->auth.onSignUpClick()}"
             android:text="@string/register_btn"
-            android:textAppearance="@style/input_text"
+            android:textAppearance="@style/tv_black_straight14"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_layout" />

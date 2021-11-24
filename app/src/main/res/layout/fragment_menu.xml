@@ -13,15 +13,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/btn_sign_in_background"
         tools:context=".views.main.MenuFragment">
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_greeting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -43,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:fontFamily="@font/sanchez"
-                android:text="@string/greeting"
+                android:text="@{viewModel.greeting}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/tz_larger"
                 app:fontFamily="@font/sanchez"
@@ -86,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:text="10"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/tz_normal"
+                    android:textSize="@dimen/_14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -97,7 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/shape_search_bg"
             android:elevation="2dp"
             android:outlineAmbientShadowColor="@color/black"
@@ -105,7 +104,7 @@
             app:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_greeting"
+            app:layout_constraintTop_toBottomOf="@id/layout_greeting"
             app:queryBackground="@null"
             tools:queryHint="Search" />
 
@@ -133,6 +132,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/CategoriesRecyclerView" />
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.progressBarVisibility}"
+            app:layout_constraintBottom_toBottomOf="@id/DrinksRecyclerView"
+            app:layout_constraintEnd_toEndOf="@id/DrinksRecyclerView"
+            app:layout_constraintStart_toStartOf="@id/DrinksRecyclerView"
+            app:layout_constraintTop_toTopOf="@id/DrinksRecyclerView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -47,4 +47,9 @@ class MenuFragment : Fragment() {
         }
         return binding.root
     }
+
+    override fun onStart() {
+        menuVM.checkLogInStatus()
+        super.onStart()
+    }
 }

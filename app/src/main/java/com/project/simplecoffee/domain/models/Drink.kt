@@ -1,7 +1,9 @@
 package com.project.simplecoffee.domain.models
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import com.google.firebase.firestore.Exclude
+import java.net.URL
 
 data class Drink(
     var name: String? = null,

@@ -88,7 +88,7 @@
                     android:background="@drawable/it_background"
                     android:inputType="textEmailAddress"
                     android:text="@={auth.inputEmail}"
-                    android:textAppearance="@style/input_text" />
+                    android:textAppearance="@style/tv_black_straight14" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,7 +113,7 @@
                     android:background="@drawable/it_background"
                     android:inputType="textPassword"
                     android:text="@={auth.inputPWD}"
-                    android:textAppearance="@style/input_text" />
+                    android:textAppearance="@style/tv_black_straight14" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -133,8 +133,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_sign_in_background"
                     android:onClick="@{() -> auth.onSignInClick()}"
-                    android:text="@string/sign_in"
-                    android:textAppearance="@style/input_text"
+                    android:text="@string/log_in"
+                    android:textAppearance="@style/tv_black_straight14"
                     android:textColor="@drawable/btn_sign_in_background"
                     android:visibility="@{auth.btnVisible}"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -156,7 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/forgot_pwd"
-                android:textAppearance="@style/tv_bot_sign_in"
+                android:textAppearance="@style/tv_black_italic14"
                 android:textColor="@color/orange"
                 app:layout_constraintBottom_toTopOf="@id/linearLayoutCompat"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -178,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/ask_for_signup"
-                    android:textAppearance="@style/tv_bot_sign_in"
+                    android:textAppearance="@style/tv_black_italic14"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -187,7 +187,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5sp"
                     android:text="@string/sign_up"
-                    android:textAppearance="@style/tv_bot_sign_in"
+                    android:textAppearance="@style/tv_black_italic14"
                     android:textColor="@color/orange" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 

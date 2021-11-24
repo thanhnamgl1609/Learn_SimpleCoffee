@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.simplecoffee.common.Resource
+import com.project.simplecoffee.common.toLocalDate
 import com.project.simplecoffee.domain.models.details.Gender
 import com.project.simplecoffee.domain.repository.IUserRepo
 import com.project.simplecoffee.views.auth.AuthContainer
@@ -24,11 +25,9 @@ class UserVM @Inject constructor(
     val inputFirstName = MutableLiveData<String>()
     val inputLastName = MutableLiveData<String>()
     val inputGender = MutableLiveData<Int>()
-    val inputDoB = MutableLiveData<Date>()
+    val inputDoB = MutableLiveData<String>()
 
-    val btnVisible = MutableLiveData<Int>().apply {
-        postValue(View.VISIBLE)
-    }
+    val btnVisible = MutableLiveData(View.VISIBLE)
 
     init {
         if (userRepo.getCurrentUser() != null)
@@ -43,7 +42,7 @@ class UserVM @Inject constructor(
         val firstName = inputFirstName.value
         val lastName = inputLastName.value
         val gender = inputGender.value
-        val dob = inputDoB.value!!
+        val dob = inputDoB.value!!.toLocalDate()
 
         when (val result = userRepo.signUp(
             email,

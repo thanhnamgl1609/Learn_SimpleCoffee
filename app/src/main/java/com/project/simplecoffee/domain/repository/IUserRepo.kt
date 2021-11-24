@@ -2,12 +2,7 @@ package com.project.simplecoffee.domain.repository
 
 import com.google.firebase.auth.FirebaseUser
 import com.project.simplecoffee.common.Resource
-import com.project.simplecoffee.data.repository.UserInfoRepo
-import com.project.simplecoffee.domain.models.Order
-import com.project.simplecoffee.domain.models.UserInfo
-import com.project.simplecoffee.repository.CartRepo
-import com.project.simplecoffee.repository.ContactRepo
-import java.util.*
+import java.time.LocalDate
 
 interface IUserRepo {
     suspend fun signIn(
@@ -22,7 +17,7 @@ interface IUserRepo {
         firstName: String?,
         lastName: String?,
         gender: Boolean?,
-        dob: Date?
+        dob: LocalDate?
     ): Resource<FirebaseUser?>
 
     fun signOut()

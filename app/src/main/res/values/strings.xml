@@ -7,7 +7,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="forgot_pwd">Forgot password?</string>
-    <string name="sign_in">Log In</string>
+    <string name="log_in">Log In</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu">Menu</string>
     <string name="order">Order</string>
@@ -19,7 +19,6 @@
     <string name="avatar">Avatar</string>
     <string name="camera">camera</string>
     <string name="update">Update</string>
-    <string name="greeting">Good afternoon, Simple</string>
     <string name="our_drink">Our Drink</string>
     <string name="img_des">background</string>
     <string name="confirm_pwd">Confirm password</string>
@@ -32,4 +31,17 @@
     <string name="Income">Income</string>
     <string name="Expenses">Expenses</string>
     <string name="Total">Total</string>
+    <string name="order_history">Order History</string>
+    <string name="my_account">My account</string>
+    <string name="account_information">Account information</string>
+    <string name="saved_address">Saved address</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_out">Sign out</string>
+    <string name="my_saved_address">My saved address</string>
+    <string name="add_new_contact">Add a new contact</string>
+    <string name="done">Done</string>
+    <string name="name">Name</string>
+    <string name="address">Your address</string>
+    <string name="phone">Phone</string>
+    <string name="remove">Remove this</string>
 </resources>

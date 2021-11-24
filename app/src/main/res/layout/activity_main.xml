@@ -3,10 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.project.simplecoffee.viewmodel.MainVM" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_orange"
+        android:background="@drawable/main_background"
         tools:context=".views.main.MainActivity">
 
         <TextView
@@ -18,7 +25,7 @@
             android:text="@string/simple_coffee"
             android:textAlignment="center"
             android:textAppearance="@style/simple_coffee"
-            android:textSize="@dimen/tz_header"
+            android:textSize="@dimen/_36sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

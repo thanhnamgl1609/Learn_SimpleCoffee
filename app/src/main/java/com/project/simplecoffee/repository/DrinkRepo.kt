@@ -1,9 +1,11 @@
 package com.project.simplecoffee.repository
 
 import android.graphics.BitmapFactory
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
 import com.project.simplecoffee.common.Resource
+import com.project.simplecoffee.common.toBitMap
 import com.project.simplecoffee.constant.ErrorConst
 import com.project.simplecoffee.domain.models.Drink
 import com.project.simplecoffee.domain.repository.IDrinkRepo
@@ -20,7 +22,7 @@ class DrinkRepo @Inject constructor(
     private val collection = db.collection("drink")
     private var listDrink: MutableList<Drink>? = null
 
-    override suspend fun getDrink()
+    override suspend fun getAllDrink()
             : Resource<List<Drink>?> = withContext(Dispatchers.IO) {
         try {
             if (listDrink == null) {
@@ -38,9 +40,9 @@ class DrinkRepo @Inject constructor(
         }
     }
 
-    private fun loadBitMap(drink: Drink): Drink {
-        val inputStream = URL(drink.image_url).openStream()
-        drink.bitmap = BitmapFactory.decodeStream(inputStream)
-        return drink
+    override fun loadBitMap(drink: Drink) {
+        if (drink.bitmap == null) {
+            drink.bitmap = drink.image_url?.toBitMap()
+        }
     }
 }
