@@ -1,7 +1,11 @@
 package com.project.simplecoffee.viewmodel
 
+import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.view.View
+import android.widget.DatePicker
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.simplecoffee.common.Resource
@@ -10,6 +14,7 @@ import com.project.simplecoffee.domain.models.details.Gender
 import com.project.simplecoffee.domain.repository.IUserRepo
 import com.project.simplecoffee.views.auth.AuthContainer
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
 
@@ -17,6 +22,13 @@ class UserVM @Inject constructor(
     private val container: AuthContainer,
     private val userRepo: IUserRepo,
 ) : ViewModel() {
+    private var dob = MutableLiveData(LocalDate.now())
+    val mDataSetListener =
+        DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            dob.postValue(
+                LocalDate.of(year, month + 1, dayOfMonth)
+            )
+        }
 
     // For databinding
     val inputEmail = MutableLiveData<String>()
@@ -25,7 +37,7 @@ class UserVM @Inject constructor(
     val inputFirstName = MutableLiveData<String>()
     val inputLastName = MutableLiveData<String>()
     val inputGender = MutableLiveData<Int>()
-    val inputDoB = MutableLiveData<String>()
+    val inputDoB = Transformations.map(dob) { info -> info.toString() }
 
     val btnVisible = MutableLiveData(View.VISIBLE)
 
@@ -42,7 +54,6 @@ class UserVM @Inject constructor(
         val firstName = inputFirstName.value
         val lastName = inputLastName.value
         val gender = inputGender.value
-        val dob = inputDoB.value!!.toLocalDate()
 
         when (val result = userRepo.signUp(
             email,
@@ -51,7 +62,7 @@ class UserVM @Inject constructor(
             firstName,
             lastName,
             gender == Gender.Male.index,
-            dob
+            dob.value!!
         )) {
             is Resource.OnSuccess -> {
                 container.finishActivity()
@@ -78,6 +89,5 @@ class UserVM @Inject constructor(
                 btnVisible.postValue(View.VISIBLE)
             }
         }
-
     }
 }

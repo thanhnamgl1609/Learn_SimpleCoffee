@@ -21,7 +21,8 @@
     <color name="gray">#545454</color>
     <color name="txt_gray">#A1A1A1</color>
     <color name="outline_gray">#555555</color>
-    <color name="green">#00FF00</color>
+    <color name="green">#33A04B</color>
     <color name="silver">#F5F5F4</color>
     <color name="near_red">#FF9292</color>
+    <color name="super_light_gray">#DDDBDB</color>
 </resources>

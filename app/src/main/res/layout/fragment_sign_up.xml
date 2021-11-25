@@ -183,6 +183,7 @@
                     android:background="@drawable/it_background"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:onClick="showDatePickerDialog"
                     app:layout_constraintStart_toEndOf="@id/input_dob"
                     app:layout_constraintTop_toTopOf="parent">
 

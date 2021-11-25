@@ -1,5 +1,6 @@
 package com.project.simplecoffee.views.auth
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import com.project.simplecoffee.R
 import com.project.simplecoffee.databinding.FragmentSignUpBinding
 import com.project.simplecoffee.viewmodel.UserVM
+import java.util.*
 import javax.inject.Inject
 
 class SignOutFragment : Fragment() {
@@ -18,6 +20,7 @@ class SignOutFragment : Fragment() {
     @Inject
     lateinit var userVM: UserVM
     private lateinit var binding: FragmentSignUpBinding
+    private lateinit var datePicker: DatePickerDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,14 +28,25 @@ class SignOutFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false)
         setUpSpinner()
+        initDatePicker()
         return binding.root
     }
 
+    private fun initDatePicker() {
+        val cal = Calendar.getInstance()
+        datePicker = DatePickerDialog(
+            requireContext(),
+            userVM.mDataSetListener,
+            cal.get(Calendar.YEAR),
+            cal.get(Calendar.MONTH),
+            cal.get(Calendar.DAY_OF_MONTH)
+        )
+    }
 
     private fun setUpSpinner() {
         val spinner: Spinner = binding.inputGender
         ArrayAdapter.createFromResource(
-            this.requireContext(),
+            requireContext(),
             R.array.gender_array,
             R.layout.spinner_item
         ).also { adapter ->
