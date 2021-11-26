@@ -21,7 +21,7 @@ class MainVM @Inject constructor(
     fun loadFragment(frag: AllMainFragment) = viewModelScope.launch {
         if (curr_fragment != frag) {
             curr_fragment = when (frag) {
-                is AllMainFragment.AccountInfo -> {
+                is AllMainFragment.CurrentOrder -> {
                     if (userRepo.getCurrentUser() != null) {
                         container.loadFragment(frag.createFragment())
                     } else {

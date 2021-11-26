@@ -13,7 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="15dp"
+        android:layout_marginHorizontal="@dimen/_15dp"
+        android:layout_marginBottom="@dimen/_15dp"
         tools:context=".views.main.ContactFragment">
 
         <TextView
@@ -43,7 +44,8 @@
                 android:src="@drawable/ic_add"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/add_icon" />
 
 
             <TextView

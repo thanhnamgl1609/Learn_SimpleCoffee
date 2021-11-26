@@ -26,6 +26,7 @@ class MenuVM @Inject constructor(
     private val _listDrinkCategory = MutableLiveData<List<DrinkCategoryItemVM>>()
     private val _listDrink = MutableLiveData<List<DrinkItemVM>>()
     private val _greeting = MutableLiveData("Welcome to Simple Coffee!")
+    private val _drinkAmount = MutableLiveData("1")
     private var listAllDrinkVM = mutableListOf<DrinkItemVM>()
     private var listCurrentDrink = emptyList<DrinkItemVM>()
 
@@ -35,7 +36,9 @@ class MenuVM @Inject constructor(
         get() = _listDrink
     val greeting: LiveData<String>
         get() = _greeting
-    val progressBarVisibility = MutableLiveData<Int>(View.VISIBLE)
+    val drinkAmount: LiveData<String>
+        get() = _drinkAmount
+    val progressBarVisibility = MutableLiveData(View.VISIBLE)
 
     val searchViewListener = object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
@@ -134,6 +137,14 @@ class MenuVM @Inject constructor(
             container.onSignIn()
         } else {
             container.showMessage("On add to cart")
+        }
+    }
+
+    fun onCartClick() {
+        if (userRepo.getCurrentUser() == null) {
+            container.onSignIn()
+        } else {
+            container.showMessage("On cart click")
         }
     }
 }

@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity(), MainContainer {
                         return@setOnItemSelectedListener true
                     }
                     R.id.action_order -> {
+                        mainVM.loadFragment(AllMainFragment.CurrentOrder)
                         return@setOnItemSelectedListener true
                     }
                     R.id.action_more -> {

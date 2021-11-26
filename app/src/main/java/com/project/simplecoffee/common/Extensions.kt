@@ -1,5 +1,6 @@
 package com.project.simplecoffee.common
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -9,9 +10,10 @@ import com.project.simplecoffee.constant.CustomConstant
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.time.ZoneId
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
-import java.util.*
+
 
 internal fun Activity.makeToast(message: String) {
     Toast.makeText(
@@ -21,20 +23,33 @@ internal fun Activity.makeToast(message: String) {
     ).show()
 }
 
-internal fun Date?.toCustomString(): String {
-    if (this == null)
-        return "null"
-    val sdf = SimpleDateFormat(CustomConstant.DATE_FORMAT_CONST)
-    return sdf.format(this).toString()
+internal fun LocalDate.toCustomString(pattern: String = CustomConstant.DATE_FORMAT): String {
+    val formatter = DateTimeFormatter.ofPattern(pattern)
+    return this.format(formatter)
+
 }
 
-fun LocalDate.toTimestamp(): Timestamp {
+fun LocalDate.toTimestamp(zone: ZoneOffset = ZoneOffset.UTC): Timestamp {
     val localDateTime = atStartOfDay()
-    return Timestamp(localDateTime.second.toLong(), localDateTime.nano)
+    return localDateTime.toTimestamp(zone)
 }
+
+fun LocalDateTime.toTimestamp(zone: ZoneOffset = ZoneOffset.UTC) =
+    Timestamp(toEpochSecond(zone), nano)
 
 fun String.toLocalDate(): LocalDate =
-    LocalDate.parse(this, DateTimeFormatter.ofPattern(CustomConstant.DATE_FORMAT_CONST))
+    LocalDate.parse(this, DateTimeFormatter.ofPattern(CustomConstant.DATE_FORMAT))
+
+@SuppressLint("SimpleDateFormat")
+fun Timestamp.toCustomString(format: String = CustomConstant.DATE_FORMAT): String {
+    val sfd = SimpleDateFormat(format)
+    return sfd.format(toDate())
+}
+
+fun Timestamp.getDayOfWeek(zone: ZoneOffset = ZoneOffset.UTC): String {
+    val localDateTime = LocalDateTime.ofEpochSecond(seconds, nanoseconds, zone)
+    return localDateTime.dayOfWeek.name
+}
 
 fun String.toBitMap(): Bitmap? =
     BitmapFactory.decodeStream(URL(this).openStream())

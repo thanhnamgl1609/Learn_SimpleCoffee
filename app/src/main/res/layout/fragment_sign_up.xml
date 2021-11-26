@@ -183,7 +183,6 @@
                     android:background="@drawable/it_background"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:onClick="showDatePickerDialog"
                     app:layout_constraintStart_toEndOf="@id/input_dob"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -191,6 +190,7 @@
                         android:id="@+id/btn_date_picker"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:contentDescription="@string/date_picker_icon"
                         android:src="@drawable/ic_calendar"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -211,6 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:contentDescription="@string/gender_icon"
                     android:src="@drawable/ic_gender"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -228,16 +229,37 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <android.widget.Button
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
-            android:background="@drawable/btn_sign_in_background"
-            android:onClick="@{()->auth.onSignUpClick()}"
-            android:text="@string/register_btn"
-            android:textAppearance="@style/tv_black_straight14"
+            android:minWidth="@dimen/_30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_layout" />
+            app:layout_constraintTop_toBottomOf="@id/main_layout">
+
+            <android.widget.Button
+                android:id="@+id/btn_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_sign_in_background"
+                android:onClick="@{()->auth.onSignUpClick()}"
+                android:text="@string/register_btn"
+                android:textAppearance="@style/tv_black_straight14"
+                android:visibility="@{auth.btnVisible}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

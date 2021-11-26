@@ -12,9 +12,11 @@ import androidx.databinding.DataBindingUtil
 import com.project.simplecoffee.R
 import com.project.simplecoffee.databinding.FragmentSignUpBinding
 import com.project.simplecoffee.viewmodel.UserVM
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SignOutFragment : Fragment() {
 
     @Inject
@@ -27,6 +29,11 @@ class SignOutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false)
+        binding.apply {
+            auth = userVM
+            lifecycleOwner = viewLifecycleOwner
+            layoutBtnPicker.setOnClickListener { datePicker.show() }
+        }
         setUpSpinner()
         initDatePicker()
         return binding.root

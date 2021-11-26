@@ -39,7 +39,7 @@ class UserInfoVM @Inject constructor(
     }
     var dob: LiveData<String> =
         Transformations.map(userInfoLiveData) { userInfo ->
-            userInfo.dob?.toDate().toCustomString()
+            userInfo.dob?.toCustomString()
         }
 
     /**

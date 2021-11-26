@@ -2,6 +2,7 @@ package com.project.simplecoffee.viewmodel
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.util.Log
 import android.view.View
 import android.widget.DatePicker
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +10,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.simplecoffee.common.Resource
+import com.project.simplecoffee.common.toCustomString
 import com.project.simplecoffee.common.toLocalDate
 import com.project.simplecoffee.domain.models.details.Gender
 import com.project.simplecoffee.domain.repository.IUserRepo
@@ -25,9 +27,7 @@ class UserVM @Inject constructor(
     private var dob = MutableLiveData(LocalDate.now())
     val mDataSetListener =
         DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            dob.postValue(
-                LocalDate.of(year, month + 1, dayOfMonth)
-            )
+            dob.value = LocalDate.of(year, month + 1, dayOfMonth)
         }
 
     // For databinding
@@ -37,7 +37,7 @@ class UserVM @Inject constructor(
     val inputFirstName = MutableLiveData<String>()
     val inputLastName = MutableLiveData<String>()
     val inputGender = MutableLiveData<Int>()
-    val inputDoB = Transformations.map(dob) { info -> info.toString() }
+    val inputDoB = Transformations.map(dob) { info -> info.toCustomString() }
 
     val btnVisible = MutableLiveData(View.VISIBLE)
 
