@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.project.simplecoffee.viewmodel.ContactVM" />
+            type="com.project.simplecoffee.presentation.contact.ContactVM" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
