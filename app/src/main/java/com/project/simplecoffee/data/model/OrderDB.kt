@@ -11,7 +11,7 @@ data class OrderDB(
     val address: String? = null,
     val phone: String? = null,
     var status: String? = null,
-    val drink: List<MutableMap<String, Any>>? = null,
+    val drink: List<MutableMap<String, Any?>>? = null,
     val total: Double? = null,
     val table: String? = null,
     @PropertyName("staff_id")

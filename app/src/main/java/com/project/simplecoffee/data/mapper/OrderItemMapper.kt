@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 class OrderItemMapper @Inject constructor(
     private val drinkRepo: IDrinkRepo
-) : IModelMapper<OrderItem, MutableMap<String, Any>> {
-    override suspend fun fromModel(from: OrderItem?): MutableMap<String, Any>? {
+) : IModelMapper<OrderItem, MutableMap<String, Any?>> {
+    override suspend fun fromModel(from: OrderItem?): MutableMap<String, Any?>? {
         return from?.run {
             mutableMapOf(
                 "quantity" to this.quantity,
@@ -21,7 +21,7 @@ class OrderItemMapper @Inject constructor(
     }
 
     @DelicateCoroutinesApi
-    override suspend fun toModel(from: MutableMap<String, Any>?): OrderItem? {
+    override suspend fun toModel(from: MutableMap<String, Any?>?): OrderItem? {
         return from?.run {
             drinkRepo.getDrinkDetail(from["drink"].toString()).data?.run {
                 OrderItem(

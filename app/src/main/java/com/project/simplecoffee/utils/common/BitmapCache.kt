@@ -21,23 +21,21 @@ object BitmapCache {
         }
 
     @DelicateCoroutinesApi
-    suspend fun loadBitmap(url: String, imageView: ImageView) {
-        val bitmap = GlobalScope.async(Dispatchers.IO) {
-            BitmapFactory.decodeStream(URL(url).openStream())
-        }
-        memoryCache.put(url, bitmap.await())
-        imageView.setImageBitmap(bitmap.await())
+    fun loadBitmap(url: String, imageView: ImageView): Bitmap {
+        val bitmap = BitmapFactory.decodeStream(URL(url).openStream())
+        memoryCache.put(url, bitmap)
+        return bitmap
     }
 
     @DelicateCoroutinesApi
-    fun setBitMap(imageView: ImageView, url: String?) {
+    fun setBitMap(imageView: ImageView, url: String?) = GlobalScope.launch(Dispatchers.IO) {
         url?.let {
-            memoryCache.get(it)?.also { bitmap ->
+            var bitmap = memoryCache.get(it)
+            if (bitmap == null) {
+                bitmap = loadBitmap(url, imageView)
+            }
+            withContext(Dispatchers.Main) {
                 imageView.setImageBitmap(bitmap)
-            } ?: run {
-                GlobalScope.launch(Dispatchers.Main) { loadBitmap(url, imageView) }
-
-                null
             }
         }
     }

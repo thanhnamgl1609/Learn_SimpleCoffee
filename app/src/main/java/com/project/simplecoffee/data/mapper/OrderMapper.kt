@@ -13,7 +13,7 @@ class OrderMapper @Inject constructor(
 ) : IModelMapper<Order, OrderDB> {
     override suspend fun fromModel(from: Order?): OrderDB? {
         return from?.run {
-            val listDrink = mutableListOf<MutableMap<String, Any>>()
+            val listDrink = mutableListOf<MutableMap<String, Any?>>()
             drink?.forEach {
                 listDrink.add(orderItemMapper.fromModel(it)!!)
             }

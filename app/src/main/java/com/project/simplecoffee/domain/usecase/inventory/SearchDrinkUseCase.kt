@@ -13,15 +13,13 @@ class SearchDrinkUseCase @Inject constructor(
         val getAllDrink = getAllDrinkUseCase()
         return withContext(Dispatchers.IO) {
             val result = getAllDrink.data?.run {
-                {
-                    val listQueryDrink = if (query != null && query.isNotEmpty()) {
-                        filter { item ->
-                            item.name!!.contains(query, ignoreCase = true)
-                        }
-                    } else
-                        this
-                    Resource.OnSuccess(listQueryDrink)
-                }
+                val listQueryDrink = if (query != null && query.isNotEmpty()) {
+                    filter { item ->
+                        item.name!!.contains(query, ignoreCase = true)
+                    }
+                } else
+                    this
+                Resource.OnSuccess(listQueryDrink)
             } ?: run {
                 Resource.OnFailure(null, getAllDrink.message)
             }

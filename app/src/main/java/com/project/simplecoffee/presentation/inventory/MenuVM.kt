@@ -10,13 +10,16 @@ import com.project.simplecoffee.utils.common.Resource
 import com.project.simplecoffee.domain.model.Drink
 import com.project.simplecoffee.domain.model.DrinkCategory
 import com.project.simplecoffee.domain.model.UserInfo
+import com.project.simplecoffee.domain.model.details.Role
 import com.project.simplecoffee.domain.usecase.auth.GetCurrentUserUseCase
 import com.project.simplecoffee.domain.usecase.inventory.GetAllDrinkUseCase
 import com.project.simplecoffee.domain.usecase.inventory.GetDrinkByCategoryUseCase
 import com.project.simplecoffee.domain.usecase.inventory.SearchDrinkUseCase
 import com.project.simplecoffee.domain.usecase.inventory.GetAllDrinkCategoryUseCase
 import com.project.simplecoffee.domain.usecase.user.GetCurrentUserInfoUseCase
+import com.project.simplecoffee.presentation.common.main.AllMainFragment
 import com.project.simplecoffee.presentation.common.main.MainContainer
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -76,25 +79,27 @@ class MenuVM @Inject constructor(
     }
 
     private fun loadDrink() = viewModelScope.launch {
-        progressBarVisibility.postValue(View.VISIBLE)
+        progressBarVisibility.value = View.VISIBLE
         handleDrinkResult(getAllDrinkUseCase())
     }
 
     fun loadDrinkByCategory(
         drinkCategory: DrinkCategory
     ) = viewModelScope.launch {
-        progressBarVisibility.postValue(View.VISIBLE)
+        progressBarVisibility.value = View.VISIBLE
         handleDrinkResult(getDrinkByCategoryUseCase(drinkCategory.id))
     }
 
-    private fun handleDrinkResult(result: Resource<List<Drink>?>) {
+    private fun handleDrinkResult(result: Resource<List<Drink>?>) = viewModelScope.launch(
+        Dispatchers.IO
+    ) {
         when (result) {
             is Resource.OnSuccess -> {
                 val listAllDrinkVM = mutableListOf<DrinkItemVM>()
                 result.data?.forEach { drink ->
-                    listAllDrinkVM.add(DrinkItemVM(this, drink))
+                    listAllDrinkVM.add(DrinkItemVM(this@MenuVM, drink))
                 }
-                _listDrink.value = listAllDrinkVM
+                _listDrink.postValue(listAllDrinkVM)
                 progressBarVisibility.postValue(View.GONE)
             }
             is Resource.OnFailure -> {
@@ -103,24 +108,31 @@ class MenuVM @Inject constructor(
         }
     }
 
-    private fun handleDrinkCategoryResult(result: Resource<List<DrinkCategory>?>) {
-        when (result) {
-            is Resource.OnSuccess -> {
-                val listAllDrinkCategoryVM = mutableListOf<DrinkCategoryItemVM>()
-                result.data?.forEach { drinkCategory ->
-                    listAllDrinkCategoryVM.add(DrinkCategoryItemVM(this, drinkCategory))
+    private fun handleDrinkCategoryResult(result: Resource<List<DrinkCategory>?>) =
+        viewModelScope.launch(
+            Dispatchers.IO
+        ) {
+            when (result) {
+                is Resource.OnSuccess -> {
+                    val listAllDrinkCategoryVM = mutableListOf<DrinkCategoryItemVM>()
+                    result.data?.forEach { drinkCategory ->
+                        listAllDrinkCategoryVM.add(
+                            DrinkCategoryItemVM(
+                                this@MenuVM,
+                                drinkCategory
+                            )
+                        )
+                    }
+                    _listDrinkCategory.postValue(listAllDrinkCategoryVM)
                 }
-                _listDrinkCategory.value = listAllDrinkCategoryVM
-            }
-            is Resource.OnFailure -> {
-                container.showMessage(result.message.toString())
+                is Resource.OnFailure -> {
+                    container.showMessage(result.message.toString())
+                }
             }
         }
-    }
 
     fun checkLogInStatus() = viewModelScope.launch {
-        val userInfo = getCurrentUserInfoUseCase().data
-        userInfo?.apply {
+        getCurrentUserInfoUseCase().data?.apply {
             _greeting.value = "Hello, $firstname $lastname"
             _userURL.value = avatar
         }
@@ -135,10 +147,14 @@ class MenuVM @Inject constructor(
     }
 
     fun onCartClick() = viewModelScope.launch {
-        if (getCurrentUserUseCase() == null) {
+        getCurrentUserInfoUseCase().data?.apply {
+            val frag = if (role == Role.Customer.value)
+                AllMainFragment.CartCustomer
+            else
+                AllMainFragment.CartStaff
+            container.loadFragment(frag.createFragment(), true)
+        } ?: run {
             container.onSignIn()
-        } else {
-            container.showMessage("On cart click")
         }
     }
 }
