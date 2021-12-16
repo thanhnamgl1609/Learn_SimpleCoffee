@@ -69,4 +69,6 @@
     <string name="statistic_icon">Statistic icon</string>
     <string name="cart_icon">Cart icon</string>
     <string name="gender_icon">Gender icon</string>
+    <string name="available">Available</string>
+    <string name="unavailable">Unavailable</string>
 </resources>
