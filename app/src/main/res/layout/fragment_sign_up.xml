@@ -7,13 +7,13 @@
 
         <variable
             name="auth"
-            type="com.project.simplecoffee.viewmodel.UserVM" />
+            type="com.project.simplecoffee.presentation.auth.UserVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.auth.SignOutFragment">
+        tools:context=".presentation.auth.SignOutFragment">
 
         <ImageView
             android:layout_width="match_parent"

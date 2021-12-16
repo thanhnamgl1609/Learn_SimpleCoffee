@@ -1,15 +1,17 @@
 package com.project.simplecoffee.domain.repository
 
-import com.google.firebase.Timestamp
-import com.project.simplecoffee.common.Resource
-import com.project.simplecoffee.domain.models.Order
+import com.project.simplecoffee.utils.common.Resource
+import com.project.simplecoffee.domain.model.Order
+import java.time.LocalDate
 
 interface IOrderRepo {
-    var current: Order?
+    suspend fun getOrderHistory(
+        uid: String
+    ): Resource<List<Order>?>
 
-    suspend fun getOrderHistory(): Resource<List<Order>?>
-    suspend fun getOrderFromTo(
-        startDate: Timestamp,
-        endDate: Timestamp
+    suspend fun getOrderHistory(
+        uid: String,
+        startDate: LocalDate,
+        endDate: LocalDate
     ): Resource<List<Order>?>
 }

@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.project.simplecoffee.viewmodel.RevenueVM" />
+            type="com.project.simplecoffee.presentation.order.RevenueVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -180,13 +180,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/middle_layout_btn"
+            android:contentDescription="@string/statistic"
             android:onClick="@{() -> viewModel.onGetListOrderClick()}"
             android:src="@drawable/ic_statistic"
             app:layout_constraintBottom_toBottomOf="@+id/layout_from_to"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/layout_from_to"
-            android:contentDescription="@string/statistic" />
+            app:layout_constraintTop_toTopOf="@+id/layout_from_to" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_outer"
@@ -195,8 +195,6 @@
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_from_to" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

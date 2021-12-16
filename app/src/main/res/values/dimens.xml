@@ -19,4 +19,10 @@
     <dimen name="_40sp">40sp</dimen>
     <dimen name="_24sp">24sp</dimen>
     <dimen name="_20dp">20dp</dimen>
+    <dimen name="_90dp">90dp</dimen>
+    <dimen name="_250dp">250dp</dimen>
+    <dimen name="_200dp">200dp</dimen>
+    <dimen name="_50dp">50dp</dimen>
+    <dimen name="_40dp">40dp</dimen>
+    <dimen name="_1dp">1dp</dimen>
 </resources>

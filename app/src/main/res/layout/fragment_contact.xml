@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.project.simplecoffee.viewmodel.ContactVM" />
+            type="com.project.simplecoffee.presentation.contact.ContactVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:layout_marginHorizontal="@dimen/_15dp"
         android:layout_marginBottom="@dimen/_15dp"
-        tools:context=".views.main.ContactFragment">
+        tools:context=".presentation.contact.ContactFragment">
 
         <TextView
             android:id="@+id/header"
@@ -41,11 +41,11 @@
                 android:id="@+id/add_ic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/add_icon"
                 android:src="@drawable/ic_add"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/add_icon" />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView

@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.project.simplecoffee.viewmodel.SettingVM" />
+            type="com.project.simplecoffee.presentation.common.setting.SettingVM" />
 
         <import type="android.view.View" />
     </data>
@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:layout_marginHorizontal="@dimen/_15dp"
         android:layout_marginBottom="@dimen/_15dp"
-        tools:context=".views.main.MenuFragment">
+        tools:context=".presentation.inventory.MenuFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_my_account"
@@ -85,6 +85,7 @@
                 android:background="@drawable/btn_setting_background"
                 android:onClick="@{() -> viewModel.onSavedAddressClick()}"
                 android:padding="10dp"
+                android:visibility="@{viewModel.customerVisible}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_account_info">
 
@@ -215,6 +216,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:visibility="@{viewModel.customerVisible}"
             app:layout_constraintTop_toBottomOf="@+id/layout_my_account">
 
             <TextView
@@ -260,7 +262,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_manage"
+            android:id="@+id/layout_staff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -285,7 +287,6 @@
                 android:background="@drawable/btn_setting_background"
                 android:onClick="@{()->viewModel.onTableStatusClick()}"
                 android:padding="10dp"
-                android:visibility="@{viewModel.staffVisible}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/role">
 
@@ -309,6 +310,57 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ic_table_management" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_manager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:visibility="@{viewModel.managerVisible}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_staff">
+
+            <TextView
+                android:id="@+id/manager_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.role}"
+                android:textAppearance="@style/header_setting"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_table_management_2"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/btn_setting_background"
+                android:onClick="@{()->viewModel.onTableStatusClick()}"
+                android:padding="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/manager_header">
+
+                <ImageView
+                    android:id="@+id/ic_table_management_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/table_icon"
+                    android:src="@drawable/ic_table_management"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/table_management_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/table"
+                    android:textAppearance="@style/btn_setting_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ic_table_management_2" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_revenue_statistics"
@@ -320,8 +372,8 @@
                 android:onClick="@{()->viewModel.onStatisticClick()}"
                 android:padding="10dp"
                 android:visibility="@{viewModel.managerVisible}"
-                app:layout_constraintStart_toEndOf="@+id/layout_table_management"
-                app:layout_constraintTop_toBottomOf="@id/role">
+                app:layout_constraintStart_toEndOf="@+id/layout_table_management_2"
+                app:layout_constraintTop_toBottomOf="@id/manager_header">
 
                 <ImageView
                     android:id="@+id/ic_statistics"

@@ -1,24 +1,27 @@
 package com.project.simplecoffee.domain.repository
 
-import com.project.simplecoffee.common.Resource
-import com.project.simplecoffee.domain.models.UserInfo
+import com.project.simplecoffee.utils.common.Resource
+import com.project.simplecoffee.domain.model.UserInfo
 import java.time.LocalDate
-import java.util.*
 
 interface IUserInfoRepo {
     suspend fun createUserInfo(
-        firstName: String?,
-        lastName: String?,
-        dob: LocalDate?,
-        gender: Boolean?
-    ): Resource<UserInfo>
+        id: String,
+        firstName: String,
+        lastName: String,
+        gender: Boolean,
+        dob: LocalDate
+    ): Resource<UserInfo?>
 
 
     suspend fun updateUserInfo(
+        id: String,
         firstName: String?,
         lastName: String?,
         gender: Boolean?
-    ): Resource<UserInfo>
+    ): Resource<UserInfo?>
 
-    suspend fun getUserInfo(): Resource<UserInfo?>
+    suspend fun getUserInfo(id: String): Resource<UserInfo?>
+
+    suspend fun deleteUserInfo(id: String): Resource<UserInfo?>
 }

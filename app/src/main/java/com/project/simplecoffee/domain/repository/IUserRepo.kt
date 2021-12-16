@@ -1,36 +1,24 @@
 package com.project.simplecoffee.domain.repository
 
-import com.google.firebase.auth.FirebaseUser
-import com.project.simplecoffee.common.Resource
-import java.time.LocalDate
+import com.project.simplecoffee.domain.model.User
+import com.project.simplecoffee.utils.common.Resource
 
 interface IUserRepo {
     suspend fun signIn(
         email: String,
         pwd: String
-    ): Resource<FirebaseUser?>
+    ): Resource<User?>
 
     suspend fun signUp(
-        email: String?,
-        pwd: String?,
-        confirmPWD: String?,
-        firstName: String?,
-        lastName: String?,
-        gender: Boolean?,
-        dob: LocalDate?
-    ): Resource<FirebaseUser?>
+        email: String,
+        pwd: String
+    ): Resource<User?>
 
     fun signOut()
 
-    fun getCurrentUser(): FirebaseUser?
+    suspend fun deleteCurrentUser(): Resource<User?>
 
-    suspend fun changePassword(newPwd: String): Resource<FirebaseUser?>
+    suspend fun getCurrentUser(): User?
 
-    fun getUserInfoRepo(): Resource<IUserInfoRepo>
-
-    fun getCartRepo(): Resource<ICartRepo>
-
-    fun getContactRepo(): Resource<IContactRepo>
-
-    fun getOrderRepo(): Resource<IOrderRepo>
+    suspend fun changePassword(newPwd: String): Resource<User?>
 }

@@ -6,7 +6,7 @@
 
         <variable
             name="itemViewModel"
-            type="com.project.simplecoffee.viewmodel.ContactItemVM" />
+            type="com.project.simplecoffee.presentation.contact.ContactItemVM" />
     </data>
 
     <androidx.cardview.widget.CardView

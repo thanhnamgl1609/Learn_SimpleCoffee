@@ -6,15 +6,14 @@
 
         <variable
             name="viewModel"
-            type="com.project.simplecoffee.viewmodel.MenuVM" />
+            type="com.project.simplecoffee.presentation.inventory.MenuVM" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/_15dp"
-        tools:context=".views.main.MenuFragment">
+        tools:context=".presentation.inventory.MenuFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_greeting"
@@ -26,13 +25,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/user_avatar_background"
-                android:src="@drawable/ic_person"
+                bitMap="@{viewModel.userURL}"
+                android:layout_width="@dimen/_50dp"
+                android:layout_height="@dimen/_50dp"
+                android:contentDescription="@string/avatar"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

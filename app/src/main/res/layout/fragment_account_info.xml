@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".views.main.AccountInfoFragment">
+    tools:context=".presentation.user.AccountInfoFragment">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.project.simplecoffee.viewmodel.UserInfoVM" />
+            type="com.project.simplecoffee.presentation.user.UserInfoVM" />
     </data>
 
 
@@ -23,35 +23,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/user_avatar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                bitMap="@{viewModel.url}"
+                android:layout_width="@dimen/_200dp"
+                android:layout_height="@dimen/_200dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/user_avatar_background"
                 android:contentDescription="@string/avatar"
-                android:src="@drawable/ic_user_avatar"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/camera"
+
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/white_circle_background"
+                android:layout_marginEnd="@dimen/_15dp"
+                android:layout_marginBottom="@dimen/_15dp"
+                android:background="@drawable/circle"
+                android:contentDescription="@string/camera"
+                android:padding="@dimen/_5dp"
+                android:src="@drawable/ic_camera"
                 app:layout_constraintBottom_toBottomOf="@+id/user_avatar"
-                app:layout_constraintEnd_toEndOf="@+id/user_avatar">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@string/camera"
-                    android:src="@drawable/ic_camera" />
-            </LinearLayout>
-
+                app:layout_constraintEnd_toEndOf="@+id/user_avatar" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

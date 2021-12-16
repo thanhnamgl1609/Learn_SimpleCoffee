@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.project.simplecoffee.viewmodel.ContactDetailVM" />
+            type="com.project.simplecoffee.presentation.contact.ContactDetailVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +16,7 @@
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="@dimen/_15dp"
-        tools:context=".views.main.ContactDetailFragment">
+        tools:context=".presentation.contact.ContactDetailFragment">
 
         <TextView
             android:id="@+id/header"
@@ -75,29 +75,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:background="@drawable/btn_sign_in_background"
+            android:background="@drawable/btn_done"
+            android:elevation="@dimen/_15dp"
             android:onClick="@{() -> viewModel.onDoneClick()}"
             android:padding="5dp"
             android:text="@string/done"
             android:textAlignment="center"
-            android:textAppearance="@style/btn_address_text"
+            android:textAppearance="@style/btn_common_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/input_phone" />
 
-        <TextView
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/btn_caution"
+            android:background="@drawable/circle_background"
             android:onClick="@{() -> viewModel.onRemoveClick()}"
             android:padding="5dp"
-            android:text="@string/remove"
-            android:textAlignment="center"
-            android:textAppearance="@style/btn_caution_text"
             android:visibility="@{viewModel.removeVisibility}"
+            app:layout_constraintBottom_toBottomOf="@id/header"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_done" />
+            app:layout_constraintTop_toTopOf="@id/header">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_trash" />
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
