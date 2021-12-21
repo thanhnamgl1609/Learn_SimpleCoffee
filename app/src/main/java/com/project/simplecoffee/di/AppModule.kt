@@ -2,11 +2,9 @@ package com.project.simplecoffee.di
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.project.simplecoffee.data.mapper.DrinkMapper
-import com.project.simplecoffee.data.mapper.OrderItemMapper
-import com.project.simplecoffee.data.mapper.OrderMapper
-import com.project.simplecoffee.data.mapper.UserMapper
+import com.project.simplecoffee.data.mapper.*
 import com.project.simplecoffee.data.repository.*
+import com.project.simplecoffee.domain.model.OrderItem
 import com.project.simplecoffee.domain.repository.*
 import dagger.Module
 import dagger.Provides
@@ -32,11 +30,6 @@ object AppModule {
         userMapper: UserMapper
     ): IUserRepo = UserRepo(auth, userMapper)
 
-    @Singleton
-    @Provides
-    fun provideUserInfoRepo(
-        userRepo: IUserRepo
-    ): IUserInfoRepo = UserInfoRepo(userRepo)
 
     @Singleton
     @Provides
@@ -61,8 +54,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideOrderRepo(orderMapper: OrderMapper) =
-        OrderRepo(orderMapper) as IOrderRepo
+    fun provideOrderRepo(
+        orderMapper: OrderMapper,
+        orderItemMapper: OrderItemMapper
+    ) = OrderRepo(orderMapper, orderItemMapper) as IOrderRepo
 
     @Provides
     @Singleton
@@ -70,4 +65,21 @@ object AppModule {
 
     @Provides
     fun provideContactRepo(userRepo: IUserRepo) = ContactRepo(userRepo) as IContactRepo
+
+    @Provides
+    @Singleton
+    fun provideCartMapper(contactRepo: IContactRepo, orderItemMapper: OrderItemMapper) =
+        CartMapper(contactRepo, orderItemMapper)
+
+    @Provides
+    @Singleton
+    fun provideCartRepo(cartMapper: CartMapper) = CartRepo(cartMapper) as ICartRepo
+
+    @Provides
+    @Singleton
+    fun provideTableMapper(revenueRepo: IRevenueRepo) = TableMapper(revenueRepo)
+
+    @Provides
+    @Singleton
+    fun provideTableRepo(tableMapper: TableMapper) = TableRepo(tableMapper) as ITableRepo
 }

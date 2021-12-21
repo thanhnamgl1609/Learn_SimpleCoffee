@@ -27,12 +27,10 @@ class DrinkMapper @Inject constructor(
         from?.run {
             val listCategory = mutableListOf<DrinkCategory>()
             category?.forEach {
-                GlobalScope.launch(Dispatchers.IO) {
-                    drinkCategoryRepo.getDrinkCategoryDetailByID(it)
-                        .data?.run {
-                            listCategory.add(this)
-                        }
-                }
+                drinkCategoryRepo.getDrinkCategoryDetailByID(it)
+                    .data?.run {
+                        listCategory.add(this)
+                    }
             }
             Drink(
                 name,

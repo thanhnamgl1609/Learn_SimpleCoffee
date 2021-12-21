@@ -23,12 +23,12 @@ class OrderItemVM constructor(
 ) : ViewModel(), ItemVM {
     override val viewType = R.layout.order_item
 
-    private val _dayOfWeek = MutableLiveData(order.createdAt!!.getDayOfWeek())
+    private val _dayOfWeek = MutableLiveData(order.createdAt!!.dayOfWeek.name)
     private val _monthYear =
         MutableLiveData(order.createdAt!!.toCustomString(CustomConstant.FULL_MONTH_YEAR))
     private val _dayOfMonth =
         MutableLiveData(order.createdAt!!.toCustomString(CustomConstant.DAY_OF_MONTH))
-    private val _status = MutableLiveData(order.status.toString())
+    private val _status = MutableLiveData(order.status?.status.toString())
     private val _total = MutableLiveData(order.total.toString())
     private val _liveListItemVM = MutableLiveData(emptyList<DrinkOrderItemVM>())
     private val _moreVisible = MutableLiveData(View.GONE)
@@ -67,10 +67,14 @@ class OrderItemVM constructor(
                 val quantity = orderItem.quantity.toString()
                 val unitPrice = orderItem.price.toString()
                 val drinkCategory = drink.category?.run {
-                    if (first().name == "All")
-                        last().name
+                    if (size > 0) {
+                        if (first().name == "All")
+                            last().name
+                        else
+                            first().name
+                    }
                     else
-                        first().name
+                        "None"
                 }
                 listItemVM.add(
                     DrinkOrderItemVM(

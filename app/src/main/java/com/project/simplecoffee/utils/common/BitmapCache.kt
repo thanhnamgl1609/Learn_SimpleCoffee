@@ -8,6 +8,7 @@ import android.widget.ImageView
 import com.project.simplecoffee.R
 import kotlinx.coroutines.*
 import java.io.BufferedInputStream
+import java.lang.Exception
 import java.net.URL
 
 object BitmapCache {
@@ -21,10 +22,14 @@ object BitmapCache {
         }
 
     @DelicateCoroutinesApi
-    fun loadBitmap(url: String, imageView: ImageView): Bitmap {
-        val bitmap = BitmapFactory.decodeStream(URL(url).openStream())
-        memoryCache.put(url, bitmap)
-        return bitmap
+    fun loadBitmap(url: String, imageView: ImageView): Bitmap? {
+        return try {
+            val bitmap = URL(url).openStream()?.run { BitmapFactory.decodeStream(this) }
+            bitmap?.run { memoryCache.put(url, bitmap) }
+            bitmap
+        } catch (e: Exception) {
+            null
+        }
     }
 
     @DelicateCoroutinesApi
@@ -34,8 +39,10 @@ object BitmapCache {
             if (bitmap == null) {
                 bitmap = loadBitmap(url, imageView)
             }
-            withContext(Dispatchers.Main) {
-                imageView.setImageBitmap(bitmap)
+            bitmap?.run {
+                withContext(Dispatchers.Main) {
+                    imageView.setImageBitmap(this@run)
+                }
             }
         }
     }

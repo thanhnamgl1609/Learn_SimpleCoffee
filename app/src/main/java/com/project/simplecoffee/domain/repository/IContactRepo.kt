@@ -5,6 +5,7 @@ import com.project.simplecoffee.domain.model.Contact
 
 interface IContactRepo {
     suspend fun getAllContact(): Resource<List<Contact>?>
+    suspend fun getContactByID(id: String): Resource<Contact?>
     suspend fun updateContact(
         id: String,
         name: String,

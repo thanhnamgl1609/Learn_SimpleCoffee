@@ -5,7 +5,6 @@ import com.project.simplecoffee.domain.repository.IUserRepo
 import com.project.simplecoffee.domain.usecase.auth.SignInUseCase
 import com.project.simplecoffee.domain.usecase.auth.SignOutUseCase
 import com.project.simplecoffee.domain.usecase.auth.SignUpUseCase
-import com.project.simplecoffee.domain.usecase.user.CreateUserInfoUseCase
 import com.project.simplecoffee.domain.usecase.user.DeleteCurrentUserUseCase
 import com.project.simplecoffee.presentation.auth.AuthContainer
 import dagger.Module
@@ -29,9 +28,7 @@ object AuthModule {
     @Provides
     fun provideSignUpUseCase(
         userRepo: IUserRepo,
-        deleteCurrentUserUseCase: DeleteCurrentUserUseCase,
-        createUserInfoUseCase: CreateUserInfoUseCase
-    ) = SignUpUseCase(userRepo, deleteCurrentUserUseCase, createUserInfoUseCase)
+    ) = SignUpUseCase(userRepo)
 
     @Provides
     fun provideSignOutUseCase(userRepo: IUserRepo) = SignOutUseCase(userRepo)

@@ -48,7 +48,7 @@ class MenuFragment : Fragment() {
     }
 
     override fun onStart() {
-        menuVM.checkLogInStatus()
+        menuVM.loadData()
         super.onStart()
     }
 }

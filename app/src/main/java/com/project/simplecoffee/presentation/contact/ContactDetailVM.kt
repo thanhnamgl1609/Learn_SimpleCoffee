@@ -67,13 +67,13 @@ class ContactDetailVM @Inject constructor(
         when (result) {
             is Resource.OnSuccess -> {
                 if (!isUpdate)
-                    container.loadFragment(AllMainFragment.Contact.createFragment())
+                    container.backToPreviousFragment()
                 else {
                     result.data!!.apply {
                         _contact.postValue(this)
                         container.showMessage(SuccessConst.SUCCESS_UPDATE)
                     }
-                    container.loadFragment(AllMainFragment.Contact.createFragment())
+                    container.backToPreviousFragment()
                 }
             }
             is Resource.OnFailure -> {

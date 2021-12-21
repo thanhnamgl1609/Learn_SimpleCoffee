@@ -27,7 +27,7 @@ class OrderItemMapper @Inject constructor(
                 OrderItem(
                     this,
                     from["quantity"].toString().toInt(),
-                    from["unit"].toString().toDouble()
+                    from["unit"]?.toString()?.toDouble()
                 )
             }
         }

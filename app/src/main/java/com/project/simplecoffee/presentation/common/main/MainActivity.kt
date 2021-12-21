@@ -1,6 +1,9 @@
 package com.project.simplecoffee.presentation.common.main
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -14,6 +17,7 @@ import com.project.simplecoffee.presentation.auth.AuthActivity
 import javax.inject.Inject
 
 
+@SuppressLint("UseCompatLoadingForDrawables")
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), MainContainer {
 
@@ -29,7 +33,6 @@ class MainActivity : AppCompatActivity(), MainContainer {
             mainVM.loadFragment(AllMainFragment.Menu)
         }
         val parent = this
-
         binding.apply {
             viewModel = mainVM
             lifecycleOwner = parent
@@ -55,6 +58,10 @@ class MainActivity : AppCompatActivity(), MainContainer {
         }
     }
 
+    override fun loadDrawable(id: Int): Drawable =
+        resources.getDrawable(id, null)
+
+
     override fun showMessage(message: String) {
         makeToast(message)
     }
@@ -64,6 +71,13 @@ class MainActivity : AppCompatActivity(), MainContainer {
             replace(R.id.frame_container, fragment)
             if (isAddToBackStack) addToBackStack(null)
             commit()
+        }
+    }
+
+    override fun backToPreviousFragment() {
+        supportFragmentManager.apply {
+            if (backStackEntryCount > 0)
+                popBackStack()
         }
     }
 

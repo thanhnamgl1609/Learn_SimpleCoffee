@@ -41,12 +41,19 @@ fun String.toLocalDate(): LocalDate =
     LocalDate.parse(this, DateTimeFormatter.ofPattern(CustomConstant.DATE_FORMAT))
 
 @SuppressLint("SimpleDateFormat")
-fun Timestamp.toCustomString(format: String = CustomConstant.DATE_FORMAT): String {
-    val sfd = SimpleDateFormat(format)
-    return sfd.format(toDate())
-}
+fun LocalDateTime.toCustomString(format: String = CustomConstant.DATE_FORMAT): String =
+    format(DateTimeFormatter.ofPattern(format))
+
+fun Timestamp.toLocalDateTime(zone: ZoneOffset = ZoneOffset.UTC): LocalDateTime =
+    LocalDateTime.ofEpochSecond(seconds, nanoseconds, zone)
+
+
+fun Timestamp.toLocalDate(zone: ZoneOffset = ZoneOffset.UTC): LocalDate =
+    toLocalDateTime().toLocalDate()
 
 fun Timestamp.getDayOfWeek(zone: ZoneOffset = ZoneOffset.UTC): String {
-    val localDateTime = LocalDateTime.ofEpochSecond(seconds, nanoseconds, zone)
-    return localDateTime.dayOfWeek.name
+    return toLocalDateTime(zone).dayOfWeek.name
 }
+
+fun Double.round(numOfDigits: Int): Double =
+    String.format("%.$numOfDigits" + "f", this).toDouble()

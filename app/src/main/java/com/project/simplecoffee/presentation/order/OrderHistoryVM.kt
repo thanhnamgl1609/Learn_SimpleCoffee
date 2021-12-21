@@ -2,6 +2,7 @@ package com.project.simplecoffee.presentation.order
 
 import android.app.DatePickerDialog
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,17 +20,10 @@ import javax.inject.Inject
 class OrderHistoryVM @Inject constructor(
     private val container: MainContainer,
     private val getCustomerOrderHistoryUseCase: GetCustomerOrderHistoryUseCase
-) : ViewModel() {
-    private val _liveListOrderItemVM = MutableLiveData<List<OrderItemVM>>()
-    private val _todayClicked = MutableLiveData(false)
+) : OrderVM(container) {
     private val fromDate = MutableLiveData(LocalDate.now())
     private val toDate = MutableLiveData(LocalDate.now())
 
-
-    val liveListOrderItemVM: LiveData<List<OrderItemVM>>
-        get() = _liveListOrderItemVM
-    val todayClicked: LiveData<Boolean>
-        get() = _todayClicked
     val mThisDateListener =
         DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             fromDate.value = LocalDate.of(year, month + 1, dayOfMonth)
@@ -41,10 +35,12 @@ class OrderHistoryVM @Inject constructor(
         onAllClick()
     }
 
+    override suspend fun getOrder() =
+        getCustomerOrderHistoryUseCase(fromDate.value!!, toDate.value!!)
+
     fun onTodayClick() {
         fromDate.value = LocalDate.now()
         toDate.value = LocalDate.now()
-        _todayClicked.value = true
         getListOrder()
     }
 
@@ -52,7 +48,6 @@ class OrderHistoryVM @Inject constructor(
         val pair = CalendarHelper.getThisWeek()
         fromDate.value = pair.first
         toDate.value = pair.second
-        _todayClicked.value = false
         getListOrder()
     }
 
@@ -71,31 +66,8 @@ class OrderHistoryVM @Inject constructor(
     }
 
     fun onAllClick() = viewModelScope.launch {
+        beforeLoading()
         handleResult(getCustomerOrderHistoryUseCase())
-    }
-
-    private fun getListOrder() =
-        viewModelScope.launch {
-            handleResult(getCustomerOrderHistoryUseCase(fromDate.value!!, toDate.value!!))
-        }
-
-    private fun handleResult(result: Resource<List<Order>?>) {
-        when (result) {
-            is Resource.OnSuccess -> {
-                val listOrderItemVM = mutableListOf<OrderItemVM>()
-                result.data?.forEach { order ->
-                    listOrderItemVM.add(
-                        OrderItemVM(
-                            container,
-                            order
-                        )
-                    )
-                }
-                _liveListOrderItemVM.value = listOrderItemVM
-            }
-            is Resource.OnFailure -> {
-                container.showMessage(result.message.toString())
-            }
-        }
+        afterLoading()
     }
 }

@@ -8,7 +8,7 @@ import com.project.simplecoffee.utils.constant.ErrorConst
 import java.time.LocalDate
 import javax.inject.Inject
 
-class GetRevenueByStatusUseCase @Inject constructor(
+class GetOrderByStatusUseCase @Inject constructor(
     private val getAllRevenueFromToUseCase: GetRevenueFromToUseCase
 ) {
     suspend operator fun invoke(
@@ -21,8 +21,8 @@ class GetRevenueByStatusUseCase @Inject constructor(
         val resAllRevenue =
             getAllRevenueFromToUseCase(startDate, endDate)
         resAllRevenue.data?.apply {
-            filter { order -> order.status == status.status }
-            return Resource.OnSuccess(this)
+            val list = filter { order -> order.status == status }
+            return Resource.OnSuccess(list)
         }
         return resAllRevenue
     }

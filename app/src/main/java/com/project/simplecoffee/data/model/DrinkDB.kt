@@ -5,6 +5,6 @@ data class DrinkDB(
     var name: String? = null,
     val image_url: String? = null,
     val price: Double? = null,
-    val stock: Long? = null,
+    val stock: Int? = null,
     val category: List<String>? = null
 ) : Model()

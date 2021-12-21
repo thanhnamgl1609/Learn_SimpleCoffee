@@ -31,6 +31,17 @@ class ContactRepo @Inject constructor(
         }
     }
 
+    override suspend fun getContactByID(id: String): Resource<Contact?> =
+        withContext(Dispatchers.IO) {
+            try {
+                val document = collection.document(id).get().await()
+                val contact = document.toObject(Contact::class.java)?.withId<Contact>(id)
+                Resource.OnSuccess(contact)
+            } catch (e: Exception) {
+                Resource.OnFailure(null, ErrorConst.ERROR_UNEXPECTED)
+            }
+        }
+
     override suspend fun updateContact(
         id: String,
         name: String,

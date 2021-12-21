@@ -6,7 +6,7 @@
     app:startDestination="@id/signInFragment">
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.project.simplecoffee.presentation.auth.SignOutFragment"
+        android:name="com.project.simplecoffee.presentation.auth.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up">
         <action

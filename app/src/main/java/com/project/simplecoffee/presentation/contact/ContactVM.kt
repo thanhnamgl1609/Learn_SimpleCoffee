@@ -12,7 +12,7 @@ import com.project.simplecoffee.presentation.common.main.MainContainer
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ContactVM @Inject constructor(
+open class ContactVM @Inject constructor(
     private val container: MainContainer,
     private val getAllContactUseCase: GetAllContactUseCase
 ) : ViewModel() {
@@ -50,7 +50,7 @@ class ContactVM @Inject constructor(
         )
     }
 
-    fun onItemClick(contact: Contact) {
+    open fun onItemClick(contact: Contact) {
         container.loadFragment(
             AllMainFragment.ContactDetailFragment.createFragment(contact),
             true

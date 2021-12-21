@@ -7,4 +7,6 @@ import java.time.LocalDate
 
 interface IRevenueRepo {
     suspend fun getRevenue(fromDate: LocalDate, toDate: LocalDate): Resource<List<Order>?>
+    suspend fun getCurrentOrder(): Resource<List<Order>?>
+    suspend fun getOrderByID(id: String?): Resource<Order?>
 }

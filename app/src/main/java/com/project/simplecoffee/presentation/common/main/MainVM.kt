@@ -10,23 +10,18 @@ class MainVM @Inject constructor(
     val container: MainContainer,
     val getCurrentUserUseCase: GetCurrentUserUseCase
 ) : ViewModel() {
-    private var currFragment: AllMainFragment? = null
 
     fun loadFragment(frag: AllMainFragment) = viewModelScope.launch {
-        if (currFragment != frag) {
-            currFragment = when (frag) {
-                is AllMainFragment.CurrentOrder -> {
-                    if (getCurrentUserUseCase() != null) {
-                        container.loadFragment(frag.createFragment())
-                    } else {
-                        container.onSignIn()
-                    }
-                    frag
+        when (frag) {
+            is AllMainFragment.CurrentOrder -> {
+                getCurrentUserUseCase()?.run {
+                    container.loadFragment(frag.createFragment(role))
+                } ?: run {
+                    container.onSignIn()
                 }
-                else -> {
-                    container.loadFragment(frag.createFragment())
-                    frag
-                }
+            }
+            else -> {
+                container.loadFragment(frag.createFragment())
             }
         }
     }

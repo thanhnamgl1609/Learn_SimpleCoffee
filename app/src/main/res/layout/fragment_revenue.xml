@@ -188,11 +188,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/layout_from_to" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="@{viewModel.loadingVisible}"
+            app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
+            app:layout_constraintTop_toBottomOf="@+id/layout_from_to">
+
+            <ProgressBar
+                android:layout_width="@dimen/_50dp"
+                android:layout_height="@dimen/_50dp"
+                android:indeterminateTint="@color/main_gray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_order_these_days"
+            android:textAlignment="center"
+            android:textAppearance="@style/tv_black16"
+            android:visibility="@{viewModel.emptyTextVisible}"
+            app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
+            app:layout_constraintTop_toBottomOf="@+id/layout_from_to" />
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_outer"
+            android:id="@+id/recyclerview"
             itemList="@{viewModel.liveListOrderItemVM}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/_15dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
             app:layout_constraintTop_toBottomOf="@+id/layout_from_to" />
@@ -231,14 +260,33 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5dp"
-                    android:text="@{`$` + viewModel.inTotal}"
+                    android:text="@{viewModel.inTotal}"
                     android:textAppearance="@style/tv_black_straight14"
                     android:textColor="@color/green"
                     android:textSize="@dimen/_24sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/In_Total_Today_textview" />
+
+                <android.widget.ProgressBar
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:indeterminateTint="@color/main_gray"
+                    android:visibility="@{viewModel.loadingSuccessView}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/In_Total_Today_textview"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/In_Total_Today_textview" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <android.widget.ProgressBar
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:indeterminateTint="@color/main_gray"
+                android:visibility="@{viewModel.loadingSuccessView}"
+                app:layout_constraintBottom_toBottomOf="@id/drinks_of_the_day_textview"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/drinks_quantity_textview"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/amount_of_complete_order_textview"

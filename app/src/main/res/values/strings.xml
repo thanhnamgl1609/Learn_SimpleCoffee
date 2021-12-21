@@ -11,6 +11,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu">Menu</string>
     <string name="order">Order</string>
+    <string name="your_order">Your Order</string>
     <string name="more">More</string>
     <string name="table">Table Status</string>
     <string name="firstname">First Name</string>
@@ -71,4 +72,17 @@
     <string name="gender_icon">Gender icon</string>
     <string name="available">Available</string>
     <string name="unavailable">Unavailable</string>
+    <string name="your_cart">Your Cart</string>
+    <string name="total">Total:</string>
+    <string name="clear">Clear All</string>
+    <string name="select_contact">Please select a contact</string>
+    <string name="no_order_these_days">NO ORDER ON THESE DAYS</string>
+    <string name="no_order">NO ORDER</string>
+    <string name="no_order_tracking">BACK TO MENU FOR ORDERING ONE</string>
+    <string name="customer_order">Customer\'s order</string>
+    <string name="cart">Cart</string>
+    <string name="no_thing_in_cart">NOTHING IN CART!\nORDER SOMETHING IN MENU!</string>
+    <string name="customer_email">Customer\'s Email</string>
+    <string name="select_table">[Select a table]</string>
+    <string name="no_table_left">No Table Left</string>
 </resources>
