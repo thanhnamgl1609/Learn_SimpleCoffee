@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.project.simplecoffee.presentation.user.CartVM" />
+
+        <variable
+            name="viewModel"
+            type="com.project.simplecoffee.presentation.user.CartStaffVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_15dp"
+        tools:context=".presentation.user.CartStaffFragment">
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/cart"
+            android:textAppearance="@style/header_setting"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_select_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_circle_background"
+            app:layout_constraintTop_toBottomOf="@+id/header">
+
+            <Spinner
+                android:id="@+id/select_table"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50dp"
+                android:padding="10dp"
+                android:selectedItemPosition="@={viewModel.selectedTable}"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_table_left"
+                android:textAlignment="center"
+                android:textAppearance="@style/tv_black16"
+                android:visibility="@{viewModel.emptyTableVisible}"
+                app:layout_constraintBottom_toBottomOf="@id/select_table"
+                app:layout_constraintTop_toTopOf="@id/select_table" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/white_circle_background"
+            android:paddingHorizontal="@dimen/_15dp"
+            app:layout_constraintTop_toBottomOf="@id/layout_select_table">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ic_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_email"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/input_email"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:autofillHints="Email"
+                android:hint="@string/customer_email"
+                android:inputType="textEmailAddress"
+                android:padding="@dimen/text_input_padding"
+                android:text="@={viewModel.email}"
+                android:textAppearance="@style/tv_black_straight14"
+                android:textColorHint="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ic_find"
+                app:layout_constraintStart_toEndOf="@id/ic_mail"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ic_find"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15dp"
+                android:onClick="@{() -> viewModel.onFindEmail()}"
+                android:src="@drawable/ic_find"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+            layout="@layout/fragment_cart_drinkview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_email"
+            app:viewModel="@{(CartVM)viewModel}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
