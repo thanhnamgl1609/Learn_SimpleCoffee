@@ -48,4 +48,40 @@ class RevenueRepo @Inject constructor(
                 Resource.OnFailure(null, ErrorConst.ERROR_UNEXPECTED)
             }
         }
+
+    override suspend fun getCurrentOrder(): Resource<List<Order>?> =
+        withContext(Dispatchers.IO) {
+            try {
+                val listOrder = mutableListOf<Order>()
+                val documents =
+                    collection
+                        .whereNotIn(
+                            "status",
+                            listOf(OrderStatus.Success.status, OrderStatus.Cancelled.status)
+                        )
+                        .get().await()
+                for (document in documents) {
+                    orderMapper.toModel(
+                        document.toObject(OrderDB::class.java).withId(document.id)
+                    )?.apply { listOrder.add(this) }
+                }
+                Resource.OnSuccess(listOrder)
+            } catch (e: Exception) {
+                Resource.OnFailure(null, ErrorConst.ERROR_UNEXPECTED)
+            }
+        }
+
+    override suspend fun getOrderByID(id: String?): Resource<Order?> =
+        withContext(Dispatchers.IO) {
+            id?.run {
+                try {
+                    val document = collection.document(id).get().await()
+                    val orderDB =
+                        document.toObject(OrderDB::class.java)?.withId<OrderDB>(document.id)
+                    Resource.OnSuccess(orderMapper.toModel(orderDB))
+                } catch (e: Exception) {
+                    Resource.OnFailure(null, ErrorConst.ERROR_UNEXPECTED)
+                }
+            } ?: Resource.OnFailure(null, ErrorConst.NOT_ALL_FILLED)
+        }
 }

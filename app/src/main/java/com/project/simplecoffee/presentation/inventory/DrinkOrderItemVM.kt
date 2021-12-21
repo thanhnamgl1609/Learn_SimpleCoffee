@@ -17,7 +17,7 @@ class DrinkOrderItemVM constructor(
 
     private val _name = MutableLiveData<String>(drink.name)
     private val _quantity = MutableLiveData(mQuantity)
-    private val _unitPrice = MutableLiveData(mPrice)
+    private val _unitPrice = MutableLiveData("\$" + mPrice)
     private val _category = MutableLiveData(mCategory)
 
     val name: LiveData<String>

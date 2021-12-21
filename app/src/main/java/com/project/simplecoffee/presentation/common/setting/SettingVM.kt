@@ -1,13 +1,11 @@
 package com.project.simplecoffee.presentation.common.setting
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.project.simplecoffee.utils.common.Resource
 import com.project.simplecoffee.domain.model.details.Role
 import com.project.simplecoffee.domain.usecase.auth.GetCurrentUserUseCase
 import com.project.simplecoffee.domain.usecase.auth.SignOutUseCase
-import com.project.simplecoffee.domain.usecase.user.GetCurrentUserInfoUseCase
 import com.project.simplecoffee.presentation.common.main.AllMainFragment
 import com.project.simplecoffee.presentation.common.main.MainContainer
 import kotlinx.coroutines.launch
@@ -16,7 +14,6 @@ import javax.inject.Inject
 class SettingVM @Inject constructor(
     private val container: MainContainer,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
-    private val getCurrentUserInfoUseCase: GetCurrentUserInfoUseCase,
     private val signOutUseCase: SignOutUseCase
 ) : ViewModel() {
     private val _isSignedIn = MutableLiveData<Boolean>().apply {
@@ -72,40 +69,37 @@ class SettingVM @Inject constructor(
     }
 
     fun onTableStatusClick() {
-
+        moveTo(AllMainFragment.TableStatus)
     }
 
     fun onStatisticClick() {
-        container.loadFragment(AllMainFragment.Revenue.createFragment(), true)
+        moveTo(AllMainFragment.Revenue)
     }
 
     fun checkSignedInStatus() = viewModelScope.launch {
         container.toggleNavigationBottom(false)
-        when (val result = getCurrentUserInfoUseCase()) {
-            is Resource.OnSuccess -> {
-                val userInfo = result.data!!
-                _isSignedIn.postValue(true)
-                userInfo.apply {
-                    _role.postValue(role.toString())
-                    when (role) {
-                        Role.Customer.value -> {
-                            _customerVisible.postValue(View.VISIBLE)
-                        }
-                        Role.Staff.value -> {
-                            _staffVisible.postValue(View.VISIBLE)
-                        }
-                        Role.Manager.value -> {
-                            _managerVisible.postValue(View.VISIBLE)
-                        }
+        val currentUser = getCurrentUserUseCase()
+        if (currentUser != null) {
+            _isSignedIn.postValue(true)
+            currentUser.apply {
+                _role.postValue(role?.value.toString())
+                when (role) {
+                    is Role.Customer -> {
+                        _customerVisible.postValue(View.VISIBLE)
+                    }
+                    is Role.Staff -> {
+                        _staffVisible.postValue(View.VISIBLE)
+                    }
+                    is Role.Manager -> {
+                        _managerVisible.postValue(View.VISIBLE)
                     }
                 }
             }
-            is Resource.OnFailure -> {
-                _isSignedIn.postValue(false)
-                _staffVisible.postValue(View.GONE)
-                _managerVisible.postValue(View.GONE)
-                _customerVisible.postValue(View.GONE)
-            }
+        } else {
+            _isSignedIn.postValue(false)
+            _staffVisible.postValue(View.GONE)
+            _managerVisible.postValue(View.GONE)
+            _customerVisible.postValue(View.GONE)
         }
     }
 

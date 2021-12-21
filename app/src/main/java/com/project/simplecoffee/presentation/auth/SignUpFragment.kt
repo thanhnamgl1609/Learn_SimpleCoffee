@@ -16,7 +16,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SignOutFragment : Fragment() {
+class SignUpFragment : Fragment() {
 
     @Inject
     lateinit var userVM: UserVM

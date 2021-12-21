@@ -1,18 +1,18 @@
 package com.project.simplecoffee.presentation.order
 
 import android.app.DatePickerDialog
+import android.view.View
 import androidx.lifecycle.*
 import com.project.simplecoffee.domain.model.Order
 import com.project.simplecoffee.domain.model.OrderItem
 import com.project.simplecoffee.domain.model.details.OrderStatus
-import com.project.simplecoffee.domain.repository.IDrinkCategoryRepo
-import com.project.simplecoffee.domain.repository.IDrinkRepo
 import com.project.simplecoffee.domain.usecase.order.GetDrinkDetailUseCase
-import com.project.simplecoffee.domain.usecase.order.GetRevenueByStatusUseCase
+import com.project.simplecoffee.domain.usecase.order.GetOrderByStatusUseCase
 import com.project.simplecoffee.domain.usecase.order.GetRevenueFromToUseCase
 import com.project.simplecoffee.presentation.common.main.MainContainer
 import com.project.simplecoffee.utils.common.CalendarHelper
 import com.project.simplecoffee.utils.common.Resource
+import com.project.simplecoffee.utils.common.round
 import com.project.simplecoffee.utils.common.toCustomString
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,22 +24,21 @@ import javax.inject.Inject
 class RevenueVM @Inject constructor(
     val container: MainContainer,
     private val getRevenueFromToUseCase: GetRevenueFromToUseCase,
-    private val getRevenueByStatusUseCase: GetRevenueByStatusUseCase,
+    private val getOrderByStatusUseCase: GetOrderByStatusUseCase,
     private val getDrinkDetailUseCase: GetDrinkDetailUseCase
-) : ViewModel() {
+) : OrderVM(container) {
     // Live Data for binding
     private val fromDate = MutableLiveData(LocalDate.now())
     private val toDate = MutableLiveData(LocalDate.now())
-    private val _liveListOrderItemVM = MutableLiveData<List<OrderItemVM>>()
-    private val _inTotal = MutableLiveData("0")
-    private val _amountOrder = MutableLiveData("0")
-    private val _quantityDrink = MutableLiveData("0")
-    private val _bestSelling = MutableLiveData<String>()
+
+    private val _inTotal = MutableLiveData("")
+    private val _amountOrder = MutableLiveData("")
+    private val _quantityDrink = MutableLiveData("")
+    private val _bestSelling = MutableLiveData("")
+    private val _loadingSuccessView = MutableLiveData(View.GONE)
 
     val fromDateStr = Transformations.map(fromDate) { info -> info.toCustomString() }
     val toDateStr = Transformations.map(toDate) { info -> info.toCustomString() }
-    val liveListOrderItemVM: LiveData<List<OrderItemVM>>
-        get() = _liveListOrderItemVM
     val inTotal: LiveData<String>
         get() = _inTotal
     val amountOrder: LiveData<String>
@@ -48,6 +47,8 @@ class RevenueVM @Inject constructor(
         get() = _quantityDrink
     val bestSelling: LiveData<String>
         get() = _bestSelling
+    val loadingSuccessView: LiveData<Int>
+        get() = _loadingSuccessView
 
     // Date Picker Listener
     val mFromDateListener =
@@ -64,73 +65,60 @@ class RevenueVM @Inject constructor(
         DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             fromDate.value = LocalDate.of(year, month + 1, dayOfMonth)
             toDate.value = LocalDate.of(year, month + 1, dayOfMonth)
-            getListOrder()
+            setData()
         }
 
     init {
         container.toggleNavigationBottom()
-        getListOrder()
+        setData()
     }
+
+    override suspend fun getOrder() = getRevenueFromToUseCase(fromDate.value!!, toDate.value!!)
 
     fun onTodayClick() {
         fromDate.value = LocalDate.now()
         toDate.value = LocalDate.now()
-        getListOrder()
+        setData()
     }
 
     fun onThisWeekClick() {
         val pair = CalendarHelper.getThisWeek()
         fromDate.value = pair.first
         toDate.value = pair.second
-        getListOrder()
+        setData()
     }
 
     fun onThisMonthClick() {
         val pair = CalendarHelper.getThisMonth()
         fromDate.value = pair.first
         toDate.value = pair.second
-        getListOrder()
+        setData()
     }
 
     fun onThisYearClick() {
         val pair = CalendarHelper.getThisYear()
         fromDate.value = pair.first
         toDate.value = pair.second
-        getListOrder()
+        setData()
     }
 
     fun onGetListOrderClick() {
-        getListOrder()
+        setData()
     }
 
-    private fun getListOrder() =
-        viewModelScope.launch {
-            handleResult(getRevenueFromToUseCase(fromDate.value!!, toDate.value!!))
-        }
-
-    private fun handleResult(result: Resource<List<Order>?>) {
-        when (result) {
-            is Resource.OnSuccess -> {
-                val listOrderItemVM = mutableListOf<OrderItemVM>()
-                result.data?.forEach { order ->
-                    listOrderItemVM.add(
-                        OrderItemVM(
-                            container,
-                            order
-                        )
-                    )
-                }
-                updateFooter()
-                _liveListOrderItemVM.postValue(listOrderItemVM)
-            }
-            is Resource.OnFailure -> {
-                container.showMessage(result.message.toString())
-            }
-        }
+    private fun setData() = viewModelScope.launch {
+        getListOrder()
+        updateFooter()
     }
 
     private fun updateFooter() = viewModelScope.launch {
-        getRevenueByStatusUseCase(
+        _loadingSuccessView.value = View.VISIBLE
+        _quantityDrink.value = ""
+        _amountOrder.value = ""
+        _bestSelling.value = ""
+        _inTotal.value = ""
+
+        getOrderByStatusUseCase(
             fromDate.value!!,
             toDate.value!!,
             OrderStatus.Success
@@ -139,13 +127,15 @@ class RevenueVM @Inject constructor(
             _quantityDrink.postValue(getDrinkQuantity(listDrinkOrder).toString())
             _amountOrder.postValue(size.toString())
             _bestSelling.postValue(getBestSellingDrink(listDrinkOrder))
-            _inTotal.postValue(sumOf { it.total!! }.toString())
+            val total = sumOf { it.total!! }.round(2).toString()
+            _inTotal.postValue("\$$total")
         } ?: run {
             _quantityDrink.postValue("0")
             _amountOrder.postValue("0")
-            _bestSelling.postValue("")
-            _inTotal.postValue("0")
+            _bestSelling.postValue("None")
+            _inTotal.postValue("$0")
         }
+        _loadingSuccessView.postValue(View.GONE)
     }
 
     private fun getDrinkQuantity(listDrinkOrder: List<List<OrderItem>?>) =
@@ -168,7 +158,7 @@ class RevenueVM @Inject constructor(
             id?.run {
                 getDrinkDetailUseCase(id).data?.run {
                     name
-                } ?: ""
-            } ?: ""
+                } ?: "None"
+            } ?: "None"
         }
 }

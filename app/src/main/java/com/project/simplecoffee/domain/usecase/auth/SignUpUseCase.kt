@@ -2,7 +2,6 @@ package com.project.simplecoffee.domain.usecase.auth
 
 import com.project.simplecoffee.domain.model.User
 import com.project.simplecoffee.domain.repository.IUserRepo
-import com.project.simplecoffee.domain.usecase.user.CreateUserInfoUseCase
 import com.project.simplecoffee.domain.usecase.user.DeleteCurrentUserUseCase
 import com.project.simplecoffee.utils.common.Resource
 import com.project.simplecoffee.utils.constant.ErrorConst
@@ -11,8 +10,6 @@ import javax.inject.Inject
 
 class SignUpUseCase @Inject constructor(
     private val userRepo: IUserRepo,
-    private val deleteCurrentUserUseCase: DeleteCurrentUserUseCase,
-    private val createUserInfoUseCase: CreateUserInfoUseCase
 ) {
     suspend operator fun invoke(
         email: String?,
@@ -37,22 +34,7 @@ class SignUpUseCase @Inject constructor(
             )
         }
 
-        val createUserResult = userRepo.signUp(email!!, pwd!!)
-        if (createUserResult is Resource.OnSuccess) {
-            val result = createUserInfoUseCase(
-                createUserResult.data?.id,
-                firstName,
-                lastName,
-                gender,
-                dob
-            )
-            if (result is Resource.OnFailure) {
-                deleteCurrentUserUseCase()
-                return Resource.OnFailure(null, result.message)
-            }
-        }
-
-        return createUserResult
+        return userRepo.signUp(email!!, pwd!!, firstName!!, lastName!!, gender!!, dob!!)
     }
 
     private fun isValid(email: String?, pwd: String?, confirmPwd: String?) =
