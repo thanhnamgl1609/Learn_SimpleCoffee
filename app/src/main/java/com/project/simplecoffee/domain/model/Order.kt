@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 data class Order(
     val createdAt: LocalDateTime? = null,
-    val uid: String? = null,
+    val email: String? = null,
     val address: String? = null,
     val phone: String? = null,
     var status: OrderStatus? = null,

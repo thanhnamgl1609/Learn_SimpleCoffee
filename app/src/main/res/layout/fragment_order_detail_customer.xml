@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.project.simplecoffee.presentation.order.OrderDetailVM" />
+
+        <variable
+            name="viewModel"
+            type="com.project.simplecoffee.presentation.order.OrderDetailCustomerVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_15dp">
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/order_detail"
+            android:textAppearance="@style/header_setting"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/order_detail"
+            layout="@layout/fragment_order_detail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_15dp"
+            app:layout_constraintBottom_toTopOf="@id/btn"
+            app:layout_constraintTop_toBottomOf="@id/header"
+            app:viewModel="@{(OrderDetailVM)viewModel}" />
+
+        <ProgressBar
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:indeterminateTint="@color/main_gray"
+            app:layout_constraintBottom_toBottomOf="@id/btn"
+            app:layout_constraintEnd_toEndOf="@id/btn"
+            app:layout_constraintStart_toStartOf="@id/btn"
+            app:layout_constraintTop_toTopOf="@id/btn" />
+
+        <android.widget.Button
+            android:id="@+id/btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gray_circle_btn"
+            android:enabled="@{viewModel.btnEnabled}"
+            android:onClick="@{() -> viewModel.onCancelRequest()}"
+            android:text="@string/request_for_cancel"
+            android:textAppearance="@style/tv_white16"
+            android:visibility="@{viewModel.requestBtn}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/order_detail" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

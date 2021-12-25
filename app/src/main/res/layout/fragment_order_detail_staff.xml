@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.project.simplecoffee.presentation.order.OrderDetailVM" />
+
+        <variable
+            name="viewModel"
+            type="com.project.simplecoffee.presentation.order.OrderDetailStaffVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_15dp">
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/order_detail"
+            android:textAppearance="@style/header_setting"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/order_detail"
+            layout="@layout/fragment_order_detail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_15dp"
+            app:layout_constraintBottom_toTopOf="@id/update_btn"
+            app:layout_constraintTop_toBottomOf="@id/header"
+            app:viewModel="@{(OrderDetailVM)viewModel}" />
+
+        <ProgressBar
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:indeterminateTint="@color/main_gray"
+            app:layout_constraintBottom_toBottomOf="@id/empty_btn"
+            app:layout_constraintEnd_toEndOf="@id/empty_btn"
+            app:layout_constraintStart_toStartOf="@id/empty_btn"
+            app:layout_constraintTop_toTopOf="@id/empty_btn" />
+
+        <android.widget.Button
+            android:id="@+id/empty_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/_50dp"
+            android:background="@drawable/gray_circle_btn"
+            android:onClick="@{() -> viewModel.acceptForCancelling()}"
+            android:text="@string/accept_cancel"
+            android:textAppearance="@style/tv_white16"
+            android:visibility="@{viewModel.acceptBtnVisible}"
+            app:layout_constraintBottom_toBottomOf="@id/update_btn"
+            app:layout_constraintEnd_toStartOf="@id/update_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/update_btn" />
+
+        <ProgressBar
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:indeterminateTint="@color/main_gray"
+            app:layout_constraintBottom_toBottomOf="@id/update_btn"
+            app:layout_constraintEnd_toEndOf="@id/update_btn"
+            app:layout_constraintStart_toStartOf="@id/update_btn"
+            app:layout_constraintTop_toTopOf="@id/update_btn" />
+
+        <android.widget.Button
+            android:id="@+id/update_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gray_circle_btn"
+            android:onClick="@{() -> viewModel.updateStatus()}"
+            android:text="@{viewModel.nextStatus}"
+            android:textAppearance="@style/tv_white16"
+            android:visibility="@{viewModel.updateBtnVisible}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/empty_btn" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

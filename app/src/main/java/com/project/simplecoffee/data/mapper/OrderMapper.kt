@@ -22,7 +22,7 @@ class OrderMapper @Inject constructor(
             }
             OrderDB(
                 createdAt?.toTimestamp(),
-                uid,
+                email,
                 address,
                 phone,
                 status?.status,
@@ -43,7 +43,7 @@ class OrderMapper @Inject constructor(
             }
             Order(
                 createdAt?.toLocalDateTime(),
-                uid,
+                email,
                 address,
                 phone,
                 getStatus(status),
@@ -63,6 +63,7 @@ class OrderMapper @Inject constructor(
             OrderStatus.Shipping.status -> OrderStatus.Shipping
             OrderStatus.Queueing.status -> OrderStatus.Queueing
             OrderStatus.Success.status -> OrderStatus.Success
+            OrderStatus.WaitInStore.status -> OrderStatus.WaitInStore
             else -> null
         }
 }

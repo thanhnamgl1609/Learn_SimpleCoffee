@@ -5,8 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.simplecoffee.domain.model.Order
 import com.project.simplecoffee.domain.model.Table
 import com.project.simplecoffee.domain.usecase.order.GetAllTableUseCase
+import com.project.simplecoffee.presentation.common.main.AllMainFragment
 import com.project.simplecoffee.presentation.common.main.MainContainer
 import com.project.simplecoffee.utils.common.Resource
 import kotlinx.coroutines.Dispatchers
@@ -25,11 +27,7 @@ class TableStatusVM @Inject constructor(
     val loadingVisible: LiveData<Int>
         get() = _loadingVisible
 
-    init {
-        getAllTable()
-    }
-
-    private fun getAllTable() = viewModelScope.launch {
+    fun getAllTable() = viewModelScope.launch {
         _loadingVisible.value = View.VISIBLE
         handleResult(getAllTableUseCase())
         _loadingVisible.value = View.GONE
@@ -54,5 +52,16 @@ class TableStatusVM @Inject constructor(
                 container.showMessage(result.message.toString())
             }
         }
+    }
+
+    fun onItemClick(order: Order) {
+        container.loadFragment(
+            AllMainFragment.OrderDetailTable.createFragment(order.id!!),
+            true
+        )
+    }
+
+    fun onAddTableButton() {
+        container.loadFragment(AllMainFragment.TableDetail.createFragment(), true)
     }
 }

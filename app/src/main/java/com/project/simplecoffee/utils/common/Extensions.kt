@@ -11,6 +11,7 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
@@ -24,6 +25,12 @@ internal fun Activity.makeToast(message: String) {
 }
 
 internal fun LocalDate.toCustomString(pattern: String = CustomConstant.DATE_FORMAT): String {
+    val formatter = DateTimeFormatter.ofPattern(pattern)
+    return this.format(formatter)
+
+}
+
+internal fun LocalTime.toCustomString(pattern: String = CustomConstant.TIME_FORMAT): String {
     val formatter = DateTimeFormatter.ofPattern(pattern)
     return this.format(formatter)
 

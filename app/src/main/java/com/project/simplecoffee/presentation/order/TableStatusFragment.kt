@@ -35,4 +35,9 @@ class TableStatusFragment : Fragment() {
         }
         return binding.root
     }
+
+    override fun onStart() {
+        tableStatusVM.getAllTable()
+        super.onStart()
+    }
 }

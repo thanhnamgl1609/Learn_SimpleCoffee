@@ -6,6 +6,6 @@ import javax.inject.Inject
 class UpdateTableOrderUseCase @Inject constructor(
     private val tableRepo: ITableRepo
 ) {
-    suspend operator fun invoke(id: String, orderID: String) =
+    suspend operator fun invoke(id: String, orderID: String?) =
         tableRepo.updateTableOrder(id, orderID)
 }

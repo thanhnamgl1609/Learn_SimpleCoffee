@@ -1,6 +1,7 @@
 package com.project.simplecoffee.presentation.common.main
 
 import androidx.fragment.app.Fragment
+import com.project.simplecoffee.domain.model.Order
 import com.project.simplecoffee.domain.model.details.Role
 import com.project.simplecoffee.presentation.common.setting.SettingFragment
 import com.project.simplecoffee.presentation.contact.ContactDetailFragment
@@ -13,6 +14,36 @@ import com.project.simplecoffee.presentation.user.CartCustomerFragment
 import com.project.simplecoffee.presentation.user.CartStaffFragment
 
 sealed class AllMainFragment {
+    object OrderDetail : AllMainFragment() {
+        override fun createFragment(withRole: Role?) = OrderDetailStatsFragment()
+        fun createFragment(orderID: String) =
+            OrderDetailStatsFragment().apply { this.orderID = orderID }
+    }
+
+    object OrderDetailCustomer : AllMainFragment() {
+        override fun createFragment(withRole: Role?) = OrderDetailCustomerFragment()
+        fun createFragment(orderID: String) =
+            OrderDetailCustomerFragment().apply { this.orderID = orderID }
+    }
+
+    object OrderDetailStaff : AllMainFragment() {
+        override fun createFragment(withRole: Role?) = OrderDetailStaffFragment()
+        fun createFragment(orderID: String) =
+            OrderDetailStaffFragment().apply { this.orderID = orderID }
+    }
+
+    object OrderDetailTable : AllMainFragment() {
+        override fun createFragment(withRole: Role?) = OrderDetailTableFragment()
+        fun createFragment(orderID: String) =
+            OrderDetailTableFragment().apply { this.orderID = orderID }
+    }
+
+    object TableDetail : AllMainFragment() {
+        override fun createFragment(withRole: Role?) = TableDetailFragment()
+        fun createFragment(tableID: String) =
+            TableDetailFragment().apply { this.tableID = tableID }
+    }
+
     object CurrentOrder : AllMainFragment() {
         override fun createFragment(withRole: Role?): Fragment {
             if (withRole !is Role.Customer)

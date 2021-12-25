@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.order.TableDetailFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.project.simplecoffee.presentation.order.TableDetailVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_15dp">
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/table_detail"
+            android:textAppearance="@style/header_setting"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/table_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginTop="@dimen/_15dp"
+            android:background="@drawable/white_circle_background"
+            android:hint="@string/name"
+            android:padding="@dimen/text_input_padding"
+            android:text="@={viewModel.name}"
+            android:textAppearance="@style/tv_black_straight14"
+            android:textColorHint="@color/disable_main_gray"
+            app:layout_constraintTop_toBottomOf="@id/header" />
+
+        <Spinner
+            android:id="@+id/table_size"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginTop="@dimen/_15dp"
+            android:background="@drawable/white_circle_background"
+            android:padding="@dimen/_10dp"
+            android:prompt="@string/select_size"
+            android:selectedItemPosition="@{viewModel.selectedSizePosition}"
+            app:layout_constraintTop_toBottomOf="@id/table_name" />
+
+        <Spinner
+            android:id="@+id/table_shape"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginTop="@dimen/_15dp"
+            android:background="@drawable/white_circle_background"
+            android:padding="@dimen/_10dp"
+            android:prompt="@string/select_shape"
+            android:selectedItemPosition="@{viewModel.selectedShapePosition}"
+            app:layout_constraintTop_toBottomOf="@id/table_size" />
+
+        <android.widget.Button
+            android:id="@+id/btn_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15dp"
+            android:background="@drawable/gray_circle_btn"
+            android:onClick="@{() -> viewModel.onDoneButton()}"
+            android:text="@string/done"
+            android:textAppearance="@style/tv_white16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/table_shape" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle_background"
+            android:onClick="@{() -> viewModel.onRemoveButton()}"
+            android:padding="5dp"
+            android:visibility="@{viewModel.removeVisibility}"
+            app:layout_constraintBottom_toBottomOf="@id/header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/header">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_trash" />
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

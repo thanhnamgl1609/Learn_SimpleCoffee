@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.project.simplecoffee.presentation.order.OrderDetailVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:indeterminateTint="@color/main_gray"
+                android:visibility="@{viewModel.loadingVisible}"
+                app:layout_constraintBottom_toBottomOf="@id/label_id"
+                app:layout_constraintStart_toEndOf="@id/label_id"
+                app:layout_constraintTop_toTopOf="@id/label_id" />
+
+            <TextView
+                android:id="@+id/label_id"
+                android:layout_width="@dimen/_100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/bill_id"
+                android:textAppearance="@style/tv_light_black16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/content_id"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@{`: ` + viewModel.id}"
+                android:textAppearance="@style/tv_black16"
+                app:layout_constraintBottom_toBottomOf="@id/label_id"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/label_id"
+                app:layout_constraintTop_toTopOf="@id/label_id" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divider_id"
+            style="@style/Divider"
+            android:layout_marginTop="@dimen/_5dp"
+            app:layout_constraintTop_toBottomOf="@id/id"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5dp"
+            app:layout_constraintTop_toBottomOf="@id/divider_id">
+
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:indeterminateTint="@color/main_gray"
+                android:visibility="@{viewModel.loadingVisible}"
+                app:layout_constraintBottom_toBottomOf="@id/label_name"
+                app:layout_constraintStart_toEndOf="@id/label_name"
+                app:layout_constraintTop_toTopOf="@id/label_name" />
+
+            <TextView
+                android:id="@+id/label_name"
+                android:layout_width="@dimen/_100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:textAppearance="@style/tv_light_black16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/content_name"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@{`: ` + viewModel.name}"
+                android:textAppearance="@style/tv_black16"
+                app:layout_constraintBottom_toBottomOf="@id/label_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/label_name"
+                app:layout_constraintTop_toTopOf="@id/label_name" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divider_name"
+            style="@style/Divider"
+            android:layout_marginTop="@dimen/_5dp"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5dp"
+            app:layout_constraintTop_toTopOf="@id/divider_name">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:indeterminateTint="@color/main_gray"
+                android:visibility="@{viewModel.loadingVisible}"
+                app:layout_constraintBottom_toBottomOf="@id/label_email"
+                app:layout_constraintStart_toEndOf="@id/label_email"
+                app:layout_constraintTop_toTopOf="@id/label_email" />
+
+            <TextView
+                android:id="@+id/label_email"
+                android:layout_width="@dimen/_100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textAppearance="@style/tv_light_black16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/content_email"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@{`: ` + viewModel.email}"
+                android:textAppearance="@style/tv_black16"
+                app:layout_constraintBottom_toBottomOf="@id/label_email"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/label_email"
+                app:layout_constraintTop_toTopOf="@id/label_email" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divider_email"
+            style="@style/Divider"
+            android:layout_marginTop="@dimen/_5dp"
+            app:layout_constraintTop_toBottomOf="@id/email"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5dp"
+            app:layout_constraintTop_toTopOf="@id/divider_status">
+
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:indeterminateTint="@color/main_gray"
+                android:visibility="@{viewModel.loadingVisible}"
+                app:layout_constraintBottom_toBottomOf="@id/label_date"
+                app:layout_constraintStart_toEndOf="@id/label_date"
+                app:layout_constraintTop_toTopOf="@id/label_date" />
+
+            <TextView
+                android:id="@+id/label_date"
+                android:layout_width="@dimen/_100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/date"
+                android:textAppearance="@style/tv_light_black16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/content_date"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@{`: ` + viewModel.date}"
+                android:textAppearance="@style/tv_black16"
+                app:layout_constraintBottom_toBottomOf="@id/label_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/label_date"
+                app:layout_constraintTop_toTopOf="@id/label_date" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divider_date"
+            style="@style/Divider"
+            android:layout_marginTop="@dimen/_5dp"
+            app:layout_constraintTop_toBottomOf="@id/date"
+            tools:ignore="MissingConstraints" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5dp"
+            app:layout_constraintTop_toTopOf="@id/divider_email">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:indeterminateTint="@color/main_gray"
+                android:visibility="@{viewModel.loadingVisible}"
+                app:layout_constraintBottom_toBottomOf="@id/label_status"
+                app:layout_constraintStart_toEndOf="@id/label_status"
+                app:layout_constraintTop_toTopOf="@id/label_status" />
+
+            <TextView
+                android:id="@+id/label_status"
+                android:layout_width="@dimen/_100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/status"
+                android:textAppearance="@style/tv_light_black16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/content_status"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@{`: ` + viewModel.status}"
+                android:textAppearance="@style/tv_black16"
+                app:layout_constraintBottom_toBottomOf="@id/label_status"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/label_status"
+                app:layout_constraintTop_toTopOf="@id/label_status" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divider_status"
+            style="@style/Divider"
+            android:layout_marginTop="@dimen/_5dp"
+            app:layout_constraintTop_toBottomOf="@id/status"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5dp"
+            app:layout_constraintTop_toTopOf="@id/divider_date">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:indeterminateTint="@color/main_gray"
+                android:visibility="@{viewModel.loadingVisible}"
+                app:layout_constraintBottom_toBottomOf="@id/label_time"
+                app:layout_constraintStart_toEndOf="@id/label_time"
+                app:layout_constraintTop_toTopOf="@id/label_time" />
+
+            <TextView
+                android:id="@+id/label_time"
+                android:layout_width="@dimen/_100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/time"
+                android:textAppearance="@style/tv_light_black16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/content_time"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@{`: ` + viewModel.time}"
+                android:textAppearance="@style/tv_black16"
+                app:layout_constraintBottom_toBottomOf="@id/label_time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/label_time"
+                app:layout_constraintTop_toTopOf="@id/label_time" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divider_time"
+            style="@style/Divider"
+            android:layout_marginTop="@dimen/_5dp"
+            app:layout_constraintTop_toBottomOf="@id/time"
+            tools:ignore="MissingConstraints" />
+
+        <ProgressBar
+            android:layout_width="@dimen/_50dp"
+            android:layout_height="@dimen/_50dp"
+            android:indeterminateTint="@color/main_gray"
+            android:visibility="@{viewModel.loadingItemsVisible}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/DrinksRecyclerView"
+            itemList="@{viewModel.listDrink}"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_15dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

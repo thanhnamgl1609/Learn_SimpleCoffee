@@ -7,5 +7,6 @@ data class TableDB(
     val order: String? = null,
     val no: Int? = null,
     val image: String? = null,
-    val size: Int? = null
+    val size: Int? = null,
+    val shape: String? = null
 ) : Model()

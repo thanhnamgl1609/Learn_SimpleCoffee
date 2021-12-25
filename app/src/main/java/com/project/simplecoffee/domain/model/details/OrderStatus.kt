@@ -2,10 +2,33 @@ package com.project.simplecoffee.domain.model.details
 
 
 sealed class OrderStatus(val status: String) {
-    object Queueing : OrderStatus("Queueing")
-    object Processing : OrderStatus("Processing")
-    object Shipping : OrderStatus("Shipping")
-    object RequestCancel : OrderStatus("Request for cancelling")
-    object Cancelled : OrderStatus("Cancelled")
-    object Success : OrderStatus("Success")
+    abstract fun next(): OrderStatus
+
+    object WaitInStore : OrderStatus("Waiting") {
+        override fun next() = Success
+    }
+
+    object Queueing : OrderStatus("Queueing") {
+        override fun next() = Processing
+    }
+
+    object Processing : OrderStatus("Processing") {
+        override fun next() = Shipping
+    }
+
+    object Shipping : OrderStatus("Shipping") {
+        override fun next() = Success
+    }
+
+    object RequestCancel : OrderStatus("Request for cancelling") {
+        override fun next() = Processing
+    }
+
+    object Cancelled : OrderStatus("Cancelled") {
+        override fun next() = Cancelled
+    }
+
+    object Success : OrderStatus("Success") {
+        override fun next() = Success
+    }
 }

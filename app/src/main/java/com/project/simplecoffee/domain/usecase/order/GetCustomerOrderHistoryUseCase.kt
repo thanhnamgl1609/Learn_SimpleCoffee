@@ -14,7 +14,7 @@ class GetCustomerOrderHistoryUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(): Resource<List<Order>?> {
         return getCurrentUserUseCase()?.run {
-            orderRepo.getOrderHistory(id!!)
+            orderRepo.getOrderHistory(email!!)
         } ?: Resource.OnFailure(null, ErrorConst.ERROR_AUTH)
     }
 
@@ -25,7 +25,7 @@ class GetCustomerOrderHistoryUseCase @Inject constructor(
         if (!isValid(fromDate, toDate))
             return Resource.OnFailure(null, ErrorConst.NOT_ALL_FILLED)
         return getCurrentUserUseCase()?.run {
-            orderRepo.getOrderHistory(id!!, fromDate!!, toDate!!)
+            orderRepo.getOrderHistory(email!!, fromDate!!, toDate!!)
         } ?: Resource.OnFailure(null, ErrorConst.ERROR_AUTH)
     }
 

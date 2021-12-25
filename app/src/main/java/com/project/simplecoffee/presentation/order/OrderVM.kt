@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.simplecoffee.domain.model.Order
+import com.project.simplecoffee.presentation.common.main.AllMainFragment
 import com.project.simplecoffee.presentation.common.main.MainContainer
 import com.project.simplecoffee.utils.common.Resource
 import kotlinx.coroutines.launch
@@ -54,6 +55,7 @@ abstract class OrderVM constructor(
                     listOrderItemVM.add(
                         OrderItemVM(
                             container,
+                            this,
                             order
                         )
                     )
@@ -64,5 +66,12 @@ abstract class OrderVM constructor(
                 container.showMessage(result.message.toString())
             }
         }
+    }
+
+    open fun onItemClick(order: Order) {
+        container.loadFragment(
+            AllMainFragment.OrderDetail.createFragment(order.id!!),
+            true
+        )
     }
 }

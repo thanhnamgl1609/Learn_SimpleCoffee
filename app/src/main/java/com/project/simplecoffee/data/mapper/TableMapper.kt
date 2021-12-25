@@ -4,6 +4,7 @@ import com.project.simplecoffee.data.model.TableDB
 import com.project.simplecoffee.domain.repository.IRevenueRepo
 import com.project.simplecoffee.domain.mapper.IModelMapper
 import com.project.simplecoffee.domain.model.Table
+import com.project.simplecoffee.domain.model.details.TableShape
 import javax.inject.Inject
 
 class TableMapper @Inject constructor(
@@ -16,7 +17,8 @@ class TableMapper @Inject constructor(
                 revenueRepo.getOrderByID(order).data,
                 no,
                 image,
-                size
+                size,
+                TableShape.getTableShape(shape!!)
             ).withId(id!!)
         }
 
@@ -27,7 +29,8 @@ class TableMapper @Inject constructor(
                 order?.id,
                 no,
                 image,
-                size
+                size,
+                shape?.value
             ).withId(id!!)
         }
 }

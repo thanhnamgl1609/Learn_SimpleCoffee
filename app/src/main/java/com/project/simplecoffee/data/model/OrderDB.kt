@@ -7,7 +7,7 @@ import com.project.simplecoffee.domain.model.Model
 data class OrderDB(
     @JvmField @PropertyName("created_at")
     val createdAt: Timestamp? = null,
-    val uid: String? = null,
+    val email: String? = null,
     val address: String? = null,
     val phone: String? = null,
     var status: String? = null,

@@ -14,6 +14,7 @@
         android:layout_height="@dimen/_100dp"
         android:layout_marginTop="@dimen/_15dp"
         android:background="@{itemViewModel.color}"
+        android:onClick="@{() -> itemViewModel.onItemClick()}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

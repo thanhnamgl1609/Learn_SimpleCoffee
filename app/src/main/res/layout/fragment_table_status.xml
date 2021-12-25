@@ -14,18 +14,61 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/_15dp"
-        android:layout_marginBottom="@dimen/_15dp">
+        android:layout_margin="@dimen/_15dp">
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/table_status"
+            android:textAppearance="@style/header_setting"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_add_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/btn_setting_background"
+            android:onClick="@{() -> viewModel.onAddTableButton()}"
+            android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header">
+
+            <ImageView
+                android:id="@+id/add_ic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/add_icon"
+                android:src="@drawable/ic_add"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/new_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="@string/add_new_table"
+                android:textAppearance="@style/btn_setting_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/add_ic"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ProgressBar
             android:layout_width="@dimen/_50dp"
             android:layout_height="@dimen/_50dp"
             android:indeterminateTint="@color/main_gray"
             android:visibility="@{viewModel.loadingVisible}"
-            app:layout_constraintBottom_toTopOf="@id/status_bar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@id/recyclerview_tables"
+            app:layout_constraintEnd_toEndOf="@id/recyclerview_tables"
+            app:layout_constraintStart_toStartOf="@id/recyclerview_tables"
+            app:layout_constraintTop_toTopOf="@id/recyclerview_tables" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_tables"
@@ -34,7 +77,7 @@
             android:layout_height="0dp"
             android:layout_marginVertical="@dimen/_15dp"
             app:layout_constraintBottom_toTopOf="@id/status_bar"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/layout_add_table" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/status_bar"

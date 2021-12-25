@@ -34,23 +34,25 @@ class MakeOrderUseCase @Inject constructor(
                         result = Resource.OnFailure(null, ErrorConst.ERROR_NOT_SELECT_DRINK)
                     } else {
                         val user = getCurrentUserUseCase()
-                        var uid = user?.id
+                        var orderStatus = OrderStatus.Queueing.status
+                        var email = user?.email
                         var staffID: String? = null
                         val isStaff = (user?.role is Role.Staff
                                 || user?.role is Role.Manager)
                         if (isStaff) {
-                            uid = getUserByEmailUseCase(cart.mail).data?.id
+                            email = cart.mail
                             staffID = user?.id
+                            orderStatus = OrderStatus.WaitInStore.status
                         }
                         val total = items!!.sumOf { orderItem ->
                             orderItem.quantity * orderItem.drink.price!!
                         }
                         result = orderRepo.createOrder(
                             now,
-                            uid,
+                            email,
                             contact?.address,
                             contact?.phone,
-                            OrderStatus.Queueing.status,
+                            orderStatus,
                             items!!,
                             total,
                             table,

@@ -13,6 +13,6 @@ class GetCurrentOrderCustomerUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(): Resource<List<Order>?> =
         getCurrentUserUseCase()?.run {
-            orderRepo.getCurrentOrder(id!!)
+            orderRepo.getCurrentOrder(email!!)
         } ?: Resource.OnFailure(null, ErrorConst.ERROR_AUTH)
 }

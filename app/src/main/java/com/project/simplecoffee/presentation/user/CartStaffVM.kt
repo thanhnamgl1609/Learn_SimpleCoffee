@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import com.project.simplecoffee.R
 import com.project.simplecoffee.domain.model.Table
 import com.project.simplecoffee.domain.usecase.auth.GetCurrentUserUseCase
+import com.project.simplecoffee.domain.usecase.order.GetAllAvailableTableUseCase
 import com.project.simplecoffee.domain.usecase.user.*
 import com.project.simplecoffee.presentation.common.main.MainContainer
 import com.project.simplecoffee.utils.common.Resource
@@ -66,7 +67,7 @@ class CartStaffVM @Inject constructor(
             false
         }
 
-    private fun checkValidTable() = (cart?.table != null).apply {
+    private fun checkValidTable() = (selectedTable.value!! >= 0).apply {
         if (!this)
             container.showMessage("Table is not valid")
     }
@@ -74,9 +75,10 @@ class CartStaffVM @Inject constructor(
     override fun onOrderClick() {
         viewModelScope.launch {
             _loadingOrderVisible.value = View.INVISIBLE
-            if ((email.value.isNullOrEmpty() || checkValidEmail()) && checkValidTable())
+            if ((email.value.isNullOrEmpty() || checkValidEmail()) && checkValidTable()) {
+                saveStaffCart()
                 super.onOrderClick()
-            else
+            } else
                 _loadingOrderVisible.value = View.VISIBLE
         }
     }

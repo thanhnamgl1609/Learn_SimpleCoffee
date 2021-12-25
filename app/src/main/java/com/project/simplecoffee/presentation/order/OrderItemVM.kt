@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 
 class OrderItemVM constructor(
     private val container: MainContainer,
+    private val pViewModel: OrderVM,
     private val order: Order
 ) : ViewModel(), ItemVM {
     override val viewType = R.layout.order_item
@@ -63,29 +64,13 @@ class OrderItemVM constructor(
             }
             val listItemVM = mutableListOf<DrinkOrderItemVM>()
             for (orderItem in listOrderItem) {
-                val drink = orderItem.drink
-                val quantity = orderItem.quantity.toString()
-                val unitPrice = orderItem.price.toString()
-                val drinkCategory = drink.category?.run {
-                    if (size > 0) {
-                        if (first().name == "All")
-                            last().name
-                        else
-                            first().name
-                    }
-                    else
-                        "None"
-                }
-                listItemVM.add(
-                    DrinkOrderItemVM(
-                        drink,
-                        quantity,
-                        unitPrice,
-                        drinkCategory ?: ""
-                    )
-                )
+                listItemVM.add(DrinkOrderItemVM(orderItem))
             }
             _liveListItemVM.postValue(listItemVM)
         }
+    }
+
+    fun onClick() {
+        pViewModel.onItemClick(order)
     }
 }

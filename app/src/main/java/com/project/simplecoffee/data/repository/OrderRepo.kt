@@ -9,14 +9,12 @@ import com.project.simplecoffee.domain.model.Order
 import com.project.simplecoffee.domain.model.OrderItem
 import com.project.simplecoffee.domain.model.details.OrderStatus
 import com.project.simplecoffee.domain.repository.IOrderRepo
-import com.project.simplecoffee.domain.repository.IUserRepo
 import com.project.simplecoffee.utils.common.toTimestamp
 import com.project.simplecoffee.utils.constant.ErrorConst
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import java.lang.Error
 import java.lang.Exception
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -30,7 +28,7 @@ class OrderRepo @Inject constructor(
 
     @DelicateCoroutinesApi
     override suspend fun getOrderHistory(
-        uid: String,
+        email: String,
         startDate: LocalDate,
         endDate: LocalDate
     ): Resource<List<Order>?> =
@@ -47,7 +45,7 @@ class OrderRepo @Inject constructor(
                         document.toObject(OrderDB::class.java).withId(document.id)
                     )?.apply { listOrder.add(this) }
                 }
-                Resource.OnSuccess(listOrder.filter { it.uid == uid })
+                Resource.OnSuccess(listOrder.filter { it.email == email })
             } catch (e: Exception) {
                 Resource.OnFailure(null, ErrorConst.ERROR_UNEXPECTED)
             }
@@ -55,7 +53,7 @@ class OrderRepo @Inject constructor(
 
     override suspend fun createOrder(
         createdAt: LocalDateTime?,
-        uid: String?,
+        email: String?,
         address: String?,
         phone: String?,
         status: String,
@@ -75,7 +73,7 @@ class OrderRepo @Inject constructor(
             val newDoc = collection.document()
             val orderDB = OrderDB(
                 createdAt?.toTimestamp(),
-                uid,
+                email,
                 address,
                 phone,
                 status,
@@ -91,13 +89,17 @@ class OrderRepo @Inject constructor(
         }
     }
 
-    override suspend fun getCurrentOrder(uid: String): Resource<List<Order>?> =
+    override suspend fun getCurrentOrder(email: String): Resource<List<Order>?> =
         withContext(Dispatchers.IO) {
             try {
                 val documents = collection
                     .whereNotIn(
                         "status",
-                        listOf(OrderStatus.Success.status, OrderStatus.Cancelled.status)
+                        listOf(
+                            OrderStatus.Success.status,
+                            OrderStatus.Cancelled.status,
+                            OrderStatus.WaitInStore.status
+                        )
                     )
                     .get().await()
                 val listOrder = mutableListOf<Order>()
@@ -106,14 +108,14 @@ class OrderRepo @Inject constructor(
                         document.toObject(OrderDB::class.java).withId(document.id)
                     )?.apply { listOrder.add(this) }
                 }
-                Resource.OnSuccess(listOrder)
+                Resource.OnSuccess(listOrder.filter { order -> order.email == email })
             } catch (e: Exception) {
-//                Resource.OnFailure(null, ErrorConst.ERROR_UNEXPECTED)
-                Resource.OnFailure(null, e.message.toString())
+                Resource.OnFailure(null, ErrorConst.ERROR_UNEXPECTED)
+//                Resource.OnFailure(null, e.message.toString())
             }
         }
 
-    override suspend fun getOrderHistory(uid: String): Resource<List<Order>?> =
+    override suspend fun getOrderHistory(email: String): Resource<List<Order>?> =
         withContext(Dispatchers.IO) {
             try {
                 val listOrder = mutableListOf<Order>()
@@ -123,7 +125,24 @@ class OrderRepo @Inject constructor(
                         document.toObject(OrderDB::class.java).withId(document.id)
                     )?.apply { listOrder.add(this) }
                 }
-                Resource.OnSuccess(listOrder.filter { it.uid == uid })
+                Resource.OnSuccess(listOrder.filter { it.email == email })
+            } catch (e: Exception) {
+                Resource.OnFailure(null, ErrorConst.ERROR_UNEXPECTED)
+            }
+        }
+
+    override suspend fun updateStatus(orderID: String, status: OrderStatus): Resource<Order?> =
+        withContext(Dispatchers.IO) {
+            try {
+                val mapObj = mapOf(
+                    "status" to status.status
+                )
+                val document = collection.document(orderID)
+                document.update(mapObj).await()
+                val orderDB = document.get().await()
+                    .toObject(OrderDB::class.java)
+                    ?.withId<OrderDB>(orderID)
+                Resource.OnSuccess(orderMapper.toModel(orderDB))
             } catch (e: Exception) {
                 Resource.OnFailure(null, ErrorConst.ERROR_UNEXPECTED)
             }

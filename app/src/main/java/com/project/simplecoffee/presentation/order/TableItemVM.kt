@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.project.simplecoffee.R
 import com.project.simplecoffee.domain.model.Table
 import com.project.simplecoffee.presentation.common.ItemVM
+import com.project.simplecoffee.presentation.common.main.AllMainFragment
 import com.project.simplecoffee.presentation.common.main.MainContainer
 
 class TableItemVM constructor(
@@ -15,7 +16,7 @@ class TableItemVM constructor(
     private val table: Table
 ) : ItemVM {
     override val viewType = R.layout.table_item
-    private val _numberOrder = MutableLiveData((table.no?: "").toString())
+    private val _numberOrder = MutableLiveData((table.no ?: "").toString())
     private val _url = MutableLiveData(table.image ?: "")
     private val _color = MutableLiveData<Drawable>().apply {
         value = if (table.order == null) // Available
@@ -30,4 +31,13 @@ class TableItemVM constructor(
         get() = _url
     val color: LiveData<Drawable>
         get() = _color
+
+    fun onItemClick() {
+        table.order?.let { order -> tableStatusVM.onItemClick(order) } ?: run {
+            container.loadFragment(
+                AllMainFragment.TableDetail.createFragment(table.id!!),
+                true
+            )
+        }
+    }
 }
