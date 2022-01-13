@@ -66,6 +66,7 @@ class MenuVM @Inject constructor(
             progressBarVisibility.postValue(View.VISIBLE)
             val result = viewModelScope.async { searchDrinkUseCase(query) }
             handleDrinkResult(result.await())
+            progressBarVisibility.value = View.GONE
         }
     }
 
@@ -98,6 +99,7 @@ class MenuVM @Inject constructor(
     ) = viewModelScope.launch {
         progressBarVisibility.value = View.VISIBLE
         handleDrinkResult(getDrinkByCategoryUseCase(drinkCategory.id))
+        progressBarVisibility.value = View.GONE
     }
 
     private fun handleDrinkResult(result: Resource<List<Drink>?>) = viewModelScope.launch(

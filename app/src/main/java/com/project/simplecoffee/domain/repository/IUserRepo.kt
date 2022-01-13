@@ -13,10 +13,10 @@ interface IUserRepo {
     suspend fun signUp(
         email: String,
         pwd: String,
-        firstName: String,
-        lastName: String,
-        gender: Boolean,
-        dob: LocalDate
+        firstName: String?,
+        lastName: String?,
+        gender: Boolean?,
+        dob: LocalDate?
     ): Resource<User?>
 
     fun signOut()

@@ -45,10 +45,10 @@ class UserRepo @Inject constructor(
     override suspend fun signUp(
         email: String,
         pwd: String,
-        firstName: String,
-        lastName: String,
-        gender: Boolean,
-        dob: LocalDate
+        firstName: String?,
+        lastName: String?,
+        gender: Boolean?,
+        dob: LocalDate?
     ): Resource<User?> = withContext(Dispatchers.IO) {
         try {
             auth.createUserWithEmailAndPassword(email, pwd).await()

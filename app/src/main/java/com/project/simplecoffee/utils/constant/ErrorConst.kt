@@ -1,6 +1,7 @@
 package com.project.simplecoffee.utils.constant
 
 object ErrorConst {
+    const val PASSWORD_START_WITH_EMPTY = "Password should not start with space"
     const val ERROR_ACCESS = "Something wrong when connecting to server"
     const val ERROR_NOT_ENTER_NAME = "Please enter a table's name"
     const val ERROR_NOT_ENTER_SIZE = "Please enter a table's size"

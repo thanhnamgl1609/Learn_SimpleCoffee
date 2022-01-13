@@ -2,7 +2,6 @@ package com.project.simplecoffee.domain.usecase.auth
 
 import com.project.simplecoffee.domain.model.User
 import com.project.simplecoffee.domain.repository.IUserRepo
-import com.project.simplecoffee.domain.usecase.user.DeleteCurrentUserUseCase
 import com.project.simplecoffee.utils.common.Resource
 import com.project.simplecoffee.utils.constant.ErrorConst
 import java.time.LocalDate
@@ -27,6 +26,13 @@ class SignUpUseCase @Inject constructor(
             )
         }
 
+        if (pwd!![0] == ' ') {
+            return Resource.OnFailure(
+                null,
+                ErrorConst.PASSWORD_START_WITH_EMPTY
+            )
+        }
+
         if (!isMatch(pwd, confirmPwd)) {
             return Resource.OnFailure(
                 null,
@@ -34,7 +40,7 @@ class SignUpUseCase @Inject constructor(
             )
         }
 
-        return userRepo.signUp(email!!, pwd!!, firstName!!, lastName!!, gender!!, dob!!)
+        return userRepo.signUp(email!!, pwd, firstName, lastName, gender, dob)
     }
 
     private fun isValid(email: String?, pwd: String?, confirmPwd: String?) =
